@@ -1,12 +1,14 @@
 import requests
 import regex # pip install regex
 import ipaddress # pip install ipaddress
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # pip install beautifulsoup4, pip install lxml
 from urllib.parse import urlparse, urljoin
 import re
+import pandas as pd
 
 # 피싱 1, 정상 -1, 의심 0
 
+# 도메인 추출 함수
 def extract_domain(url):
     parsed_url = urlparse(url)
     return parsed_url.netloc
@@ -454,14 +456,49 @@ def check_onmouseover_change(url):
     #     return 0      
 
 
-# if __name__ == '__main__':
-#     test_url = 'https://bit.ly/xyz123'  # 여기에 테스트할 URL을 넣으세요
+def classify_phishing(url):
+    results = {
+        "RightClick": use_right_click(url),
+        "popUpWidnow": popup_window_text(url),
+        "Iframe": iFrame_redirection(url),
+        "having_IPhaving_IP_Address": using_ip(url),
+        "Favicon": check_favicon(url),
+        "Request_URL": check_request_url(url),
+        "URL_of_Anchor": check_url_of_anchor(url),
+        "Links_in_tags": has_meta_tags(url),
+        "SFH": check_sfh(url),
+        "Submitting_to_email": check_submit_email(url),
+        "Redirect": check_redirect_count(url),
+        "on_mouseover": check_onmouseover_change(url)
+    }
+    return results
 
-#     print('Number of Hyperlinks:', nb_hyperlinks(test_url))
-#     print('Ratio of External Hyperlinks:', ratio_extHyperlinks(test_url))
-#     print('Safe Anchor Text:', safe_anchor(test_url))
-#     print('Disable Right Click:', disable_right_click(test_url))
-#     print('Domain in Source:', domain_in_source(test_url))
-#     print('Popup Window with Text Field:', popup_window_text(test_url))
-#     print('iFrame Redirection:', iFrame_redirection(test_url))
-#     print('IP Usage:', IP_usage(test_url))
+def main():
+    # URL과 상태를 포함한 딕셔너리
+    test_urls = {
+        "https://3u8kstpg-97iuu3sdu.vercel.app/": "피싱",
+        "https://www.look.com.ua/": "정상",
+        "https://viatraniver1972.blogspot.be": "피싱",
+        "http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html": "정상",
+        "https://support-appleld.com.secureupdate.duilawyeryork.com/ap/ee636eeb7669742/?cmd=_update&dispatch=ee636eeb76697424b&locale=_": "피싱",
+        "https://www.kia.com/cz/dealer/pemmbrno/": "정상",
+        "http://kprealtors.com/ve/": "피싱",
+        "http://www.ghbook.ir/index.php?lang=fa": "정상",
+        "http://hello-d4cdd.firebaseapp.com/": "피싱",
+        "https://www.eliteprospects.com/": "정상"
+    }
+
+    # 탐지 결과 출력
+    for url, expected_status in test_urls.items():
+        results = classify_phishing(url)
+        # 상태는 URL에 대한 예상 결과를 사용합니다
+        status = expected_status
+
+        print(f"Results for {url} (Status: {status}):")
+        for key, value in results.items():
+            result_status = "Phishing" if value == 1 else "Legitimate" if value == -1 else "Suspicious"
+            print(f"{key}: {result_status}")
+        print("-" * 40)
+
+if __name__ == "__main__":
+    main()
