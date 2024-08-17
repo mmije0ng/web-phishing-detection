@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1IDmtCLK9flKKcp_IzG68Lkr3h-g0VE01
 """
 
-pip install python-whois
+# pip install python-whois
 
 import re
 from urllib.parse import urlparse
