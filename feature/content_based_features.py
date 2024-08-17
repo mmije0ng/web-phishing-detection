@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup # pip install beautifulsoup4, pip install lxml
 from urllib.parse import urlparse, urljoin
 import re
 import pandas as pd
+import time
 
 # 피싱 1, 정상 -1, 의심 0
 
@@ -490,6 +491,8 @@ def main():
 
     # 탐지 결과 출력
     for url, expected_status in test_urls.items():
+        start_time = time.time()  # 시작 시간 기록
+        
         results = classify_phishing(url)
         # 상태는 URL에 대한 예상 결과를 사용합니다
         status = expected_status
@@ -498,6 +501,10 @@ def main():
         for key, value in results.items():
             result_status = "Phishing" if value == 1 else "Legitimate" if value == -1 else "Suspicious"
             print(f"{key}: {result_status}")
+
+        end_time = time.time()  # 종료 시간 기록
+        elapsed_time = end_time - start_time  # 실행 시간 계산
+        print(f"컨텐츠 기반 피처 실행 시간: {elapsed_time:.4f} seconds")  # 실행 시간 출력
         print("-" * 40)
 
 if __name__ == "__main__":
