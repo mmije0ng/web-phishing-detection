@@ -24,6 +24,7 @@ def check_url_length(url):
     else :
         return 1
 
+# port -> scan_non_standard_ports
 def scan_port(hostname, port):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
