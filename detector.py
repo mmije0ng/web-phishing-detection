@@ -139,7 +139,7 @@ for url in test_urls:
 
     # MLP 결과 출력
     mlp_phishing, mlp_probability, mlp_explanations = results["mlp"]
-    print(f"MLP 모델 결과:")
+    print(f"MLP 다층퍼셉트론 모델 결과:")
     print(f"URL: {url}")
     print(f"피싱 확률: {mlp_probability:.4f}%")
     print(f"피싱 여부: {'Yes' if mlp_phishing else 'No'}")
