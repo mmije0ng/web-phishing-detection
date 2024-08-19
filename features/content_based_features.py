@@ -18,7 +18,7 @@ def extract_domain(url):
 # 우클릭 방지 여부
 def use_right_click(url):
     try:
-        response = requests.get(url, timeout=10) # 웹 페이지의 HTML 소스를 받아옴
+        response = requests.get(url, timeout=5) # 웹 페이지의 HTML 소스를 받아옴
         if response.status_code == 200:
             # 응답 텍스트가 비어 있는 경우 피싱으로 간주
             if response.text.strip() == "":
@@ -46,7 +46,7 @@ def use_right_click(url):
 # 팝업 창에 텍스트 필드가 포함되어 있는지 여부
 def popup_window_text(url):
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         soup = BeautifulSoup(response.content, 'lxml')
         forms = soup.find_all('form')
     
@@ -64,12 +64,11 @@ def popup_window_text(url):
         print(f"popUpWidnow Exception Error: {e}")
         return 0
 
-
 # Iframe
 # iframe 사용 여부
 def iFrame_redirection(url):
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
 
         # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
         if response.text.strip() == "":
@@ -91,7 +90,7 @@ def iFrame_redirection(url):
 
     # try:
     #     # 웹 페이지 요청
-    #     response = requests.get(url, timeout=10)
+    #     response = requests.get(url, timeout=5)
     #     response.raise_for_status()  # HTTP 요청 에러 발생 시 예외 발생
 
     #     # 페이지 파싱
@@ -119,7 +118,6 @@ def iFrame_redirection(url):
     #     print(f"Iframe Exception Error: {e}")
     #     return -1  # 오류 발생 시 의심으로 간주
 
-
 # having_IPhaving_IP_Address
 # IP 사용 여부
 def using_ip(url):
@@ -133,7 +131,7 @@ def using_ip(url):
 def check_favicon(url):
     try:
         # 웹 페이지 요청
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()  # HTTP 요청 에러 발생 시 예외 발생
         
         # 페이지 파싱
@@ -173,7 +171,7 @@ def check_favicon(url):
 def check_request_url(url):
     try:
         # 웹 페이지 요청
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()  # 요청이 실패하면 예외 발생
             
         # 페이지 파싱
@@ -236,7 +234,7 @@ def check_request_url(url):
 def check_url_of_anchor(url):
     try:
         # 웹 페이지 요청
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -292,7 +290,7 @@ def check_url_of_anchor(url):
 def has_meta_tags(url):
     try:
         # 웹 페이지 요청
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -320,7 +318,7 @@ def has_meta_tags(url):
 def check_sfh(url):
     try:
         # 웹 페이지 요청
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -355,7 +353,7 @@ def check_sfh(url):
 def check_submit_email(url):
     try:
             # 웹 페이지 요청
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=5)
             response.raise_for_status()  # 요청이 실패하면 예외 발생
             
             # 페이지 파싱
@@ -385,7 +383,7 @@ def check_submit_email(url):
 def check_redirect_count(url):
     try:
         # 웹 페이지 요청 및 리디렉션 횟수 확인
-        response = requests.get(url, allow_redirects=True, timeout=10)
+        response = requests.get(url, allow_redirects=True, timeout=5)
         
         # 리디렉션 횟수 확인
         redirect_count = len(response.history)
@@ -410,7 +408,7 @@ def check_redirect_count(url):
 # 피싱 공격자는 JavaScript를 사용하여 상태 표시줄에 사용자에게 가짜 URL을 표시할 수 있음
 def check_onmouseover_change(url):
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         if response.status_code == 200:
             # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
             if response.text.strip() == "":
@@ -433,7 +431,7 @@ def check_onmouseover_change(url):
 
     # try:
     #     # 웹 페이지 요청
-    #     response = requests.get(url, timeout=10)
+    #     response = requests.get(url, timeout=5)
     #     response.raise_for_status()  # 요청이 실패하면 예외 발생
         
     #     # 페이지 파싱
