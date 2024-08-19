@@ -13,6 +13,9 @@ def evaluate_url(url):
     url, is_shortened = short_url_features.check_url(url)
     print(f'단축 URL 여부: {is_shortened}')
 
+    # 컨텐츠 기판 피처용 URLData 객체 생성
+    response = content_based_features.get_request_url(url)
+    
     # 피처를 딕셔너리로 정의
     features = {
         'URLURL_Length': url_based_feature.check_url_length(url),
@@ -22,18 +25,18 @@ def evaluate_url(url):
         'Prefix_Suffix': url_based_feature.check_prefix_suffix(url),
         'Abnormal_URL': url_based_feature.check_abnormal_url(url),
         
-        'RightClick': content_based_features.use_right_click(url),
-        'popUpWidnow': content_based_features.popup_window_text(url),
-        'Iframe': content_based_features.iFrame_redirection(url),
+        'RightClick': content_based_features.use_right_click(response),
+        'popUpWidnow': content_based_features.popup_window_text(response),
+        'Iframe': content_based_features.iFrame_redirection(response),
         'having_IPhaving_IP_Address': content_based_features.using_ip(url),
-        'Favicon': content_based_features.check_favicon(url),
-        'Request_URL': content_based_features.check_request_url(url),
-        'URL_of_Anchor': content_based_features.check_url_of_anchor(url),
-        'Links_in_tags': content_based_features.has_meta_tags(url),
-        'SFH': content_based_features.check_sfh(url),
-        'Submitting_to_email': content_based_features.check_submit_email(url),
-        'Redirect': content_based_features.check_redirect_count(url),
-        'on_mouseover': content_based_features.check_onmouseover_change(url),
+        'Favicon': content_based_features.check_favicon(url, response),
+        'Request_URL': content_based_features.check_request_url(url, response),
+        'URL_of_Anchor': content_based_features.check_url_of_anchor(url, response),
+        'Links_in_tags': content_based_features.has_meta_tags(response),
+        'SFH': content_based_features.check_sfh(url, response),
+        'Submitting_to_email': content_based_features.check_submit_email(url, response),
+        'Redirect': content_based_features.check_redirect_count(response),
+        'on_mouseover': content_based_features.check_onmouseover_change(response),
 
         'Google_Index': domainver1.google_index(url),
         'Domain_registeration_length': domainver1.domain_registration_period(url),
@@ -91,10 +94,10 @@ test_urls = [
     'https://bit.ly/3xyz123',  # 정상, 0%, 복원 x
     'https://tinyurl.com/y6abcd',  # 정상, 0%, 복원 x
     'https://goo.gl/abc123',  # 정상, 0%, 복원 x
-    'https://ow.ly/abcd1234',  # 정상, 0.29%, 복원 x
+    'https://ow.ly/abcd1234',  # 정상, 0.4305%, 복원 x
     'https://bit.ly/4abcd',  # 정상, 0%, 복원 o
     'https://bit.ly/malicious1',  # 악성, 0%, 복원 x
-    'https://cli.gs/malware',  # 악성, 99.61%, 복원 x
+    'https://cli.gs/malware',  # 악성, 99.6068%, 복원 x
     'https://v.gd/phishing',  # 악성, 0% 복원 x
     'https://bc.vc/fraud',  # 악성, 0%, 복원 o
     'https://po.st/scam',  # 악성, 0%, 복원 x
@@ -107,9 +110,9 @@ test_urls = [
     'https://www.stackoverflow.com',  # 정상, 0%
     'http://malicious-site.com',  # 악성, 85.27%
     'http://phishing-site.com',  # 악성, 100%
-    'http://fraud-site.org',  # 악성, 99.99%
-    'http://fake-login.net',  # 악성, 99.99%
-    'http://dangerous-site.biz',  # 악성, 99.99%
+    'http://fraud-site.org',  # 악성, 99.9929%
+    'http://fake-login.net',  # 악성, 99.9929%
+    'http://dangerous-site.biz',  # 악성, 99.9929%
 ]
 
 # test_urls = [
@@ -123,7 +126,7 @@ for url in test_urls:
     end_time = time.time()
 
     print(f"URL: {url}")
-    print(f"피싱 확률: {probability:.2f}%")
+    print(f"피싱 확률: {probability:.4f}%")
     print(f"피싱 여부: {'Yes' if phishing else 'No'}")
     if explanations:
         print("의심 피처들:")
