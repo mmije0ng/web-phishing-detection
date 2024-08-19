@@ -69,44 +69,47 @@ def check_url(url):
             print(f"복원된 URL: {expanded_url}")
             # 이 부분은 주석 처리합니다
             # return team_members_phishing_check(expanded_url)  # 다른 팀원이 작성한 함수
-            return "복원된 URL을 확인했습니다."
+            # return "복원된 URL을 확인했습니다."
+            return expanded_url, 1
         else:
-            return "복원 실패: URL을 확인할 수 없습니다."
+            # return "복원 실패: URL을 확인할 수 없습니다."
+            return url, -1
     else:
         print("일반 URL입니다.")
         # 이 부분은 주석 처리합니다
         # return team_members_phishing_check(url)  # 다른 팀원이 작성한 함수
-        return "일반 URL을 확인했습니다."
+        # return "일반 URL을 확인했습니다."
+        return url, -1
 
-# 테스트용 URL 목록
-test_urls = [
-    # 단축 URL (정상 5개, 악성 5개)
-    'https://bit.ly/3xyz123',  # 정상
-    'https://tinyurl.com/y6abcd',  # 정상
-    'https://goo.gl/abc123',  # 정상
-    'https://ow.ly/abcd1234',  # 정상
-    'https://bit.ly/4abcd',  # 정상
-    'https://bit.ly/malicious1',  # 악성
-    'https://cli.gs/malware',  # 악성
-    'https://v.gd/phishing',  # 악성
-    'https://bc.vc/fraud',  # 악성
-    'https://po.st/scam',  # 악성
+# # 테스트용 URL 목록
+# test_urls = [
+#     # 단축 URL (정상 5개, 악성 5개)
+#     'https://bit.ly/3xyz123',  # 정상
+#     'https://tinyurl.com/y6abcd',  # 정상
+#     'https://goo.gl/abc123',  # 정상
+#     'https://ow.ly/abcd1234',  # 정상
+#     'https://bit.ly/4abcd',  # 정상
+#     'https://bit.ly/malicious1',  # 악성
+#     'https://cli.gs/malware',  # 악성
+#     'https://v.gd/phishing',  # 악성
+#     'https://bc.vc/fraud',  # 악성
+#     'https://po.st/scam',  # 악성
 
-    # 일반 URL (정상 5개, 악성 5개)
-    'https://www.google.com',  # 정상
-    'https://www.wikipedia.org',  # 정상
-    'https://www.python.org',  # 정상
-    'https://www.github.com',  # 정상
-    'https://www.stackoverflow.com',  # 정상
-    'http://malicious-site.com',  # 악성
-    'http://phishing-site.com',  # 악성
-    'http://fraud-site.org',  # 악성
-    'http://fake-login.net',  # 악성
-    'http://dangerous-site.biz',  # 악성
-]
+#     # 일반 URL (정상 5개, 악성 5개)
+#     'https://www.google.com',  # 정상
+#     'https://www.wikipedia.org',  # 정상
+#     'https://www.python.org',  # 정상
+#     'https://www.github.com',  # 정상
+#     'https://www.stackoverflow.com',  # 정상
+#     'http://malicious-site.com',  # 악성
+#     'http://phishing-site.com',  # 악성
+#     'http://fraud-site.org',  # 악성
+#     'http://fake-login.net',  # 악성
+#     'http://dangerous-site.biz',  # 악성
+# ]
 
-# 테스트 수행
-for url in test_urls:
-    print(f"URL: {url}")
-    result = check_url(url)
-    print(f"결과: {result}\n")
+# # 테스트 수행
+# for url in test_urls:
+#     print(f"URL: {url}")
+#     result = check_url(url)
+#     print(f"결과: {result}\n")

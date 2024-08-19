@@ -6,6 +6,9 @@ from features import domainver1
 import pandas as pd
 import pickle
 import time
+import numpy as np
+
+# pip install scikit-learn==1.3.2
 
 def evaluate_url(url):
     # URL이 단축된 경우 복원
@@ -15,7 +18,7 @@ def evaluate_url(url):
     # 피처를 딕셔너리로 정의
     features = {
         'URL Length': url_based_feature.check_url_length(url),
-        'Port Scan': url_based_feature.port_scan(url),
+        'Port Scan': url_based_feature.scan_port(url),
         'Having At Symbol': url_based_feature.check_at_symbol(url),
         'Double Slash Redirecting': url_based_feature.check_double_slash_redirecting(url),
         'Prefix/Suffix': url_based_feature.check_double_slash_redirecting(url),
@@ -60,17 +63,20 @@ def evaluate_url(url):
         'Shortening Service'
     ]
 
-    # 피처 값을 올바른 순서로 정렬하여 데이터프레임으로 변환
+    # 피처 값을 올바른 순서로 정렬하여 단순 배열로 변환
     feature_values = [features[feature] for feature in feature_order]
-    features_df = pd.DataFrame([feature_values], columns=feature_order)
+    features_array = np.array(feature_values).reshape(1, -1)  # 2D 배열로 변환
 
     # 학습된 모델 로드
-    with open('../model/mlp_model.pkl', 'rb') as f:
+    with open('model/mlp_model.pkl', 'rb') as f:
         model = pickle.load(f)
     
-    # 피처 데이터프레임을 사용하여 예측 수행
-    prediction = model.predict(features_df)[0]
-    probability = model.predict_proba(features_df)[0]
+    # 피처 배열을 사용하여 예측 수행
+    prediction = model.predict(features_array)[0]
+    probability = model.predict_proba(features_array)[0]
+
+    # 피싱 확률 계산
+    phishing_prob = round(probability[1] * 100, 4)  # 피싱일 확률을 퍼센트로 변환하고 소수점 네 자리로 반올림
 
     # 피싱 여부 및 상세 설명
     phishing = prediction == 1
@@ -78,19 +84,19 @@ def evaluate_url(url):
 
     for feature_name, feature_value in features.items():
         if feature_value == 1:
-            explanation.append(f"{feature_name}: Suspicious")
+            explanation.append(f"{feature_name}: {feature_value}")
     
-    return phishing, probability[1], explanation
+    return phishing, phishing_prob, explanation
 
 # 예시 URL
-url = 'https://po.st/scam'  # 피싱, 단축 url
+url = 'https://bit.ly/malicious1'  # 피싱, 단축 url
 
 start_time = time.time()
 phishing, probability, explanations = evaluate_url(url)
 end_time = time.time()
 
 print(f"URL: {url}")
-print(f"피싱 확률: {probability:.2%}")
+print(f"피싱 확률: {probability:.2f}%")
 print(f"피싱 여부: {'Yes' if phishing else 'No'}")
 if explanations:
     print("의심 피처들:")
