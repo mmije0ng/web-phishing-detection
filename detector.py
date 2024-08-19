@@ -86,34 +86,35 @@ def evaluate_url(url):
 
 # 예시 URL
 # 테스트용 URL 목록
-# test_urls = [
-#     # 단축 URL (정상 5개, 악성 5개)
-#     'https://bit.ly/3xyz123',  # 정상, 0%, 복원 x
-#     'https://tinyurl.com/y6abcd',  # 정상, 0%, 복원 x
-#     'https://goo.gl/abc123',  # 정상, 0%, 복원 x
-#     'https://ow.ly/abcd1234',  # 정상, 0.29%, 복원 x
-#     'https://bit.ly/4abcd',  # 정상, 0%, 복원 o
-#     'https://bit.ly/malicious1',  # 악성, 0%, 복원 x
-#     'https://cli.gs/malware',  # 악성, 99.61%, 복원 x
-#     'https://v.gd/phishing',  # 악성, 0% 복원 x
-#     'https://bc.vc/fraud',  # 악성, 0%, 복원 o
-#     'https://po.st/scam',  # 악성, 0%, 복원 x
-
-#     # 일반 URL (정상 5개, 악성 5개)
-#     'https://www.google.com',  # 정상, 0%
-#     'https://www.wikipedia.org',  # 정상, 0%
-#     'https://www.python.org',  # 정상, 0%
-#     'https://www.github.com',  # 정상, 0%
-#     'https://www.stackoverflow.com',  # 정상, 0%
-#     'http://malicious-site.com',  # 악성, 85.27%
-#     'http://phishing-site.com',  # 악성, 100%
-#     'http://fraud-site.org',  # 악성, 99.99%
-#     'http://fake-login.net',  # 악성, 99.99%
-#     'http://dangerous-site.biz',  # 악성, 99.99%
-# ]
 test_urls = [
-    'http://html.house/l7ceeid6.html' # 일반 URL, 피싱
+    # 단축 URL (정상 5개, 악성 5개)
+    'https://bit.ly/3xyz123',  # 정상, 0%, 복원 x
+    'https://tinyurl.com/y6abcd',  # 정상, 0%, 복원 x
+    'https://goo.gl/abc123',  # 정상, 0%, 복원 x
+    'https://ow.ly/abcd1234',  # 정상, 0.29%, 복원 x
+    'https://bit.ly/4abcd',  # 정상, 0%, 복원 o
+    'https://bit.ly/malicious1',  # 악성, 0%, 복원 x
+    'https://cli.gs/malware',  # 악성, 99.61%, 복원 x
+    'https://v.gd/phishing',  # 악성, 0% 복원 x
+    'https://bc.vc/fraud',  # 악성, 0%, 복원 o
+    'https://po.st/scam',  # 악성, 0%, 복원 x
+
+    # 일반 URL (정상 5개, 악성 5개)
+    'https://www.google.com',  # 정상, 0%
+    'https://www.wikipedia.org',  # 정상, 0%
+    'https://www.python.org',  # 정상, 0%
+    'https://www.github.com',  # 정상, 0%
+    'https://www.stackoverflow.com',  # 정상, 0%
+    'http://malicious-site.com',  # 악성, 85.27%
+    'http://phishing-site.com',  # 악성, 100%
+    'http://fraud-site.org',  # 악성, 99.99%
+    'http://fake-login.net',  # 악성, 99.99%
+    'http://dangerous-site.biz',  # 악성, 99.99%
 ]
+
+# test_urls = [
+#     'http://html.house/l7ceeid6.html' # 일반 URL, 피싱
+# ]
 
 # 각 URL에 대해 평가 수행
 for url in test_urls:
