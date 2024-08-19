@@ -10,8 +10,13 @@ import time
 
 # URL 데이터 추출
 def get_request_url(url):
-    response = requests.get(url, timeout=5)  # 웹 페이지의 HTML 소스를 받아옴
-    return response
+    try:
+        response = requests.get(url, timeout=5)  # 웹 페이지의 HTML 소스를 받아옴
+        return response
+        
+    except requests.RequestException as e:
+        print("HTTP 요청 Error: {e}")
+        return None   
 
 # 도메인 추출 함수
 def extract_domain(url):
@@ -22,6 +27,9 @@ def extract_domain(url):
 # 우클릭 방지 여부
 def use_right_click(response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         if response.status_code == 200:
             # 응답 텍스트가 비어 있는 경우 피싱으로 간주
             if response.text.strip() == "":
@@ -49,7 +57,9 @@ def use_right_click(response):
 # 팝업 창에 텍스트 필드가 포함되어 있는지 여부
 def popup_window_text(response):
     try:
-        response = requests.get(url, timeout=5)
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         soup = BeautifulSoup(response.content, 'lxml')
         forms = soup.find_all('form')
         
@@ -71,6 +81,8 @@ def popup_window_text(response):
 # iframe 사용 여부
 def iFrame_redirection(response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
         # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
         if response.text.strip() == "":
             return 1
@@ -101,6 +113,8 @@ def using_ip(url):
 # favicon 사용 여부, 동일한 도메인에서 로드되면 정상으로 간주
 def check_favicon(url, response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
         # 페이지 파싱
         soup = BeautifulSoup(response.content, 'lxml')
 
@@ -137,6 +151,8 @@ def check_favicon(url, response):
 # 웹페이지 내의 외부 객체(이미지, 비디오, 소리 등)가 다른 도메인에서 로드되는지를 검사
 def check_request_url(url, response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
         response.raise_for_status()  # 요청이 실패하면 예외 발생
             
         # 페이지 파싱
@@ -197,6 +213,9 @@ def check_request_url(url, response):
 # <a> 태그의 href 속성에 포함된 링크가 웹사이트의 도메인과 다른 도메인을 가리키는지 경우
 def check_url_of_anchor(url, response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -251,6 +270,9 @@ def check_url_of_anchor(url, response):
 # <meta> 태그를 사용하는 것이 일반적
 def has_meta_tags(response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -276,6 +298,9 @@ def has_meta_tags(response):
 # 빈 문자열, about:blank, 또는 웹페이지 도메인과 다른 도메인으로 설정되어 있는 경우를 검사
 def check_sfh(url, response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -308,6 +333,9 @@ def check_sfh(url, response):
 # 피싱 공격자는 사용자의 정보를 자신의 개인 이메일로 리다이렉트할 수 있음
 def check_submit_email(url, response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         # 웹 페이지 요청
         response = requests.get(url, timeout=5)
         response.raise_for_status()  # 요청이 실패하면 예외 발생
@@ -336,7 +364,10 @@ def check_submit_email(url, response):
 # Redirect
 # 피싱 웹사이트는 최소한 4번 이상 리디렉션된
 def check_redirect_count(response):
-    try:        
+    try:    
+        if response is None:
+            raise requests.RequestException("Response is None")
+            
         # 리디렉션 횟수 확인
         redirect_count = len(response.history)
         
@@ -359,6 +390,9 @@ def check_redirect_count(response):
 # 피싱 공격자는 JavaScript를 사용하여 상태 표시줄에 사용자에게 가짜 URL을 표시할 수 있음
 def check_onmouseover_change(response):
     try:
+        if response is None:
+            raise requests.RequestException("Response is None")
+        
         if response.status_code == 200:
             # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
             if response.text.strip() == "":
