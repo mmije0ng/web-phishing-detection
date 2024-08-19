@@ -17,9 +17,7 @@ y = df['Result']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # MLP 모델 인스턴스화
-# mlp = MLPClassifier(max_iter=1000, learning_rate_init=0.005, random_state=42)
-# 최적 하이퍼파라미터 적용
-mlp = MLPClassifier(alpha=0.001, hidden_layer_sizes=(100), learning_rate_init=0.001, max_iter=1000)
+mlp = MLPClassifier(max_iter=1000, learning_rate_init=0.005, random_state=42)
 
 # 모델 학습
 mlp.fit(X_train, y_train)
@@ -72,29 +70,21 @@ disp_test = ConfusionMatrixDisplay(confusion_matrix=cm_test, display_labels=mlp.
 disp_test.plot()
 plt.show()
 
-# # 하이퍼파라미터 튜닝
-# parameters = {
-#     'hidden_layer_sizes': [(100,), (50, 50), (100, 50)],
-#     'learning_rate_init': [0.001, 0.005, 0.01],
-#     'alpha': [0.0001, 0.001, 0.01],
-# }
+# 하이퍼파라미터 튜닝
+parameters = {
+    'hidden_layer_sizes': [(100,), (50, 50), (100, 50)],
+    'learning_rate_init': [0.001, 0.005, 0.01],
+    'alpha': [0.0001, 0.001, 0.01],
+}
 
-# grid_mlp = GridSearchCV(mlp, param_grid=parameters, scoring='accuracy', n_jobs=-1, cv=5)
-# grid_mlp.fit(X_train, y_train)
+grid_mlp = GridSearchCV(mlp, param_grid=parameters, scoring='accuracy', n_jobs=-1, cv=5)
+grid_mlp.fit(X_train, y_train)
 
-# print('GridSearchCV 최적 하이퍼 파라미터 :', grid_mlp.best_params_)
-# print('GridSearchCV 최고 정확도: {0:.4f}'.format(grid_mlp.best_score_))
+print('GridSearchCV 최적 하이퍼 파라미터 :', grid_mlp.best_params_)
+print('GridSearchCV 최고 정확도: {0:.4f}'.format(grid_mlp.best_score_))
 
-# # 최적 모델 평가
-# best_mlp = grid_mlp.best_estimator_
-# dpredictions = best_mlp.predict(X_test)
-# accuracy = accuracy_score(y_test, dpredictions)
-# print('테스트 세트에서의 최적 MLP 정확도 : {0:.4f}'.format(accuracy))
-
-# 모델을 pkl 파일로 저장
-try:
-    with open('mlp_model.pkl', 'wb') as f:
-        pickle.dump(mlp, f)
-    print("모델이 성공적으로 저장되었습니다.")
-except Exception as e:
-    print(f"모델 저장 중 오류 발생: {e}")
+# 최적 모델 평가
+best_mlp = grid_mlp.best_estimator_
+dpredictions = best_mlp.predict(X_test)
+accuracy = accuracy_score(y_test, dpredictions)
+print('테스트 세트에서의 최적 MLP 정확도 : {0:.4f}'.format(accuracy))
