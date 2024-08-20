@@ -8,6 +8,15 @@ import pickle
 import time
 import numpy as np
 
+# 피처 이름 목록을 모델 학습 데이터의 피처 순서와 일치시킴
+feature_order = [
+    'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting',
+    'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon',
+    'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email',
+    'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord',
+    'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report'
+]
+
 def evaluate_url(url):
     # URL이 단축된 경우 복원
     url, is_shortened = short_url_features.check_url(url)
@@ -52,15 +61,6 @@ def evaluate_url(url):
 
         'Shortining_Service': is_shortened,
     }
-
-    # 피처 이름 목록을 모델 학습 데이터의 피처 순서와 일치시킴
-    feature_order = [
-        'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting',
-        'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon',
-        'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email',
-        'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord',
-        'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report'
-    ]
 
     # 피처 값을 올바른 순서로 정렬하여 단순 배열로 변환
     feature_values = [features[feature] for feature in feature_order]
