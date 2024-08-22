@@ -52,12 +52,12 @@ def evaluate_url(url):
         'age_of_domain': domainver1.domain_age(url),
         'DNSRecord': domainver1.dns_record(url),
         'SSLfinal_State': domainver1.ssl_certificate_status(url),
-        'having_Sub_Domain': domainver1.having_sub_domain(url),
+        'having_Sub_Domain': domainver1.having_subdomain(url),
         'HTTPS_token': domainver1.https_token(url),
         'web_traffic': domainver1.web_traffic(url),
-        'Page_Rank': domainver1.page_rank(url),
-        'Links_pointing_to_page': domainver1.links_pointing_to_page(url),
-        'Statistical_report': domainver1.statistical_report(url),
+        'Page_Rank': 0,
+        'Links_pointing_to_page': 0,
+        'Statistical_report': 0,
 
         'Shortining_Service': is_shortened,
     }
@@ -95,36 +95,54 @@ def evaluate_url(url):
             explanation.append(f"{feature_name}: {feature_value}")
     
     return {
+        "url": (url),
         "mlp": (phishing_mlp, mlp_phishing_prob, explanation),
         "XGBoost": (phishing_xgboost, xgboost_phishing_prob, explanation)
     }
 
 # 예시 URL
 # 테스트용 URL 목록
-test_urls = [
-    # 단축 URL (정상 5개, 악성 5개)
-    'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0165%
-    'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0165%
-    'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0138%
-    'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 8.4119%, XGBoost: 99.9725%
-    'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 0.0006%
-    'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 0%, XGBoost: 0.0165%
-    'https://cli.gs/malware',  # 악성, 복원 x, mlp: 98.9646%, XGBoost: 99.9985%
-    'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 0%, XGBoost: 0.0165%
-    'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 0%, XGBoost: 0.0165%
-    'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0%, XGBoost: 0.0009%
+# test_urls = [
+#     # 단축 URL (정상 5개, 악성 5개)
+#     'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0165%
+#     'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0165%
+#     'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0138%
+#     'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 8.4119%, XGBoost: 99.9725%
+#     'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 0.0006%
+#     'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 0%, XGBoost: 0.0165%
+#     'https://cli.gs/malware',  # 악성, 복원 x, mlp: 98.9646%, XGBoost: 99.9985%
+#     'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 0%, XGBoost: 0.0165%
+#     'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 0%, XGBoost: 0.0165%
+#     'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0%, XGBoost: 0.0009%
 
-    # 일반 URL (정상 5개, 악성 5개)
-    'https://www.google.com',  # 정상, mlp: 0%, XGBoost: 0.0070%
-    'https://www.wikipedia.org',  # 정상, mlp: 0%, XGBoost: 0%
-    'https://www.python.org',  # 정상, mlp: 0%, XGBoost: 0.0063%
-    'https://www.github.com',  # 정상, mlp: 0%, XGBoost: 0.0056%
-    'https://www.stackoverflow.com',  # 정상, mlp: 0%, XGBoost: 0.0025%
-    'http://malicious-site.com',  # 악성, mlp: 20.1776%, XGBoost: 99.9938%
-    'http://phishing-site.com',  # 악성, mlp: 100%, XGBoost: 99.9999%
-    'http://fraud-site.org',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
-    'http://fake-login.net',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
-    'http://dangerous-site.biz',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
+#     # 일반 URL (정상 5개, 악성 5개)
+#     'https://www.google.com',  # 정상, mlp: 0%, XGBoost: 0.0070%
+#     'https://www.wikipedia.org',  # 정상, mlp: 0%, XGBoost: 0%
+#     'https://www.python.org',  # 정상, mlp: 0%, XGBoost: 0.0063%
+#     'https://www.github.com',  # 정상, mlp: 0%, XGBoost: 0.0056%
+#     'https://www.stackoverflow.com',  # 정상, mlp: 0%, XGBoost: 0.0025%
+#     'http://malicious-site.com',  # 악성, mlp: 20.1776%, XGBoost: 99.9938%
+#     'http://phishing-site.com',  # 악성, mlp: 100%, XGBoost: 99.9999%
+#     'http://fraud-site.org',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
+#     'http://fake-login.net',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
+#     'http://dangerous-site.biz',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
+
+# ]
+
+test_urls = [
+    # 피싱 5개
+    'https://buly.kr/BITBije', # 복원 o, mlp: 0%, XGBoost: 0.0120%
+    'https://buly.kr/9BU5wxI', # 복원 o, mlp: 0.0001%, XGBoost: 0.4235%
+    'https://buly.kr/Gkqg82e', # 복원 o, mlp: 0.0000%, XGBoost: 66.0719%
+    'https://buly.kr/GZvv9En', # 복원 o, mlp: 0.0000%, XGBoost: 0.0043%
+    'https://buly.kr/jXirow', # 복원 o, mlp: 0.0000%, XGBoost: 0.0005%
+
+    # 일반 5개
+    'https://buly.kr/610SIJC', # 복원 o, mlp: 0.0000%, XGBoost: 0.0001%
+    'https://buly.kr/2qWodcD', # 복원 o, mlp: 0.0000%, XGBoost: 0.0002%
+    'https://buly.kr/C08De2i', # 복원 o, mlp: 0.0000%, XGBoost: 0.0870%
+    'https://url.kr/b2ecua', # 복원 o, mlp: 0.0000%, XGBoost: 0.1792%
+    'https://tinyurl.com/3z5h4h3w' # 복원 o, mlp: 0.0000%, XGBoost: 0.0002%
 ]
 
 # test_urls = [
@@ -140,7 +158,7 @@ for url in test_urls:
     # MLP 결과 출력
     mlp_phishing, mlp_probability, mlp_explanations = results["mlp"]
     print(f"MLP 다층퍼셉트론 모델 결과:")
-    print(f"URL: {url}")
+    print(f"URL: {results['url']}")
     print(f"피싱 확률: {mlp_probability:.4f}%")
     print(f"피싱 여부: {'Yes' if mlp_phishing else 'No'}")
     if mlp_explanations:
@@ -152,7 +170,7 @@ for url in test_urls:
     # XGBoost 결과 출력
     xgboost_phishing, xgboost_probability, xgboost_explanations = results["XGBoost"]
     print(f"XGBoost 모델 결과:")
-    print(f"URL: {url}")
+    print(f"URL: {results['url']}")
     print(f"피싱 확률: {xgboost_probability:.4f}%")
     print(f"피싱 여부: {'Yes' if xgboost_phishing else 'No'}")
     if xgboost_explanations:
