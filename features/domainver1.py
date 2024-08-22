@@ -1,28 +1,33 @@
-import requests
 import whois
-import datetime
+import requests
 from urllib.parse import urlparse
-from bs4 import BeautifulSoup
+import datetime
 
-# Google Safe Browsing API 키
-API_KEY = 'AIzaSyD2OaMfUyIk8Zq0BOJs_hCoM_WRZEInx1g'
-API_URL = f'https://safebrowsing.googleapis.com/v4/threatMatches:find?key={API_KEY}'
 
-# 위협 유형 리스트
-THREAT_TYPES = [
-    "MALWARE",
-    "SOCIAL_ENGINEERING",
-    "UNWANTED_SOFTWARE",
-    "POTENTIALLY_HARMFUL_APPLICATION"
-]
+# 피처 함수들 정의
 
-# Helper Functions
 def google_index(url):
     try:
         response = requests.get(f"https://www.google.com/search?q=site:{urlparse(url).netloc}")
-        return 1 if 'No results' not in response.text else 0
-    except requests.RequestException:
-        return -1
+        return -1 if 'No results' not in response.text else 1
+    except requests.RequestException as e:
+        print(f"Google Index Error: {e}")
+        return 0  # 의심
+
+def domain_registration_period(url):
+    try:
+        domain = urlparse(url).netloc
+        domain_info = whois.whois(domain)
+        creation_date = domain_info.creation_date
+        if isinstance(creation_date, list):
+            creation_date = creation_date[0]
+        if creation_date is None:
+            return 0  # 의심
+        age_days = (datetime.datetime.now() - creation_date).days
+        return 1 if age_days < 180 else -1
+    except Exception as e:
+        print(f"Domain Registration Period Error: {e}")
+        return 0  # 의심
 
 def domain_age(url):
     try:
@@ -32,147 +37,142 @@ def domain_age(url):
         if isinstance(creation_date, list):
             creation_date = creation_date[0]
         if creation_date is None:
-            return -1
+            return 0  # 의심
         age_days = (datetime.datetime.now() - creation_date).days
-        if age_days >= 3031:
-            return 0
-        else:
-            return 1
+        #도메인 등록 기간이 6개월 미만인 경우에 피싱사이트로 간주
+        return 1 if age_days < 183 else -1
     except Exception as e:
-        print(f"An error occurred: {e}")
-        return -1
+        print(f"Domain Age Error: {e}")
+        return 0  # 의심
 
 def dns_record(url):
     try:
         domain = urlparse(url).netloc
         domain_info = whois.whois(domain)
         if domain_info is None or domain_info.status is None:
-            return 1
-        return 0
+            return 1  # 피싱
+        return -1  # 정상
     except Exception as e:
-        print(f"Whois 조회 중 오류 발생: {e}")
-        return -1
-
-def domain_registration_period(url):
-    try:
-        domain = urlparse(url).netloc
-        domain_info = whois.whois(domain)
-        if domain_info.creation_date is None:
-            return -1
-        if isinstance(domain_info.creation_date, list):
-            creation_date = domain_info.creation_date[0]
-        else:
-            creation_date = domain_info.creation_date
-        if isinstance(creation_date, datetime.datetime):
-            age_days = (datetime.datetime.now() - creation_date).days
-        else:
-            return -1
-        if age_days < 180:
-            return 1
-        else:
-            return 0
-    except Exception as e:
-        print(f"Whois 조회 중 오류 발생: {e}")
-        return -1
+        print(f"DNS Record Error: {e}")
+        return 0  # 의심
 
 def ssl_certificate_status(url):
     try:
         response = requests.get(url, timeout=5)
-        return 0 if 'https' in response.url else 1
-    except requests.RequestException:
-        return 1
+        return -1 if 'https' in response.url else 1  # 피싱이면 1, 정상이면 -1
+    except requests.RequestException as e:
+        print(f"SSL Certificate Status Error: {e}")
+        return 0  # 의심
+    except Exception as e:
+        print(f"SSL Certificate Status General Error: {e}")
+        return 0  # 의심
 
-def safe_browsing(url):
-    body = {
-        'client': {
-            'clientId': 'yourcompany',
-            'clientVersion': '1.0.0'
-        },
-        'threatInfo': {
-            'threatTypes': THREAT_TYPES,
-            'platformTypes': ['ANY_PLATFORM'],
-            'threatEntryTypes': ['URL'],
-            'threatEntries': [{'url': url}]
-        }
-    }
+# def having_subdomain(url):
+#     try:
+#         subdomain_count = urlparse(url).netloc.count('.')
+#         return 1 if subdomain_count > 1 else -1  # 피싱이면 1, 정상이면 -1
+#     except Exception as e:
+#         print(f"Having Subdomain Error: {e}")
+#         return 0  # 의심
+
+
+# def having_subdomain(url):
+#     try:
+#         subdomain_count = urlparse(url).netloc.count('.')
+#         if subdomain_count == 0:
+#             return -1  # 정상 (legitimate)
+#         elif subdomain_count == 1:
+#             return 0  # 의심 (suspicious)
+#         else:
+#             return 1  # 피싱 (phishing)
+#     except Exception as e:
+#         print(f"Having Subdomain Error: {e}")
+#         return 0  # 의심 (suspicious)
+def having_subdomain(url):
     try:
-        response = requests.post(API_URL, json=body)
-        if response.status_code == 200:
-            result = response.json()
-            return 1 if result.get('matches') else 0
+        netloc = urlparse(url).netloc
+        # 도메인 부분을 점(.)으로 분리
+        parts = netloc.split('.')
+        
+        # 서브도메인 개수 계산
+        # TLD와 주 도메인을 제외한 부분이 서브도메인
+        if len(parts) <= 2:
+            return -1  # 서브도메인이 없음 (정상)
+        elif len(parts) == 3:
+            return 0  # 서브도메인 1개 (의심)
         else:
-            return -1
-    except requests.RequestException:
-        return -1
+            return 1  # 서브도메인 2개 이상 (피싱)
+    except Exception as e:
+        print(f"Having Subdomain Error: {e}")
+        return 0  # 예외 발생 시 의심
 
-def having_sub_domain(url):
-    return 1 if len(urlparse(url).path.split('.')) > 2 else 0
 
+# def https_token(url):
+#     try:
+#         return 1 if 'https-' in url else -1  # 피싱이면 1, 정상이면 -1
+#     except Exception as e:
+#         print(f"HTTPS Token Error: {e}")
+#         return 0  # 의심
 def https_token(url):
-    return 1 if 'https' in urlparse(url).netloc else 0
+    try:
+        # URL에서 도메인 부분을 추출
+        domain = urlparse(url).netloc
+        
+        # 도메인 부분에 "https-" 토큰이 포함되어 있는지 확인
+        if "https-" in domain.lower():
+            return 1  # 피싱
+        else:
+            return -1  # 정상
+    except Exception as e:
+        # 예외 발생 시 의심으로 간주
+        print(f"HTTPS Token Error: {e}")
+        return 0  # 의심
 
 def web_traffic(url):
-    # Note: Web traffic data typically requires specialized APIs or services.
-    # This is a placeholder implementation.
-    return -1  # Placeholder for actual traffic data lookup
+    try:
+        return 1 if "low-traffic" in url else -1  # 피싱이면 1, 정상이면 -1
+    except Exception as e:
+        print(f"Web Traffic Error: {e}")
+        return 0  # 의심
 
-def page_rank(url):
-    # Note: Google PageRank API is not publicly available.
-    # This is a placeholder implementation.
-    return -1  # Placeholder for actual PageRank lookup
+def check_url(url):
+    results = {}
+    results['Google_Index'] = google_index(url)
+    results['Domain_registeration_length'] = domain_registration_period(url)
+    results['age_of_domain'] = domain_age(url)
+    results['DNSRecord'] = dns_record(url)
+    results['SSLfinal_State'] = ssl_certificate_status(url)
+    results['having_Sub_Domain'] = having_subdomain(url)
+    results['HTTPS_token'] = https_token(url)
+    results['web_traffic'] = web_traffic(url)
 
-def links_pointing_to_page(url):
-    # Placeholder implementation, actual implementation would require crawling the web.
-    return -1  # Placeholder for actual link count lookup
+    score = sum(int(value) for value in results.values())
 
-def statistical_report(url):
-    # Placeholder for checking against PhishTank or StopBadware databases.
-    return -1  # Placeholder for actual statistical report lookup
+    if score > 0:
+        results['Phishing_Site'] = "Yes"
+    elif score == 0:
+        results['Phishing_Site'] = "Suspicious"
+    else:
+        results['Phishing_Site'] = "No"
 
-def main():
-    test_urls = [
-        "http://www.crestonwood.com/router.php",
-        "http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4",
-        "https://support-appleld.com.secureupdate.duilawyeryork.com/ap/89e6a3b4b063b8d/?cmd=_update&dispatch=89e6a3b4b063b8d1b&locale=_",
-        "http://rgipt.ac.in",
-        "http://www.iracing.com/tracks/gateway-motorsports-park/",
-        "http://appleid.apple.com-app.es/",
-        "http://www.mutuo.it",
-        "http://www.shadetreetechnology.com/V4/validation/ba4b8bddd7958ecb8772c836c2969531",
-        "http://vamoaestudiarmedicina.blogspot.com/",
-        "https://parade.com/425836/joshwigler/the-amazing-race-host-phil-keoghan-previews-the-season-27-premiere/",
-        "https://www.astrologyonline.eu/Astro_MemoNew/Profilo.asp",
-        "https://www.lifewire.com/tcp-port-21-818146",
-        "https://technofizi.net/top-best-mp3-downloader-app-for-android-free-music-download/",
-        "http://html.house/l7ceeid6.html",
-        "https://www.missfiga.com/",
-        "http://wave.progressfilm.co.uk/time3/?logon=myposte",
-        "https://www.chiefarchitect.com/",
-        "http://beta.kenaidanceta.com/postamok/d39a2/source",
-        "http://www.ktplasmachinery.com/cs/",
-        "http://www.2345daohang.com/",
-        "http://www.game.co.uk/en/games/nintendo-switch/nintendo-switch/",
-        "https://blog.hubspot.com/marketing/email-open-click-rate-benchmark",
-        "http://batvrms.net/deliver/D2017HL/u.php",
-        "http://sophie-world.com/games/port-and-starboard",
-        "http://support-appleld.com.secureupdate.duilawyeryork.com/ap/bb14d7ff1fcbf29?cmd=_update&dispatch=bb14d7ff1fcbf29bb&locale=_"
-    ]
+    return results
 
-    for url in test_urls:
-        print(f"URL: {url}")
-        print(f"Google Index: {google_index(url)}")
-        print(f"Domain Age: {domain_age(url)}")
-        print(f"DNS Record: {dns_record(url)}")
-        print(f"Domain Registration Period: {domain_registration_period(url)}")
-        print(f"SSL Certificate Status: {ssl_certificate_status(url)}")
-        print(f"Safe Browsing: {safe_browsing(url)}")
-        print(f"Having Sub Domain: {having_sub_domain(url)}")
-        print(f"HTTPS Token: {https_token(url)}")
-        print(f"Web Traffic: {web_traffic(url)}")
-        print(f"Page Rank: {page_rank(url)}")
-        print(f"Links Pointing to Page: {links_pointing_to_page(url)}")
-        print(f"Statistical Report: {statistical_report(url)}")
-        print("-" * 50)
+# 테스트할 URL 목록
+urls = [
+    "http://www.crestonwood.com/router.php",
+    "http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4",
+    "https://support-appleld.com.secureupdate.duilawyeryork.com/ap/89e6a3b4b063b8d/?cmd=_update&dispatch=89e6a3b4b063b8d1b&locale=_",
+    "http://rgipt.ac.in",
+    "http://www.iracing.com/tracks/gateway-motorsports-park/",
+    "http://appleid.apple.com-app.es/",
+    "http://www.mutuo.it",
+    "http://www.shadetreetechnology.com/V4/validation/ba4b8bddd7958ecb8772c836c2969531",
+    "http://vamoaestudiarmedicina.blogspot.com/",
+    "https://parade.com/425836/joshwigler/the-amazing-race-host-phil-keoghan-previews-the-season-27-premiere/",
+]
 
-if __name__ == "__main__":
-    main()
+for url in urls:
+    result = check_url(url)
+    print(f"URL: {url}")
+    print(result)
+    print("-" * 80)
