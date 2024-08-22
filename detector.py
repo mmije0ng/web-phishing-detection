@@ -145,10 +145,6 @@ test_urls = [
     'https://tinyurl.com/3z5h4h3w' # 복원 o, mlp: 0.0000%, XGBoost: 0.0002%
 ]
 
-# test_urls = [
-#     'http://html.house/l7ceeid6.html' # 일반 URL, 피싱
-# ]
-
 # 각 URL에 대해 평가 수행
 for url in test_urls:
     start_time = time.time()
