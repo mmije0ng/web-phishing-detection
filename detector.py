@@ -95,9 +95,9 @@ test_urls = [
     'https://buly.kr/jXirow',
 
     # 일반 5개
+   'https://buly.kr/610SIJC',
    'https://buly.kr/2qWodcD',
    'https://buly.kr/C08De2i',
-   'https://buly.kr/610SIJC',
    'https://url.kr/b2ecua',
    'https://tinyurl.com/3z5h4h3w'
 ]
