@@ -10,12 +10,20 @@ import numpy as np
 
 # 피처 이름 목록을 모델 학습 데이터의 피처 순서와 일치시킴
 feature_order = [
-    'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting',
-    'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon',
+    'having_IPhaving_IP_Address', 'URLURL_Length', 'having_At_Symbol', 'double_slash_redirecting',
+    'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length',
     'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email',
-    'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord',
-    'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report'
+    'Abnormal_URL', 'Redirect', 'popUpWidnow', 'age_of_domain', 'DNSRecord',
+    'Google_Index'
 ]
+
+# feature_order = [
+#     'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting',
+#     'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon',
+#     'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email',
+#     'Abnormal_URL', 'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord',
+#     'web_traffic', 'Page_Rank', 'Google_Index', 'Links_pointing_to_page', 'Statistical_report'
+# ]
 
 def evaluate_url(url):
     # URL이 단축된 경우 복원
@@ -34,18 +42,18 @@ def evaluate_url(url):
         'Prefix_Suffix': url_based_feature.check_prefix_suffix(url),
         'Abnormal_URL': url_based_feature.check_abnormal_url(url),
         
-        'RightClick': content_based_features.use_right_click(response),
+        # 'RightClick': content_based_features.use_right_click(response),
         'popUpWidnow': content_based_features.popup_window_text(response),
-        'Iframe': content_based_features.iFrame_redirection(response),
+        # 'Iframe': content_based_features.iFrame_redirection(response),
         'having_IPhaving_IP_Address': content_based_features.using_ip(url),
-        'Favicon': content_based_features.check_favicon(url, response),
+        # 'Favicon': content_based_features.check_favicon(url, response),
         'Request_URL': content_based_features.check_request_url(url, response),
         'URL_of_Anchor': content_based_features.check_url_of_anchor(url, response),
         'Links_in_tags': content_based_features.has_meta_tags(response),
         'SFH': content_based_features.check_sfh(url, response),
         'Submitting_to_email': content_based_features.check_submit_email(url, response),
         'Redirect': content_based_features.check_redirect_count(response),
-        'on_mouseover': content_based_features.check_onmouseover_change(response),
+        # 'on_mouseover': content_based_features.check_onmouseover_change(response),
 
         'Google_Index': domainver1.google_index(url),
         'Domain_registeration_length': domainver1.domain_registration_period(url),
@@ -54,12 +62,12 @@ def evaluate_url(url):
         'SSLfinal_State': domainver1.ssl_certificate_status(url),
         'having_Sub_Domain': domainver1.having_subdomain(url),
         'HTTPS_token': domainver1.https_token(url),
-        'web_traffic': domainver1.web_traffic(url),
-        'Page_Rank': 0,
-        'Links_pointing_to_page': 0,
-        'Statistical_report': 0,
+        # 'web_traffic': domainver1.web_traffic(url),
+        # 'Page_Rank': 0,
+        # 'Links_pointing_to_page': 0,
+        # 'Statistical_report': 0,
 
-        'Shortining_Service': is_shortened,
+        # 'Shortining_Service': is_shortened,
     }
 
     # 피처 값을 올바른 순서로 정렬하여 단순 배열로 변환
@@ -68,11 +76,11 @@ def evaluate_url(url):
 
     # 학습된 모델 로드 및 예측 수행
     # 다층퍼셉트론 모델 로드
-    with open('model/mlp_model.pkl', 'rb') as f:
+    with open('model/mlp_model_column_drop.pkl', 'rb') as f:
         mlp_model = pickle.load(f)
 
     # XGBoost 모델 로드
-    with open('model/XGBoost_model.pkl', 'rb') as f:
+    with open('model/XGBoost_model_column_drop.pkl', 'rb') as f:
         xgboost_model = pickle.load(f)
     
     # MLP 모델 예측
@@ -100,49 +108,49 @@ def evaluate_url(url):
         "XGBoost": (phishing_xgboost, xgboost_phishing_prob, explanation)
     }
 
-# 예시 URL
-# 테스트용 URL 목록
+# # 예시 URL
+# # 테스트용 URL 목록
 # test_urls = [
 #     # 단축 URL (정상 5개, 악성 5개)
-#     'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0165%
-#     'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0165%
-#     'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 0%, XGBoost: 0.0138%
-#     'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 8.4119%, XGBoost: 99.9725%
-#     'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 0.0006%
-#     'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 0%, XGBoost: 0.0165%
-#     'https://cli.gs/malware',  # 악성, 복원 x, mlp: 98.9646%, XGBoost: 99.9985%
-#     'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 0%, XGBoost: 0.0165%
-#     'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 0%, XGBoost: 0.0165%
-#     'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0%, XGBoost: 0.0009%
+#     'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+#     'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+#     'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+#     'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
+#     'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
+#     'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+#     'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
+#     'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+#     'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 99.9994%, XGBoost: 94.4168%
+#     'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0.0000%, XGBoost: 1.3971%
 
 #     # 일반 URL (정상 5개, 악성 5개)
-#     'https://www.google.com',  # 정상, mlp: 0%, XGBoost: 0.0070%
-#     'https://www.wikipedia.org',  # 정상, mlp: 0%, XGBoost: 0%
-#     'https://www.python.org',  # 정상, mlp: 0%, XGBoost: 0.0063%
-#     'https://www.github.com',  # 정상, mlp: 0%, XGBoost: 0.0056%
-#     'https://www.stackoverflow.com',  # 정상, mlp: 0%, XGBoost: 0.0025%
-#     'http://malicious-site.com',  # 악성, mlp: 20.1776%, XGBoost: 99.9938%
-#     'http://phishing-site.com',  # 악성, mlp: 100%, XGBoost: 99.9999%
-#     'http://fraud-site.org',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
-#     'http://fake-login.net',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
-#     'http://dangerous-site.biz',  # 악성, mlp: 99.9929%, XGBoost: 99.9987%
+#     'https://www.google.com',  # 정상, mlp: 0.0000%, XGBoost: 0.5252%
+#     'https://www.wikipedia.org',  # 정상, mlp: 0.0003%, XGBoost: 0%
+#     'https://www.python.org',  # 정상, mlp: 0.0000%, XGBoost: 1.5160%
+#     'https://www.github.com',  # 정상, mlp: 8.8258%, XGBoost: 4.7550%
+#     'https://www.stackoverflow.com',  # 정상, mlp: 0.0000%, XGBoost: 0.8729%
+#     'http://malicious-site.com',  # 악성, mlp: 100.0000%, XGBoost: 99.9999%
+#     'http://phishing-site.com',  # 악성, mlp:  100.0000%, XGBoost: 98.3522%
+#     'http://fraud-site.org',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
+#     'http://fake-login.net',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
+#     'http://dangerous-site.biz',  # 악성, mlp: 100.0000%, XGBoost:88.3212%
 
 # ]
 
 test_urls = [
     # 피싱 5개
-    'https://buly.kr/BITBije', # 복원 o, mlp: 0%, XGBoost: 0.0120%
-    'https://buly.kr/9BU5wxI', # 복원 o, mlp: 0.0001%, XGBoost: 0.4235%
-    'https://buly.kr/Gkqg82e', # 복원 o, mlp: 0.0000%, XGBoost: 66.0719%
-    'https://buly.kr/GZvv9En', # 복원 o, mlp: 0.0000%, XGBoost: 0.0043%
-    'https://buly.kr/jXirow', # 복원 o, mlp: 0.0000%, XGBoost: 0.0005%
+    'https://buly.kr/BITBije', # 복원 o, mlp: 0.0000%, XGBoost: 1.0463%
+    'https://buly.kr/9BU5wxI', # 복원 o, mlp: 0.0038%, XGBoost: 0.4673%
+    'https://buly.kr/Gkqg82e', # 복원 o, mlp: 0.0000%, XGBoost: 0.1185%
+    'https://buly.kr/GZvv9En', # 복원 o, mlp: 0.0000%, XGBoost: 1.7451%
+    'https://buly.kr/jXirow', # 복원 o, mlp: 0.0000%, XGBoost: 0.0727%
 
     # 일반 5개
-    'https://buly.kr/610SIJC', # 복원 o, mlp: 0.0000%, XGBoost: 0.0001%
-    'https://buly.kr/2qWodcD', # 복원 o, mlp: 0.0000%, XGBoost: 0.0002%
-    'https://buly.kr/C08De2i', # 복원 o, mlp: 0.0000%, XGBoost: 0.0870%
-    'https://url.kr/b2ecua', # 복원 o, mlp: 0.0000%, XGBoost: 0.1792%
-    'https://tinyurl.com/3z5h4h3w' # 복원 o, mlp: 0.0000%, XGBoost: 0.0002%
+    'https://buly.kr/610SIJC', # 복원 o, mlp: 0.0000%, XGBoost: 0.0003%
+    'https://buly.kr/2qWodcD', # 복원 o, mlp: 0.0000%, XGBoost: 0.0009%
+    'https://buly.kr/C08De2i', # 복원 o, mlp: 0.0000%, XGBoost: 1.9202%
+    'https://url.kr/b2ecua', # 복원 o, mlp: 0.0000%, XGBoost: 0.2273%
+    'https://tinyurl.com/3z5h4h3w' # 복원 o, mlp: 0.0000%, XGBoost: 0.0011%
 ]
 
 # 각 URL에 대해 평가 수행
