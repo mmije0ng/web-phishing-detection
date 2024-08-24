@@ -87,7 +87,7 @@ def evaluate_url(url):
 # 예시 URL
 # 테스트용 URL 목록
 test_urls = [
-  # 피싱 5개
+    # 피싱 5개
     'https://buly.kr/BITBije',
     'https://buly.kr/9BU5wxI',
     'https://buly.kr/Gkqg82e',
@@ -95,11 +95,11 @@ test_urls = [
     'https://buly.kr/jXirow',
 
     # 일반 5개
-   'https://buly.kr/610SIJC',
-   'https://buly.kr/2qWodcD',
-   'https://buly.kr/C08De2i',
-   'https://url.kr/b2ecua',
-   'https://tinyurl.com/3z5h4h3w'
+    'https://buly.kr/610SIJC',
+    'https://buly.kr/2qWodcD',
+    'https://buly.kr/C08De2i',
+    'https://url.kr/b2ecua',
+    'https://tinyurl.com/3z5h4h3w'
 ]
 
 # 각 URL에 대해 평가 수행
