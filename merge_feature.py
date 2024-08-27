@@ -21,32 +21,13 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
 from features import url_based_feature as ubf
 from features import content_based_features as cbf
-from features import domainver1 as dbf
+from features import domain_based_features as dbf
 from features import short_url_features as suf
 
 def apply(df, func_name, col_name):
-    results = []
-    
-    # 단축 url 판별
-    for idx, url in enumerate(df['url']):
-        print(f"Processing {idx + 1}/{len(df)}: {url}")  # 현재 몇 번째 URL을 처리 중인지 출력
-
-        # 단축 URL 판별 및 복원 / 문제점 -> 복원 실패 시의 방향이 너무 많음
-        expanded_url, status = suf.check_url(url)  
-        
-        # 복원된 URL 또는 원래 URL을 피처 함수에 전달
-        if status == 1:  # 1 : 복원에 성공한 경우
-            result = func_name(expanded_url)  # 복원된 URL을 사용
-        else:           # -1 : 복원에 실패한 경우
-            result = func_name(url)  # 복원되지 않았으면 원래 URL을 사용 -> 변경 필요
-
-        results.append(result)  # 결과 리스트에 추가
-
+    results = [func_name(url) for url in df['url']]  # URL을 순차적으로 처리하여 피처 계산
     df[col_name] = results  # 결과를 새로운 컬럼에 추가
-    df.reset_index(drop=True, inplace=True)  # 인덱스 재설정
 
-    if col_name not in df.columns:
-        print(f"피처 '{col_name}'이 데이터프레임에 존재하지 않습니다.")
 
 apply(df, cbf.use_right_click, 'RightClick')
 apply(df, cbf.popup_window_text, 'popUpWidnow')
@@ -73,6 +54,7 @@ apply(df, dbf.domain_registration_period, ' Domain_registeration_length')
 apply(df, dbf.ssl_certificate_status, ' SSLfinal_State')
 apply(df, dbf.having_sub_domain, ' having_Sub_Domain')
 apply(df, dbf.https_token, ' HTTPS_token')
+apply(df, suf.is_shortened, 'Shortining_Service')
 
 # 결과를 CSV 파일로 저장
 df.to_csv('merge_test_dataset.csv', index=False)
