@@ -18,35 +18,35 @@ def google_index(url):
         print(f"Google Index Error: {e}")
         return 1  # 예외 발생 시 피싱으로 간주
 
-# 도메인 등록 기간 (Domain_registration_length)
-def domain_registration_length(url):
-    try:
-        # URL에서 도메인 추출
-        domain = urlparse(url).netloc
+# # 도메인 등록 기간 (Domain_registration_length)
+# def domain_registration_length(url):
+#     try:
+#         # URL에서 도메인 추출
+#         domain = urlparse(url).netloc
 
-        # 도메인 정보 가져오기
-        domain_info = whois.whois(domain)
+#         # 도메인 정보 가져오기
+#         domain_info = whois.whois(domain)
 
-        # 도메인의 등록 만료일 추출
-        expiration_date = domain_info.expiration_date
+#         # 도메인의 등록 만료일 추출
+#         expiration_date = domain_info.expiration_date
 
-        # 등록 만료일이 리스트로 반환되는 경우 첫 번째 항목 선택
-        if isinstance(expiration_date, list):
-            expiration_date = expiration_date[0]
+#         # 등록 만료일이 리스트로 반환되는 경우 첫 번째 항목 선택
+#         if isinstance(expiration_date, list):
+#             expiration_date = expiration_date[0]
 
-        # 만료일이 없는 경우 피싱으로 간주
-        if expiration_date is None:
-            return 1
+#         # 만료일이 없는 경우 피싱으로 간주
+#         if expiration_date is None:
+#             return 1
 
-        # 현재 날짜와의 차이 계산
-        remaining_days = (expiration_date - datetime.datetime.now()).days
+#         # 현재 날짜와의 차이 계산
+#         remaining_days = (expiration_date - datetime.datetime.now()).days
 
-        # 도메인 등록 기간이 1년(365일) 이상이면 정상, 그렇지 않으면 피싱
-        return -1 if remaining_days >= 365 else 1
+#         # 도메인 등록 기간이 1년(365일) 이상이면 정상, 그렇지 않으면 피싱
+#         return -1 if remaining_days >= 365 else 1
 
-    except Exception as e:
-        print(f"Domain Registration Length Error: {e}")
-        return 1  # 오류 발생 시 피싱으로 간주
+#     except Exception as e:
+#         print(f"Domain Registration Length Error: {e}")
+#         return 1  # 오류 발생 시 피싱으로 간주
 
 # 도메인 수명 (Age_of_Domain)
 def age_of_domain(url):
@@ -78,30 +78,20 @@ def age_of_domain(url):
         print(f"Age of Domain Error: {e}")
         return 1  # 오류 발생 시 피싱으로 간주
 
-def dns_record(url):
-    try:
-        domain = urlparse(url).netloc
-        domain_info = whois.whois(domain)
-        
-        # 도메인 정보가 없거나 상태 정보가 없는 경우 피싱으로 간주
-        if domain_info is None or domain_info.status is None:
-            return 1  # 피싱
-        
-        return -1  # 정상
-    except Exception as e:
-        print(f"DNS Record Error: {e}")
-        return 1  # 예외 발생 시 피싱으로 간주
-
-# def ssl_certificate_status(url):
+# def dns_record(url):
 #     try:
-#         response = requests.get(url, timeout=5)
-#         return -1 if 'https' in response.url else 1  # 피싱이면 1, 정상이면 -1
-#     except requests.RequestException as e:
-#         print(f"SSL Certificate Status Error: {e}")
-#         return 0  # 의심
+#         domain = urlparse(url).netloc
+#         domain_info = whois.whois(domain)
+        
+#         # 도메인 정보가 없거나 상태 정보가 없는 경우 피싱으로 간주
+#         if domain_info is None or domain_info.status is None:
+#             return 1  # 피싱
+        
+#         return -1  # 정상
 #     except Exception as e:
-#         print(f"SSL Certificate Status General Error: {e}")
-#         return 0  # 의심
+#         print(f"DNS Record Error: {e}")
+#         return 1  # 예외 발생 시 피싱으로 간주
+
 
 def sslfinal_state(url):
     # 1. HTTPS 사용 여부 확인
@@ -173,23 +163,15 @@ def https_token(url):
         print(f"HTTPS Token Error: {e}")
         return 1  # 피싱
 
-def web_traffic(url):
-    try:
-        return 1 if "low-traffic" in url else -1  # 피싱이면 1, 정상이면 -1
-    except Exception as e:
-        print(f"Web Traffic Error: {e}")
-        return 0  # 의심
-
 def check_url(url):
     results = {}
     results['Google_Index'] = google_index(url)
-    results['Domain_registeration_length'] = domain_registration_length(url)
+    # results['Domain_registeration_length'] = domain_registration_length(url)
     results['age_of_domain'] = age_of_domain(url)
-    results['DNSRecord'] = dns_record(url)
+    # results['DNSRecord'] = dns_record(url)
     results['SSLfinal_State'] = sslfinal_state(url)
     results['having_Sub_Domain'] = having_subdomain(url)
     results['HTTPS_token'] = https_token(url)
-    results['web_traffic'] = web_traffic(url)
 
     score = sum(int(value) for value in results.values())
 
