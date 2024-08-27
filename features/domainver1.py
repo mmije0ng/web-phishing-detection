@@ -173,13 +173,6 @@ def https_token(url):
         print(f"HTTPS Token Error: {e}")
         return 1  # 피싱
 
-def web_traffic(url):
-    try:
-        return 1 if "low-traffic" in url else -1  # 피싱이면 1, 정상이면 -1
-    except Exception as e:
-        print(f"Web Traffic Error: {e}")
-        return 0  # 의심
-
 def check_url(url):
     results = {}
     results['Google_Index'] = google_index(url)
@@ -189,7 +182,6 @@ def check_url(url):
     results['SSLfinal_State'] = sslfinal_state(url)
     results['having_Sub_Domain'] = having_subdomain(url)
     results['HTTPS_token'] = https_token(url)
-    results['web_traffic'] = web_traffic(url)
 
     score = sum(int(value) for value in results.values())
 
