@@ -9,11 +9,11 @@ import time
 
 # 피처 이름 목록을 모델 학습 데이터의 피처 순서와 일치시킴
 feature_order = [
-    'having_IPhaving_IP_Address', 'URLURL_Length', 'having_At_Symbol', 'double_slash_redirecting',
-    'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length',
+    'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service', 'having_At_Symbol', 'double_slash_redirecting',
+    'Prefix_Suffix', 'having_Sub_Domain', 'SSLfinal_State', 'Domain_registeration_length', 'Favicon',
     'port', 'HTTPS_token', 'Request_URL', 'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email',
-    'Abnormal_URL', 'Redirect', 'popUpWidnow', 'age_of_domain', 'DNSRecord',
-    'Google_Index'
+    'Redirect', 'on_mouseover', 'RightClick', 'popUpWidnow', 'Iframe', 'age_of_domain', 'DNSRecord',
+    'Links_pointing_to_page'
 ]
 
 async def evaluate_url(url):
@@ -31,34 +31,26 @@ async def evaluate_url(url):
         'having_At_Symbol': asyncio.to_thread(url_based_feature.check_at_symbol, url),
         'double_slash_redirecting': asyncio.to_thread(url_based_feature.check_double_slash_redirecting, url),
         'Prefix_Suffix': asyncio.to_thread(url_based_feature.check_prefix_suffix, url),
-        'Abnormal_URL': asyncio.to_thread(url_based_feature.check_abnormal_url, url),
         
-        # 'RightClick': asyncio.to_thread(content_based_features.use_right_click, response),
+        'RightClick': asyncio.to_thread(content_based_features.use_right_click, response),
         'popUpWidnow': asyncio.to_thread(content_based_features.popup_window_text, response),
-        # 'Iframe': asyncio.to_thread(content_based_features.iFrame_redirection, response),
+        'Iframe': asyncio.to_thread(content_based_features.iFrame_redirection, response),
         'having_IPhaving_IP_Address': asyncio.to_thread(content_based_features.using_ip, url),
-        # 'Favicon': asyncio.to_thread(content_based_features.check_favicon, url, response),
+        'Favicon': asyncio.to_thread(content_based_features.check_favicon, url, response),
         'Request_URL': asyncio.to_thread(content_based_features.check_request_url, url, response),
         'URL_of_Anchor': asyncio.to_thread(content_based_features.check_url_of_anchor, url, response),
         'Links_in_tags': asyncio.to_thread(content_based_features.has_meta_tags, response),
         'SFH': asyncio.to_thread(content_based_features.check_sfh, url, response),
         'Submitting_to_email': asyncio.to_thread(content_based_features.check_submit_email, url, response),
         'Redirect': asyncio.to_thread(content_based_features.check_redirect_count, response),
-        # 'on_mouseover': asyncio.to_thread(content_based_features.check_onmouseover_change, response),
+        'on_mouseover': asyncio.to_thread(content_based_features.check_onmouseover_change, response),
 
-        'Google_Index': asyncio.to_thread(domainver1.google_index, url),
-        'Domain_registeration_length': asyncio.to_thread(domainver1.domain_registration_period, url),
         'age_of_domain': asyncio.to_thread(domainver1.domain_age, url),
-        'DNSRecord': asyncio.to_thread(domainver1.dns_record, url),
         'SSLfinal_State': asyncio.to_thread(domainver1.ssl_certificate_status, url),
         'having_Sub_Domain': asyncio.to_thread(domainver1.having_subdomain, url),
         'HTTPS_token': asyncio.to_thread(domainver1.https_token, url),
-        # 'web_traffic': asyncio.to_thread(domainver1.web_traffic, url),
-        # 'Page_Rank': asyncio.to_thread(0),
-        # 'Links_pointing_to_page': asyncio.to_thread(0),
-        # 'Statistical_report': asyncio.to_thread(0),
 
-        # 'Shortining_Service': asyncio.to_thread(is_shortened),
+        'Shortining_Service': asyncio.to_thread(is_shortened),
     }
 
     # 모든 비동기 작업을 병렬로 실행

@@ -107,7 +107,6 @@ def using_ip(url):
     # IP 주소를 직접 사용하면 피싱일 가능성이 있음
     return 1 if domain.replace('.', '').isdigit() else -1
 
-
 # Favicon
 # favicon 사용 여부, 동일한 도메인에서 로드되면 정상으로 간주
 def check_favicon(url, response):
