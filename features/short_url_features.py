@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 
 # 블랙리스트
-shortened_urls_df = pd.read_csv('filtered_short_urls.csv')
+shortened_urls_df = pd.read_csv('features/filtered_short_urls.csv')
 
 
 def is_shortened(url):
