@@ -1,7 +1,7 @@
 from features import short_url_features
 from features import url_based_feature
 from features import content_based_features
-from features import domainver1
+from features import domain_based_features
 
 import pandas as pd
 import pickle
@@ -9,9 +9,6 @@ import time
 import numpy as np
 
 def evaluate_url(url):
-    # URL이 단축된 경우 복원
-    url, is_shortened = short_url_features.check_url(url)
-    print(f'단축 URL 여부: {is_shortened}')
 
     # 피처를 딕셔너리로 정의
     features = {
@@ -35,19 +32,19 @@ def evaluate_url(url):
         'Redirect': content_based_features.check_redirect_count(url),
         'on_mouseover': content_based_features.check_onmouseover_change(url),
 
-        'Google_Index': domainver1.google_index(url),
-        'Domain_registeration_length': domainver1.domain_registration_period(url),
-        'age_of_domain': domainver1.domain_age(url),
-        'DNSRecord': domainver1.dns_record(url),
-        'SSLfinal_State': domainver1.ssl_certificate_status(url),
-        'having_Sub_Domain': domainver1.having_sub_domain(url),
-        'HTTPS_token': domainver1.https_token(url),
-        'web_traffic': domainver1.web_traffic(url),
-        'Page_Rank': domainver1.page_rank(url),
-        'Links_pointing_to_page': domainver1.links_pointing_to_page(url),
-        'Statistical_report': domainver1.statistical_report(url),
+        'Google_Index': domain_based_features.google_index(url),
+        'Domain_registeration_length': domain_based_features.domain_registration_period(url),
+        'age_of_domain': domain_based_features.domain_age(url),
+        'DNSRecord': domain_based_features.dns_record(url),
+        'SSLfinal_State': domain_based_features.ssl_certificate_status(url),
+        'having_Sub_Domain': domain_based_features.having_sub_domain(url),
+        'HTTPS_token': domain_based_features.https_token(url),
+        'web_traffic': domain_based_features.web_traffic(url),
+        'Page_Rank': domain_based_features.page_rank(url),
+        'Links_pointing_to_page': domain_based_features.links_pointing_to_page(url),
+        'Statistical_report': domain_based_features.statistical_report(url),
 
-        'Shortining_Service': is_shortened,
+        'Shortining_Service': short_url_features.is_shortened(url),
     }
 
     # 피처 이름 목록을 모델 학습 데이터의 피처 순서와 일치시킴
