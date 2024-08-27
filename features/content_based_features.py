@@ -1,6 +1,5 @@
 import requests
 import re
-import ipaddress
 import regex
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, urljoin
@@ -29,28 +28,25 @@ def use_right_click(response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
+        response.raise_for_status()  # 요청이 실패하면 예외 발생
         
-        if response.status_code == 200:
-            # 응답 텍스트가 비어 있는 경우 피싱으로 간주
-            if response.text.strip() == "":
-                return 1  
-            else:
-                # 마우스 우클릭이 비활성화 되어 있다면 피싱
-                if regex.findall(r"event\.button ?== ?2", response.text):
-                    return 1  # Contains right-click disabling code, likely phishing
-                # 마우스 우클릭이 활성화 되어 있다면 정상
-                else:
-                    return -1
-        # 상태 코드가 200이 아닌 경우 피싱 사이트로 간주 
+        # 응답 텍스트가 비어 있는 경우 피싱으로 간주
+        if response.text.strip() == "":
+            return 1  
         else:
-            return 1 
+            # 마우스 우클릭이 비활성화 되어 있다면 피싱
+            if regex.findall(r"event\.button ?== ?2", response.text):
+                return 1  # Contains right-click disabling code, likely phishing
+            # 마우스 우클릭이 활성화 되어 있다면 정상
+            else:
+                return -1
         
     except requests.RequestException as e:
         print(f"RightClick HTTP 요청 Error: {e}")
         return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
     except Exception as e:
         print(f"RightClick Exception Error: {e}")
-        return 0  # 에러 발생 시 의심으로 간주 
+        return 1  # 에러 발생 시 의심으로 간주 
 
 
 # popUpWidnow    
@@ -59,6 +55,7 @@ def popup_window_text(response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
+        response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         soup = BeautifulSoup(response.content, 'lxml')
         forms = soup.find_all('form')
@@ -75,7 +72,7 @@ def popup_window_text(response):
         return 1 
     except Exception as e:
         print(f"popUpWidnow Exception Error: {e}")
-        return 0
+        return 1
 
 # Iframe
 # iframe 사용 여부
@@ -83,13 +80,15 @@ def iFrame_redirection(response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
+        response.raise_for_status()  # 요청이 실패하면 예외 발생
+
         # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
         if response.text.strip() == "":
             return 1
         
         # 페이지 텍스트에서 파이프 문자가 있는지 확인
         if re.search(r"\|", response.text):
-            return 0  # 파이프 문자가 있으면 정상 웹사이트로 간주
+            return -1  # 파이프 문자가 있으면 정상 웹사이트로 간주
         
         # 파이프 문자가 없으면 피싱으로 간주
         return 1
@@ -99,7 +98,7 @@ def iFrame_redirection(response):
         return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
     except Exception as e:
         print(f"Iframe Exception Error: {e}")
-        return 0  # 오류 발생 시 의심으로 간주
+        return 1  # 오류 발생 시 의심으로 간주
 
 # having_IPhaving_IP_Address
 # IP 사용 여부
@@ -108,13 +107,14 @@ def using_ip(url):
     # IP 주소를 직접 사용하면 피싱일 가능성이 있음
     return 1 if domain.replace('.', '').isdigit() else -1
 
-
 # Favicon
 # favicon 사용 여부, 동일한 도메인에서 로드되면 정상으로 간주
 def check_favicon(url, response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
+        response.raise_for_status()  # 요청이 실패하면 예외 발생
+
         # 페이지 파싱
         soup = BeautifulSoup(response.content, 'lxml')
 
@@ -138,14 +138,14 @@ def check_favicon(url, response):
             else:
                 return -1 
         else:
-            return 0  # 파비콘을 찾을 수 없는 경우 의심
+            return 1  # 파비콘을 찾을 수 없는 경우 피싱
 
     except requests.RequestException as e:
         print(f"Favicon HTTP Exception Error: {e}")
         return 1 
     except Exception as e:
         print(f"Favicon Exception Error: {e}")
-        return 0 
+        return 1 
 
 # Request_URL
 # 웹페이지 내의 외부 객체(이미지, 비디오, 소리 등)가 다른 도메인에서 로드되는지를 검사
@@ -195,10 +195,9 @@ def check_request_url(url, response):
         avg = linked_outside / total if total != 0 else 0
 
         # 피싱 여부 판별
-        if avg < 0.22:
+        threshold = 0.22  # 임계값 설정
+        if avg > threshold:
             return 1  # 피싱으로 간주
-        elif 0.22 <= avg <= 0.61:
-            return 0  # 의심d
         else:
             return -1  # 정상
 
@@ -207,7 +206,7 @@ def check_request_url(url, response):
         return 1  # 요청 오류로 인해 사이트를 확인할 수 없는 경우 의심
     except Exception as e:
         print(f"Request_URL Exception Error: {e}")
-        return 0  # 일반적인 오류 발생 시 의심
+        return 1  # 일반적인 오류 발생 시 의심
 
 # URL_of_Anchor
 # <a> 태그의 href 속성에 포함된 링크가 웹사이트의 도메인과 다른 도메인을 가리키는지 경우
@@ -215,7 +214,6 @@ def check_url_of_anchor(url, response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
-        
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -272,7 +270,6 @@ def has_meta_tags(response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
-        
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -300,7 +297,6 @@ def check_sfh(url, response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
-        
         response.raise_for_status()  # 요청이 실패하면 예외 발생
         
         # 페이지 파싱
@@ -335,9 +331,6 @@ def check_submit_email(url, response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
-        
-        # 웹 페이지 요청
-        response = requests.get(url, timeout=5)
         response.raise_for_status()  # 요청이 실패하면 예외 발생
             
         # 페이지 파싱
@@ -359,7 +352,7 @@ def check_submit_email(url, response):
         return 1  
     except Exception as e:
         print(f"Submitting_to_email Exception Error: {e}")
-        return 0  
+        return 1  
 
 # Redirect
 # 피싱 웹사이트는 최소한 4번 이상 리디렉션된
@@ -367,6 +360,7 @@ def check_redirect_count(response):
     try:    
         if response is None:
             raise requests.RequestException("Response is None")
+        response.raise_for_status()  # 요청이 실패하면 예외 발생
             
         # 리디렉션 횟수 확인
         redirect_count = len(response.history)
@@ -392,18 +386,16 @@ def check_onmouseover_change(response):
     try:
         if response is None:
             raise requests.RequestException("Response is None")
-        
-        if response.status_code == 200:
-            # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
-            if response.text.strip() == "":
-                return 1 
+        response.raise_for_status()  # 요청이 실패하면 예외 발생
+
+        # 응답의 텍스트가 비어 있는 경우 피싱으로 간주
+        if response.text.strip() == "":
+            return 1 
             
-            # onmouseover 이벤트 스크립트 검색:
-            if re.search(r"<script.*?onmouseover.*?>", response.text, re.IGNORECASE):
-                return 1 # onmouseover 이벤트를 포함하는 스크립트가 발견되면 피싱일 가능성
+        # onmouseover 이벤트 스크립트 검색:
+        if re.search(r"<script.*?onmouseover.*?>", response.text, re.IGNORECASE):
+            return 1 # onmouseover 이벤트를 포함하는 스크립트가 발견되면 피싱일 가능성
             
-            return -1
-        
         return -1 
 
     except requests.RequestException as e:
@@ -411,7 +403,7 @@ def check_onmouseover_change(response):
         return 1  
     except Exception as e:
         print(f"on_mouseover Exception Error: {e}")
-        return 0
+        return 1
 
     # try:
     #     # 웹 페이지 요청
