@@ -1,0 +1,111 @@
+having_IPhaving_IP_Address,URLURL_Length,having_At_Symbol,double_slash_redirecting,Prefix_Suffix,having_Sub_Domain,SSLfinal_State,Domain_registeration_length,Favicon,port,HTTPS_token,Request_URL,URL_of_Anchor,Links_in_tags,SFH,Submitting_to_email,Abnormal_URL,Redirect,on_mouseover,RightClick,popUpWidnow,Iframe,age_of_domain,DNSRecord,Google_Index,MLP_Phishing,MLP_Probability,XGBoost_Phishing,XGBoost_Probability,status,url,time
+-1,1,-1,-1,1,1,0,-1,1,0,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,98.1986,phishing,https://support-appleld.com.secureupdate.duilawyeryork.com/ap/89e6a3b4b063b8d/?cmd=_update&dispatch=89e6a3b4b063b8d1b&locale=_,0.4856412410736084
+-1,-1,-1,-1,-1,1,1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9996,phishing,http://phan.thuchao.free.fr/Hao/YouTube/ba.htm,1.4645235538482666
+-1,-1,-1,-1,-1,-1,0,0,1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,0,1,-1,True,100.0,False,0.7341,legitimate,http://taccs.hu,1.992755651473999
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0003,legitimate,https://en.wikipedia.org/wiki/NIC_Bank,1.2716429233551025
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0002,legitimate,https://www.markspcsolution.com/,2.6785624027252197
+-1,1,-1,-1,-1,-1,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,False,0.0103,phishing,http://swallowthisbitchpics.com/jpg/www.global.visa.com/myca/oce/emea/action/request_type=un_Activation/visa.html,0.5301041603088379
+-1,-1,-1,-1,1,0,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,1.125,legitimate,https://www.soul-flower.com/,6.212480068206787
+-1,1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0003,legitimate,http://www.whio.com/news/local/thief-breaks-into-save-lot-steals-steaks-dayton/dX1YgaOZ7zmj18bPd4tU6L/,4.568227767944336
+-1,-1,-1,-1,1,-1,1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,100.0,legitimate,http://sophie-world.com/games/port-and-starboard,1.697847604751587
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0003,legitimate,https://en.wikipedia.org/wiki/Gateway,1.154144525527954
+-1,1,-1,-1,1,0,0,-1,-1,-1,-1,1,-1,-1,1,-1,-1,0,-1,-1,1,0,-1,-1,-1,False,0.0,False,1.4206,phishing,http://www.courgeon-immobilier.fr/wp-content/uploads/2019/07/tpg/9ac6ba30463d0fb7974c06843717284c/,6.706677198410034
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0002,legitimate,https://www.lifewire.com/tcp-port-21-818146,1.623218297958374
+-1,0,-1,-1,1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9974,legitimate,http://www.online-tech-tips.com/computer-tips/how-to-change-mac-address/,1.1538729667663574
+-1,-1,-1,-1,-1,1,1,0,1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,True,99.9628,phishing,http://xh167894743.el.r.appspot.com/,3.3636274337768555
+-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0001,legitimate,http://stattrek.com/statistics/dictionary.aspx?definition=standard%20error,1.4080734252929688
+-1,-1,-1,-1,-1,0,0,-1,1,0,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,87.471,phishing,http://www.motoincontroepoca.com/blog/profile/,10.303728818893433
+-1,-1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.7731,legitimate,https://www.merriam-webster.com/dictionary/tabloid,9.58916187286377
+-1,-1,-1,-1,-1,0,1,-1,1,1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,False,0.0,True,71.1338,phishing,http://vufd.hyperphp.com/amzn,10.341959714889526
+-1,-1,-1,-1,1,0,1,-1,1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,16.7931,True,99.9119,legitimate,http://press-preview.weebly.com,1.3706810474395752
+-1,0,-1,-1,-1,0,-1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.6941,legitimate,http://www.bobsplans.com/FreeDownloads/RouterTable.pdf,0.7333190441131592
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9392,phishing,http://www.storybookalpacas.com/account4/index2.html,1.2364246845245361
+-1,1,-1,-1,-1,0,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9942,phishing,http://www.shadetreetechnology.com/V4/validation/ba4b8bddd7958ecb8772c836c2969531,1.154520034790039
+-1,1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,True,89.5338,phishing,https://grassform-my.sharepoint.com/:b:/g/personal/accounts_grassform_co_uk/EYsmX_DhwSVAlooW1ETKf50BIChCl1rrAfmqvTLvySTLQQ?e=UbjoWA,1.7998056411743164
+-1,-1,-1,-1,-1,0,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9999,legitimate,http://www.flaticon.com/free-icons/parking_403,1.1050093173980713
+-1,0,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.4909,legitimate,http://www.iracing.com/tracks/gateway-motorsports-park/,1.9108283519744873
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.8379,legitimate,http://www.mutuo.it,1.7789251804351807
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,1.0697,legitimate,https://www.provenancevineyards.com/,1.2740716934204102
+-1,1,-1,-1,-1,0,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9942,phishing,http://www.shadetreetechnology.com/V4/validation/44ccd8b487c7fe797dc775e919236002,1.1247930526733398
+-1,0,-1,-1,-1,0,-1,-1,-1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.5504,legitimate,http://www.history.com/topics/american-civil-war/gettysburg-address,1.5377089977264404
+-1,1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,False,0.1815,True,94.2639,legitimate,http://www.ilovefreesoftware.com/16/featured/5-best-free-network-packet-sniffer.html,1.2620055675506592
+-1,0,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.4909,legitimate,https://answers.yahoo.com/question/index?qid=20060914152716AAZTOSo,1.1577887535095215
+-1,1,1,-1,-1,-1,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,1,-1,True,99.9999,False,0.0933,phishing,http://hidayat.uz/928375602332311ochttp3A2F2F2Fws2FISAPIdllFM2MContact26item3B14276952031324requestePPd3DwolandgioielliPPP26qidQ-jlc@amahousse.com.html,1.093151569366455
+-1,-1,-1,-1,-1,0,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,False,11.996,phishing,http://beta.kenaidanceta.com/postamok/d39a2/source,0.4051802158355713
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9392,legitimate,https://www.provenancevineyards.com/our-wines,1.1264748573303223
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0003,legitimate,https://www.chiefarchitect.com/,1.2806329727172852
+-1,0,-1,-1,-1,-1,-1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,91.2581,phishing,http://dichvuvnpt.com/home/components/com_user/bbtonline.html,8.920934438705444
+-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0001,legitimate,http://remontka.pro/mac-address/,2.2234277725219727
+-1,-1,-1,-1,-1,-1,1,-1,1,1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,True,100.0,True,99.2856,phishing,http://enerclim.com/cs/,0.8785035610198975
+-1,-1,-1,-1,1,0,0,-1,1,0,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,1,-1,True,100.0,True,99.907,legitimate,http://www.j-net.cn/cms,1.8110647201538086
+-1,-1,-1,-1,-1,1,-1,0,1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,99.9768,True,96.9153,phishing,https://mailserver67187.uc.r.appspot.com,1.0703608989715576
+-1,0,-1,-1,1,-1,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,True,78.5626,phishing,http://baghira-wupperwolf.de/images/banners/bbtonline/,0.6540658473968506
+-1,1,-1,-1,-1,-1,-1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,False,0.0216,False,31.2901,phishing,http://vaportotal.net/catalog/language/english/product/special/index.php?cid=474fe1ba8fa8cfd26e81532c7baac4a1&amp;SSID=d2b816c9e8292c96546684e342c2e77cd27f39cf,1.9701666831970215
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0002,legitimate,http://rgipt.ac.in,4.868484258651733
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9392,phishing,https://bit.ly/2E6D7J1,4.210468292236328
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,2.3878,legitimate,https://ru.wikipedia.org/wiki/MultiMedia_Card,1.1560795307159424
+-1,0,-1,-1,-1,1,1,0,1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,True,99.9214,phishing,http://sharedpont77wwjxjx.df.r.appspot.com/wp-content/xp.php,2.2324416637420654
+-1,0,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.1818,legitimate,https://blog.hubspot.com/marketing/email-open-click-rate-benchmark,1.729560136795044
+-1,-1,-1,-1,-1,0,1,-1,1,1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,True,99.9997,True,97.6079,phishing,http://www.ktplasmachinery.com/cs/,1.4104928970336914
+-1,1,1,-1,-1,0,-1,0,1,1,-1,1,1,1,1,1,1,1,1,1,1,1,0,-1,-1,False,1.0478,False,36.3156,phishing,http://www.inbioma.pe/rechnung-376440790464490488&amp;cgi3-viewkontakt-376440790464490488-007acctpagetype-376440790464490488=4674720-&amp;info@s-und-s-shop.de.html,8.543384790420532
+-1,0,-1,-1,-1,0,0,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,67.7952,legitimate,https://www.showplaceicon.com/Browsing/Cinemas/Details/8863,1.0795221328735352
+-1,0,-1,-1,-1,0,-1,-1,1,-1,-1,-1,0,1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.4465,legitimate,http://support.brother.com/g/s/id/pdf_pub/faq/faq002478/en/Scan_To_FTP.pdf,18.726300477981567
+-1,1,1,-1,-1,0,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,99.9955,False,0.5203,phishing,https://sura.careervidi.com/mot?fg=Z4Nwk2pibWKclbF2k29kaHd1YKCWjJyepKZdaXy0j2lj/koenig-sandra@online.de,0.6360547542572021
+-1,0,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.7954,legitimate,http://www.excel-easy.com/examples/shortest-path-problem.html,3.5022647380828857
+-1,0,-1,-1,-1,-1,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,1,-1,True,100.0,False,0.2552,phishing,http://izvilagkft.hu/wp-content/languages/.../redirect/com.htm,0.6400399208068848
+-1,-1,-1,-1,-1,0,-1,-1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0004,legitimate,https://www.mummyandmini.com/,2.5258848667144775
+-1,-1,-1,-1,-1,1,-1,-1,-1,1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0737,phishing,http://wave.progressfilm.co.uk/time3/?logon=myposte,1.472795009613037
+-1,-1,-1,-1,-1,0,-1,0,-1,-1,-1,-1,1,-1,-1,-1,1,-1,-1,-1,-1,0,0,0,-1,False,0.0,False,0.0254,phishing,http://elexusbettgiris4.blogspot.com,1.2033734321594238
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9392,legitimate,https://www.bls.gov/oes/current/oes292035.htm,1.2290112972259521
+-1,0,-1,-1,-1,1,0,-1,1,0,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,67.1177,phishing,http://secureupdate.appleld.com.duilawyeryork.com/ap/88b142e778d73f7,0.4985179901123047
+-1,-1,-1,-1,-1,-1,-1,0,1,-1,-1,1,-1,-1,1,-1,1,-1,-1,-1,1,0,0,1,-1,False,0.0,False,0.0001,legitimate,https://apshop.vn/,5.856772184371948
+-1,-1,-1,-1,-1,-1,0,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,False,37.5883,phishing,http://html.house/l7ceeid6.html,1.8248958587646484
+-1,1,1,-1,-1,1,-1,-1,1,-1,-1,1,0,-1,-1,-1,-1,0,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0989,phishing,https://storage.cloud.google.com/prprhrhprc.appspot.com/index.htm#oncall-infra@eqiom.com,2.456721305847168
+-1,-1,-1,-1,-1,0,0,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,87.471,legitimate,http://www.crestonwood.com/router.php,1.1179125308990479
+-1,-1,-1,-1,-1,1,1,0,-1,1,-1,-1,0,-1,-1,-1,1,-1,-1,-1,-1,1,0,-1,-1,True,99.9983,False,15.3734,legitimate,http://www.calculate.co.il/,1.2965996265411377
+-1,0,-1,-1,-1,0,-1,0,1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,0,0,1,-1,False,0.0,False,0.0,legitimate,https://www.astrologyonline.eu/Astro_MemoNew/Profilo.asp,2.061901330947876
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,False,0.0,False,0.0003,phishing,https://www.123formbuilder.com/form-4850478/,1.9782495498657227
+-1,-1,-1,-1,-1,0,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,False,11.996,phishing,http://hotmailsecure.brilliantbokeh.com/HotmailNEW/,0.5186655521392822
+-1,1,-1,-1,-1,-1,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.8913,phishing,http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4,1.171339511871338
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,0,-1,-1,-1,-1,1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,15.4042,phishing,https://sites.google.com/site/ilyasdxih,2.5642926692962646
+-1,1,-1,-1,-1,-1,1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9443,phishing,http://realestateinvestordatabase.com/wp-content/plugins/portfolio-cpt/tax/login.php,1.2265245914459229
+-1,-1,-1,-1,-1,0,1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,-1,-1,-1,False,0.0,False,0.3071,legitimate,http://www.enkiquotes.com/,1.5151329040527344
+-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0272,legitimate,https://technofizi.net/top-best-mp3-downloader-app-for-android-free-music-download/,5.708707571029663
+-1,-1,-1,-1,1,0,-1,-1,1,-1,-1,1,0,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,True,97.5667,legitimate,http://yummy-cummy-in-my-tummy.tumblr.com,1.4276747703552246
+-1,1,-1,-1,-1,0,1,0,1,1,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,True,99.7413,phishing,http://interimmanagement.uk.com/wp-includes/js/chronopost.fr/suivi/accueil/infos/ifram2.php?Code_Smserror_tapnovcodeSms,2.489530324935913
+-1,-1,-1,-1,-1,0,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,False,11.996,phishing,https://www.skecherstanio.pl/,0.5490443706512451
+-1,-1,-1,-1,-1,-1,-1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.5092,phishing,http://electricitypak.com/fakt/css/data/16/index.php,3.3709187507629395
+-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,False,0.0,False,0.2328,legitimate,https://twitter.com/mimosagrillclt,1.266225814819336
+-1,0,-1,-1,-1,1,0,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,67.1177,legitimate,http://www.game.co.uk/en/games/nintendo-switch/nintendo-switch/,11.977945804595947
+-1,1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,False,0.1815,True,94.2639,phishing,https://docs.google.com/forms/d/e/1FAIpQLSedi778KA_QpFW-6VseK02w_qghyAY4KrmhVAHDl-qBzUQytg/viewform,1.3597807884216309
+-1,0,-1,-1,-1,0,0,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,77.8309,phishing,http://mno.naomigoff.com/Apollo/bc28a52c2070ca93176244f59e1f19c6,1.020597219467163
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,1.1342,legitimate,https://www.facebook.com/thekeyboardcat,3.258622169494629
+-1,1,-1,-1,1,1,0,-1,1,0,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,98.1986,phishing,http://support-appleld.com.secureupdate.duilawyeryork.com/ap/bb14d7ff1fcbf29?cmd=_update&dispatch=bb14d7ff1fcbf29bb&locale=_us,0.6771903038024902
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9392,legitimate,https://www.missfiga.com/,1.3491334915161133
+-1,-1,-1,-1,-1,0,1,0,-1,-1,-1,1,1,-1,-1,-1,1,-1,-1,-1,-1,1,0,0,-1,True,100.0,True,91.7251,legitimate,http://vamoaestudiarmedicina.blogspot.com/,1.6855278015136719
+-1,-1,-1,-1,-1,0,1,0,1,-1,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,True,99.9898,phishing,http://app66560000.blogspot.com/,1.1335785388946533
+-1,0,-1,-1,-1,0,-1,-1,-1,1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0006,legitimate,http://wiki.openstreetmap.org/wiki/Databases_and_data_access_APIs,2.4893224239349365
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0003,legitimate,https://www.chiostrodelbramante.it/,2.727924108505249
+-1,0,-1,-1,-1,1,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,99.9995,True,98.9949,phishing,https://documentos.sfo2.digitaloceanspaces.com/ordem.html,1.1925880908966064
+-1,-1,-1,-1,-1,0,-1,0,-1,-1,-1,1,1,-1,1,-1,1,-1,-1,-1,1,0,0,0,-1,False,0.0,False,0.1804,phishing,https://polarklimatsgserver.blogspot.com/,1.1718955039978027
+-1,-1,-1,-1,-1,0,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9999,legitimate,http://www.2345daohang.com/,1.2849316596984863
+-1,1,-1,-1,-1,0,-1,-1,-1,-1,-1,1,1,-1,1,-1,-1,0,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.8976,legitimate,http://searchnetworking.techtarget.com/tip/Comparisons-of-coaxial-cable-fiber-optic-cable-and-twisted-pair-cable,2.3011975288391113
+-1,0,-1,-1,-1,-1,0,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,False,9.4198,phishing,http://sloaneandhyde.com/drs/new2015/document.php/index.css,1.1528480052947998
+-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,1,0,-1,-1,-1,False,0.0,False,0.0071,legitimate,http://securityxploded.com/router-password-kracker.php,1.3545558452606201
+-1,-1,-1,-1,1,1,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,1,-1,True,100.0,True,98.4078,phishing,http://appleid.apple.com-app.es/,0.4111928939819336
+-1,1,-1,-1,-1,-1,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,False,0.0103,False,22.8434,legitimate,https://parade.com/425836/joshwigler/the-amazing-race-host-phil-keoghan-previews-the-season-27-premiere/,1.102893590927124
+-1,0,-1,-1,-1,0,-1,0,-1,1,-1,1,-1,-1,-1,-1,1,0,-1,-1,-1,0,0,1,-1,False,0.0,False,0.0002,phishing,http://mne.edu.vn/wp-includes/Netflix/LoginID/index.php,4.138027906417847
+-1,1,-1,-1,-1,0,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,1,-1,True,100.0,False,1.0525,phishing,http://marketinghelper.com.au/themes/sports/wp-content/net/555183669058fb273008595a9393d628/,2.715949773788452
+-1,-1,-1,-1,-1,0,0,0,1,0,-1,1,1,1,1,1,1,1,1,1,1,1,0,0,-1,True,100.0,False,11.996,phishing,http://www.nakamistrad.com/aa/test.php,0.39185047149658203
+-1,-1,-1,-1,-1,1,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.999,phishing,http://www.astroresidential.co.uk/application/data/,1.2582895755767822
+-1,-1,-1,-1,-1,-1,1,-1,1,1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9997,phishing,http://batvrms.net/deliver/D2017HL/u.php,4.4398040771484375
+-1,-1,-1,-1,-1,0,1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9999, phishing,https://buly.kr/BITBije,4.54499626159668
+-1,-1,-1,-1,-1,-1,-1,0,-1,0,-1,-1,0,-1,-1,-1,1,-1,-1,-1,-1,1,0,1,-1,False,0.0,False,0.0338, phishing,https://buly.kr/9BU5wxI,4.968412160873413
+-1,-1,-1,-1,1,0,-1,0,1,-1,-1,1,1,-1,-1,-1,1,-1,-1,-1,-1,1,0,1,-1,True,99.9986,True,50.2642, phishing,https://buly.kr/Gkqg82e,3.931588888168335
+-1,-1,-1,-1,-1,0,-1,-1,1,-1,-1,1,1,1,1,1,-1,1,1,1,1,1,-1,-1,-1,True,100.0,True,99.9392, phishing,https://buly.kr/GZvv9En,3.8421506881713867
+-1,-1,-1,-1,1,-1,-1,0,1,-1,-1,1,-1,-1,-1,-1,1,-1,-1,-1,-1,0,0,0,-1,False,0.0,False,0.4728, phishing,https://buly.kr/jXirow,6.470598220825195
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0008, legitimate,https://buly.kr/2qWodcD,4.27463436126709
+-1,-1,-1,-1,-1,1,-1,-1,-1,-1,-1,-1,0,-1,1,-1,-1,-1,-1,-1,1,0,-1,1,-1,False,0.0,False,0.3027, legitimate,https://buly.kr/C08De2i,9.06458854675293
+-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0002, legitimate,https://buly.kr/610SIJC,78.30967783927917
+-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,False,0.0,False,0.0001, legitimate,https://tinyurl.com/3z5h4h3w,2.1021506786346436
+-1,-1,-1,-1,-1,1,-1,-1,1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,1,-1,False,0.0,False,0.1155, legitimate,https://url.kr/b2ecua,4.2014360427856445
