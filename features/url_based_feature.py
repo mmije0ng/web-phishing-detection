@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1ug54LEJRt_rAILTXOxwlSfQ21LHC0Vci
 """
 
-#pip install python-whois
-
 import re
 from urllib.parse import urlparse
 import whois
@@ -79,21 +77,21 @@ def check_prefix_suffix(url):
         return 1
     return -1
 
-# Abnormal_URL
-def check_abnormal_url(url):
-    domain = urlparse(url).netloc
+# # Abnormal_URL
+# def check_abnormal_url(url):
+#     domain = urlparse(url).netloc
 
-    try:
-        # WHOIS 정보 조회
-        w = whois.whois(domain)
+#     try:
+#         # WHOIS 정보 조회
+#         w = whois.whois(domain)
 
-        if not w.domain_name or not w.creation_date:
-            return 1
-        else:
-            return -1
-    except Exception as e:
-        # WHOIS 조회 실패 시 피싱으로 간주
-        return 1
+#         if not w.domain_name or not w.creation_date:
+#             return 1
+#         else:
+#             return -1
+#     except Exception as e:
+#         # WHOIS 조회 실패 시 피싱으로 간주
+#         return 1
 
 # 테스트
 # def test_features():
