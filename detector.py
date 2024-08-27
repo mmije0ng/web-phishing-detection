@@ -121,7 +121,7 @@ async def evaluate_url(url):
 #     'http://dangerous-site.biz',  # 악성, mlp: 100.0000%, XGBoost:88.3212%
 # ]
 
-# # 테스트용 URL 목록
+# 테스트용 URL 목록
 test_urls = [
     # 피싱 5개
     'https://buly.kr/BITBije', # 복원 o, mlp: 0.0000%, XGBoost: 1.0463%
