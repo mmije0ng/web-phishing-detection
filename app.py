@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from sqlalchemy import text
 from config import DB_URL, DB_ENGINE_OPTIONS
 from models import db, URLs
 
@@ -20,7 +21,6 @@ migrate = Migrate(app, db)
 @app.route('/')
 def index():
     return 'Hello World'
-from sqlalchemy import text
 
 # # 데이터베이스 연결 테스트
 # @app.route('/test-connection')
