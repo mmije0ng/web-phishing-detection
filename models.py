@@ -17,6 +17,30 @@ class URLs(db.Model):
     blacklist = db.relationship('Blacklist', back_populates='url', uselist=False, cascade='all, delete-orphan')
     features = db.relationship('Features', back_populates='url', uselist=False, cascade='all, delete-orphan')
 
+class Predictions(db.Model):
+    __tablename__ = 'Predictions'  # 테이블 이름을 'Predictions'로 지정
+
+    prediction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # ForeignKey 참조 변경
+    prediction_result = db.Column(db.SmallInteger)
+    prediction_prob = db.Column(db.Float)
+    predicted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+    # Relationships
+    url = db.relationship('URLs', back_populates='predictions')
+
+class Blacklist(db.Model):
+    __tablename__ = 'Blacklist'  # 테이블 이름을 'Blacklist'로 지정
+
+    blacklist_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # ForeignKey 참조 변경
+    b_result = db.Column(db.SmallInteger)
+    b_prob = db.Column(db.Float)
+    blacklisted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+    # Relationships
+    url = db.relationship('URLs', back_populates='blacklist')
+
 class Features(db.Model):
     __tablename__ = 'Features'  # 테이블 이름을 'Features'로 지정
 
@@ -47,28 +71,3 @@ class Features(db.Model):
 
     # Relationships
     url = db.relationship('URLs', back_populates='features')
-
-class Predictions(db.Model):
-    __tablename__ = 'Predictions'  # 테이블 이름을 'Predictions'로 지정
-
-    prediction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # ForeignKey 참조 변경
-    prediction_result = db.Column(db.SmallInteger)
-    prediction_prob = db.Column(db.Float)
-    predicted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-
-    # Relationships
-    url = db.relationship('URLs', back_populates='predictions')
-
-class Blacklist(db.Model):
-    __tablename__ = 'Blacklist'  # 테이블 이름을 'Blacklist'로 지정
-
-    blacklist_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # ForeignKey 참조 변경
-    b_result = db.Column(db.SmallInteger)
-    b_prob = db.Column(db.Float)
-    reason = db.Column(db.String(255), nullable=False)
-    blacklisted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-
-    # Relationships
-    url = db.relationship('URLs', back_populates='blacklist')
