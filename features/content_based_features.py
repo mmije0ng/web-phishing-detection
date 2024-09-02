@@ -429,7 +429,7 @@ def check_onmouseover_change(response):
     # except Exception as e:
     #     print(f"on_mouseover Exception Error: {e}")
     #     return 0      
-
+    
 
 def classify_phishing(url):
     response = get_request_url(url)
