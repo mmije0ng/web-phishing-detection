@@ -3,13 +3,14 @@ import datetime
 
 db = SQLAlchemy()
 
+# URL 정보
 class URLs(db.Model):
     __tablename__ = 'URLs'  # 테이블 이름을 'URLs'로 지정
 
-    url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    url_id = db.Column(db.Integer, primary_key=True, autoincrement=True) # pk
     url = db.Column(db.String(255), nullable=False, unique=True)
-    is_blacklisted = db.Column(db.Boolean, default=False)
-    search_count = db.Column(db.Integer, default=0)
+    is_blacklisted = db.Column(db.Boolean, default=False) # 블랙리스트 여부
+    search_count = db.Column(db.Integer, default=0) # URL 조회 횟수
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     # Relationships
@@ -17,30 +18,34 @@ class URLs(db.Model):
     blacklist = db.relationship('Blacklist', back_populates='url', uselist=False, cascade='all, delete-orphan')
     features = db.relationship('Features', back_populates='url', uselist=False, cascade='all, delete-orphan')
 
+# 피싱 탐지 결과
 class Predictions(db.Model):
     __tablename__ = 'Predictions'  # 테이블 이름을 'Predictions'로 지정
 
-    prediction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # ForeignKey 참조 변경
-    prediction_result = db.Column(db.SmallInteger)
-    prediction_prob = db.Column(db.Float)
-    predicted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    prediction_id = db.Column(db.Integer, primary_key=True, autoincrement=True) # pk
+    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False) # fk
+    prediction_result = db.Column(db.SmallInteger) # 분석 결과
+    prediction_prob = db.Column(db.Float) # 피싱 확률
+    predicted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow) 
 
     # Relationships
     url = db.relationship('URLs', back_populates='predictions')
 
+# 블랙리스트 테이블
+# 자주 검색되거나 중요한 URL을 저장하여 응답 속도 개선
 class Blacklist(db.Model):
     __tablename__ = 'Blacklist'  # 테이블 이름을 'Blacklist'로 지정
 
-    blacklist_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # ForeignKey 참조 변경
-    b_result = db.Column(db.SmallInteger)
-    b_prob = db.Column(db.Float)
+    blacklist_id = db.Column(db.Integer, primary_key=True, autoincrement=True) # pk
+    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False) # fk
+    b_result = db.Column(db.SmallInteger) # 분석 결과
+    b_prob = db.Column(db.Float) # 피싱 확률
     blacklisted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     # Relationships
     url = db.relationship('URLs', back_populates='blacklist')
 
+# URL의 피처 값을 관리 & 모델 학습에 사용
 class Features(db.Model):
     __tablename__ = 'Features'  # 테이블 이름을 'Features'로 지정
 
