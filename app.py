@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import DB_URL, DB_ENGINE_OPTIONS
-from models.models import db, URLs
+from models import db, URLs
 
 app = Flask(__name__)
 
