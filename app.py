@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import text
 from config import DB_URL, DB_ENGINE_OPTIONS
-from models import db, URLs
+from entity.models import db, URLs
+from service import url_service
 
 app = Flask(__name__)
 
@@ -22,6 +23,29 @@ migrate = Migrate(app, db)
 def index():
     return 'Hello World'
 
+# (확장용) 피싱 여부 및 확률
+@app.route('/api/url/simple')
+def simple_result():
+    return 'Hello World'
+
+# (웹용) 피싱 분석 상세 결과
+@app.route('/api/url/detailed', methods=['POST'])
+async def detailed_result():
+    # request body에서 JSON 데이터를 가져옴
+    url = request.get_json().get('url')
+
+    if not url:
+        return {"error": "No URL provided"}, 400  # URL이 없으면 400 Bad Request 반환
+
+    # Blacklist 검색 로직
+    # Blacklist 있을 시 db 검색
+
+    # Blacklist 없을 시 feature 추출, 모델 예측, db
+    detailed_response_dto = await url_service.not_blacklist_detailed_analyze_url(db, url)
+
+    # 분석 결과 반환
+    return jsonify(detailed_response_dto)
+
 # # 데이터베이스 연결 테스트
 # @app.route('/test-connection')
 # def test_connection():
@@ -37,7 +61,7 @@ def index():
 # @app.route('/test')
 # def add_url():
 #     # URL 객체 생성 및 데이터베이스에 추가
-#     new_url = URLs(url="https://www.google.com/")
+#     new_url = URLs(url="https://www.notion.so/f267366bd61041c88f7bb39edddf46bc")
 #     db.session.add(new_url)
     
 #     # 세션에 데이터가 있는지 확인
@@ -47,7 +71,7 @@ def index():
 #     db.session.commit()
     
 #     # 커밋 후 데이터가 있는지 확인
-#     saved_url = URLs.query.filter_by(url="https://www.google.com/").first()
+#     saved_url = URLs.query.filter_by(url="https://www.notion.so/f267366bd61041c88f7bb39edddf46bc").first()
 #     print("Saved URL:", saved_url)
     
 #     return f"<h1>Added URL</h1><p>{new_url.url}</p>"

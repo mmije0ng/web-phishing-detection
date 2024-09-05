@@ -1,17 +1,21 @@
 from flask_sqlalchemy import SQLAlchemy
-import datetime
+from datetime import datetime
+import pytz  # pytz 사용
 
 db = SQLAlchemy()
+
+# 한국 시간(KST) 지정
+kst = pytz.timezone('Asia/Seoul')
 
 # URL 정보
 class URLs(db.Model):
     __tablename__ = 'URLs'  # 테이블 이름을 'URLs'로 지정
 
-    url_id = db.Column(db.Integer, primary_key=True, autoincrement=True) # pk
+    url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # pk
     url = db.Column(db.String(255), nullable=False, unique=True)
-    is_blacklisted = db.Column(db.Boolean, default=False) # 블랙리스트 여부
-    search_count = db.Column(db.Integer, default=0) # URL 조회 횟수
-    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    is_blacklisted = db.Column(db.Boolean, default=False)  # 블랙리스트 여부
+    search_count = db.Column(db.Integer, default=0)  # URL 조회 횟수
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(kst))  # 한국 시간으로 설정
 
     # Relationships
     predictions = db.relationship('Predictions', back_populates='url', cascade='all, delete-orphan')
@@ -22,25 +26,24 @@ class URLs(db.Model):
 class Predictions(db.Model):
     __tablename__ = 'Predictions'  # 테이블 이름을 'Predictions'로 지정
 
-    prediction_id = db.Column(db.Integer, primary_key=True, autoincrement=True) # pk
-    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False) # fk
-    prediction_result = db.Column(db.SmallInteger) # 분석 결과
-    prediction_prob = db.Column(db.Float) # 피싱 확률
-    predicted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow) 
+    prediction_id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # pk
+    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # fk
+    prediction_result = db.Column(db.SmallInteger)  # 분석 결과
+    prediction_prob = db.Column(db.Float)  # 피싱 확률
+    predicted_at = db.Column(db.DateTime, default=lambda: datetime.now(kst))  # 한국 시간으로 설정
 
     # Relationships
     url = db.relationship('URLs', back_populates='predictions')
 
 # 블랙리스트 테이블
-# 자주 검색되거나 중요한 URL을 저장하여 응답 속도 개선
 class Blacklist(db.Model):
     __tablename__ = 'Blacklist'  # 테이블 이름을 'Blacklist'로 지정
 
-    blacklist_id = db.Column(db.Integer, primary_key=True, autoincrement=True) # pk
-    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False) # fk
-    b_result = db.Column(db.SmallInteger) # 분석 결과
-    b_prob = db.Column(db.Float) # 피싱 확률
-    blacklisted_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    blacklist_id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # pk
+    url_id = db.Column(db.Integer, db.ForeignKey('URLs.url_id'), nullable=False)  # fk
+    b_result = db.Column(db.SmallInteger)  # 분석 결과
+    b_prob = db.Column(db.Float)  # 피싱 확률
+    blacklisted_at = db.Column(db.DateTime, default=lambda: datetime.now(kst))  # 한국 시간으로 설정
 
     # Relationships
     url = db.relationship('URLs', back_populates='blacklist')

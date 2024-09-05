@@ -43,10 +43,10 @@ def use_right_click(response):
         
     except requests.RequestException as e:
         print(f"RightClick HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
+        return 0  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
     except Exception as e:
         print(f"RightClick Exception Error: {e}")
-        return 1  # 에러 발생 시 의심으로 간주 
+        return 0  # 에러 발생 시 의심으로 간주 
 
 
 # popUpWidnow    
@@ -95,10 +95,10 @@ def iFrame_redirection(response):
             
     except requests.RequestException as e:
         print(f"Iframe HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
+        return 0  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
     except Exception as e:
         print(f"Iframe Exception Error: {e}")
-        return 1  # 오류 발생 시 의심으로 간주
+        return 0  # 오류 발생 시 의심으로 간주
 
 # having_IPhaving_IP_Address
 # IP 사용 여부
@@ -142,10 +142,10 @@ def check_favicon(url, response):
 
     except requests.RequestException as e:
         print(f"Favicon HTTP Exception Error: {e}")
-        return 1 
+        return 0 
     except Exception as e:
         print(f"Favicon Exception Error: {e}")
-        return 1 
+        return 0 
 
 # Request_URL
 # 웹페이지 내의 외부 객체(이미지, 비디오, 소리 등)가 다른 도메인에서 로드되는지를 검사
@@ -400,10 +400,10 @@ def check_onmouseover_change(response):
 
     except requests.RequestException as e:
         print(f"on_mouseover 요청 Error: {e}")
-        return 1  
+        return 0  
     except Exception as e:
         print(f"on_mouseover Exception Error: {e}")
-        return 1
+        return 0
 
     # try:
     #     # 웹 페이지 요청

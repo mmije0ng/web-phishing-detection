@@ -163,43 +163,43 @@ def https_token(url):
         print(f"HTTPS Token Error: {e}")
         return 1  # 피싱
 
-def check_url(url):
-    results = {}
-    results['Google_Index'] = google_index(url)
-    # results['Domain_registeration_length'] = domain_registration_length(url)
-    results['age_of_domain'] = age_of_domain(url)
-    # results['DNSRecord'] = dns_record(url)
-    results['SSLfinal_State'] = sslfinal_state(url)
-    results['having_Sub_Domain'] = having_subdomain(url)
-    results['HTTPS_token'] = https_token(url)
+# def check_url(url):
+#     results = {}
+#     results['Google_Index'] = google_index(url)
+#     # results['Domain_registeration_length'] = domain_registration_length(url)
+#     results['age_of_domain'] = age_of_domain(url)
+#     # results['DNSRecord'] = dns_record(url)
+#     results['SSLfinal_State'] = sslfinal_state(url)
+#     results['having_Sub_Domain'] = having_subdomain(url)
+#     results['HTTPS_token'] = https_token(url)
 
-    score = sum(int(value) for value in results.values())
+#     score = sum(int(value) for value in results.values())
 
-    if score > 0:
-        results['Phishing_Site'] = "Yes"
-    elif score == 0:
-        results['Phishing_Site'] = "Suspicious"
-    else:
-        results['Phishing_Site'] = "No"
+#     if score > 0:
+#         results['Phishing_Site'] = "Yes"
+#     elif score == 0:
+#         results['Phishing_Site'] = "Suspicious"
+#     else:
+#         results['Phishing_Site'] = "No"
 
-    return results
+#     return results
 
-# 테스트할 URL 목록
-urls = [
-    "http://www.crestonwood.com/router.php",
-    "http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4",
-    "https://support-appleld.com.secureupdate.duilawyeryork.com/ap/89e6a3b4b063b8d/?cmd=_update&dispatch=89e6a3b4b063b8d1b&locale=_",
-    "http://rgipt.ac.in",
-    "http://www.iracing.com/tracks/gateway-motorsports-park/",
-    "http://appleid.apple.com-app.es/",
-    "http://www.mutuo.it",
-    "http://www.shadetreetechnology.com/V4/validation/ba4b8bddd7958ecb8772c836c2969531",
-    "http://vamoaestudiarmedicina.blogspot.com/",
-    "https://parade.com/425836/joshwigler/the-amazing-race-host-phil-keoghan-previews-the-season-27-premiere/",
-]
+# # 테스트할 URL 목록
+# urls = [
+#     "http://www.crestonwood.com/router.php",
+#     "http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4",
+#     "https://support-appleld.com.secureupdate.duilawyeryork.com/ap/89e6a3b4b063b8d/?cmd=_update&dispatch=89e6a3b4b063b8d1b&locale=_",
+#     "http://rgipt.ac.in",
+#     "http://www.iracing.com/tracks/gateway-motorsports-park/",
+#     "http://appleid.apple.com-app.es/",
+#     "http://www.mutuo.it",
+#     "http://www.shadetreetechnology.com/V4/validation/ba4b8bddd7958ecb8772c836c2969531",
+#     "http://vamoaestudiarmedicina.blogspot.com/",
+#     "https://parade.com/425836/joshwigler/the-amazing-race-host-phil-keoghan-previews-the-season-27-premiere/",
+# ]
 
-for url in urls:
-    result = check_url(url)
-    print(f"URL: {url}")
-    print(result)
+# for url in urls:
+#     result = check_url(url)
+#     print(f"URL: {url}")
+#     print(result)
     print("-" * 80)
