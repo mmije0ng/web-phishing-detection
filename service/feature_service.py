@@ -74,29 +74,27 @@ async def extract_features(url):
     
     return np.array(feature_values).reshape(1, -1), features
 
-# URL, Content, Domain 기반 의심 피처 반환 함수
 def get_suspicious_features(features):
     """피처 딕셔너리에서 값이 1인 의심 피처를 URL, Content, Domain 기반으로 나누어 반환하는 함수."""
 
     suspicious_url_based = []
     suspicious_content_based = []
     suspicious_domain_based = []
-    # 의심 피처 추출 (URL, Content, Domain으로 분리)
-
+    
     # URL 기반 피처 확인
     for feature_name in URL_BASED_FEATURES:
         if features.get(feature_name, 0) == 1:
-            suspicious_url_based.append(f"{feature_name}: 1")
+            suspicious_url_based.append(feature_name)
 
     # Content 기반 피처 확인
     for feature_name in CONTENT_BASED_FEATURES:
         if features.get(feature_name, 0) == 1:
-            suspicious_content_based.append(f"{feature_name}: 1")
+            suspicious_content_based.append(feature_name)
 
     # Domain 기반 피처 확인
     for feature_name in DOMAIN_BASED_FEATURES:
         if features.get(feature_name, 0) == 1:
-            suspicious_domain_based.append(f"{feature_name}: 1")
+            suspicious_domain_based.append(feature_name)
 
     # 각 그룹의 의심 피처들을 사전 형태로 반환
     return {
