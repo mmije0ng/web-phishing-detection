@@ -60,38 +60,37 @@ def add_or_update_predictions(db, url_id, prediction_result, prediction_prob):
         print(f"Error saving or updating prediction for URL ID {url_id}: {e}")
 
 
-
-# Predictions 테이블의 피싱 여부 및 확률 업데이트
-def update_predictions_entity(db, url_id, prediction_result, prediction_prob):
-    print('prediction result: '+str(prediction_result))
-    print('prediction prob: '+str(prediction_prob))
+# # Predictions 테이블의 피싱 여부 및 확률 업데이트
+# def update_predictions_entity(db, url_id, prediction_result, prediction_prob):
+#     print('prediction result: '+str(prediction_result))
+#     print('prediction prob: '+str(prediction_prob))
     
-    # 기존 Predictions가 있는지 확인
+#     # 기존 Predictions가 있는지 확인
 
 
-    prediction_entity = Predictions.query.filter_by(url_id=url_id).first()
+#     prediction_entity = Predictions.query.filter_by(url_id=url_id).first()
 
-    prediction_entity.prediction_result = prediction_result
-    prediction_entity.prediction_prob = prediction_prob
+#     prediction_entity.prediction_result = prediction_result
+#     prediction_entity.prediction_prob = prediction_prob
 
-    # 데이터베이스에 커밋
-    db.session.commit()
+#     # 데이터베이스에 커밋
+#     db.session.commit()
 
-    print(f"Prediction updated for URL ID {url_id}")
+#     print(f"Prediction updated for URL ID {url_id}")
 
 
-# Predictions 테이블에 예측 결과를 저장하는 함수
-def add_predictions_entity(db, url_id, prediction_result, prediction_prob):
-    # 예측 결과 저장
-    new_prediction_entity = Predictions(
-        url_id=url_id,
-        prediction_result=prediction_result,  # 피싱 여부
-        prediction_prob=prediction_prob,  # 피싱 확률
-    )
+# # Predictions 테이블에 예측 결과를 저장하는 함수
+# def add_predictions_entity(db, url_id, prediction_result, prediction_prob):
+#     # 예측 결과 저장
+#     new_prediction_entity = Predictions(
+#         url_id=url_id,
+#         prediction_result=prediction_result,  # 피싱 여부
+#         prediction_prob=prediction_prob,  # 피싱 확률
+#     )
 
-    db.session.add(new_prediction_entity)
+#     db.session.add(new_prediction_entity)
 
-    # 데이터베이스에 커밋
-    db.session.commit()
+#     # 데이터베이스에 커밋
+#     db.session.commit()
 
-    print(f"New prediction added for URL ID {url_id}")
+#     print(f"New prediction added for URL ID {url_id}")
