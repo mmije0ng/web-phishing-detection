@@ -14,7 +14,7 @@ class URLs(db.Model):
     url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # pk
     url = db.Column(db.String(255), nullable=False, unique=True)
     is_blacklisted = db.Column(db.Boolean, default=False)  # 블랙리스트 여부
-    search_count = db.Column(db.Integer, default=0)  # URL 조회 횟수
+    search_count = db.Column(db.Integer, default=1)  # URL 조회 횟수
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(kst))  # 한국 시간으로 설정
 
     # Relationships
