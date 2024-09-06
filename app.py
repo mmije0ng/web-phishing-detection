@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS # pip install flask-cors
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy import text
@@ -7,6 +8,10 @@ from entity.models import db, URLs
 from service import url_service
 
 app = Flask(__name__)
+
+# CORS 설정
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}},
+    allow_headers="*", expose_headers="*", supports_credentials=True, max_age=3600)
 
 # Flask 애플리케이션에 SQLAlchemy 설정 추가
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
