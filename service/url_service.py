@@ -1,5 +1,5 @@
 from entity.models import URLs
-from service import feature_service, predict_service
+from service import feature_service, predict_service, blacklist_service
 from dto import url_response_dto
 import time
 from urllib.parse import urlparse
@@ -25,7 +25,7 @@ import requests
 #     return detailed_analyze_url(db, url, url_id)
 
 # (확장용) 분석 결과
-async def simple_analyze_url(url):
+async def simple_analyze_url(db, url):
     """URL에 대해 피처 추출 및 분석을 실행하는 함수."""
 
     start_time = time.time()
@@ -35,6 +35,30 @@ async def simple_analyze_url(url):
         
     # 피싱 여부 및 확률 예측
     phishing_result, phishing_prob = predict_service.predict_phishing(features_array)
+
+    #DB 저장
+    # URLs 테이블에서 해당 URL이 존재하는지 확인
+    url_exist, url_id = get_url_exist(url)
+
+    if url_exist:
+        # URL이 존재하면 search_count 증가
+        update_urls_entity(db, url_id)
+    else:
+        # URL이 존재하지 않으면 새로운 URL 추가
+        url_id=add_urls_entity(db, url)
+
+    # url_entry = URLs.query.filter_by(url=url).first() # URLs에 있는지 검색
+
+    # if not url_entry:
+    #     # URLs에 존재하지 않으면 새로 생성 후 DB 조작
+    #     new_url_entry = URLs(url=url, search_count=1)
+    #     db.session.add(new_url_entry)
+    #     db.session.commit()
+    
+    feature_service.add_or_update_features_entity(db, url_id, features)
+    predict_service.add_or_update_predictions(db, url_id, phishing_result, phishing_prob)
+
+    blacklist_service.add_to_blacklist(db, url) # search_count >= 20시, 블랙리스트 추가
 
         
     # DTO 생성
@@ -49,7 +73,7 @@ async def simple_analyze_url(url):
     elapsed_time = time.time() - start_time
     print(f"실행 시간: {elapsed_time:.4f}초\n")
 
-    return simple_response_dto, features, phishing_result, phishing_prob
+    return simple_response_dto
 
 
 # # (웹용) 상세 분석 결과

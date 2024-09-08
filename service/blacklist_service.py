@@ -2,26 +2,28 @@ from entity.models import URLs, Blacklist, Predictions
 
 # 블랙리스트 확인
 def check_blacklist(db, input_url):
-    # 블랙리스트 여부 검색 
-    url_entry = URLs.query.filter_by(url=input_url, is_blacklisted=True).first()
+    # URLs 테이블에서 URL이 블랙리스트에 있는지 확인
+    url_entry = URLs.query.filter_by(url=input_url).first()
 
-    if url_entry:
-        # URLs에 있으먄 search_count 증가
+    # URL이 존재하고, 블랙리스트에 등록된 경우
+    if url_entry and url_entry.is_blacklisted:
+        # search_count 증가
         url_entry.search_count += 1
         db.session.commit()
 
-        if url_entry.is_blacklisted:
-            blacklist_entry = Blacklist.query.filter_by(url_id=url_entry.url_id).first()
-            return blacklist_entry
+        # Blacklist 테이블에서 블랙리스트 정보 가져오기
+        blacklist_entry = Blacklist.query.filter_by(url_id=url_entry.url_id).first()
+        return blacklist_entry
     
     return None
 
 # 블랙리스트 추가 
-def add_to_blacklist(db, url_entry):
+def add_to_blacklist(db, url):
+    url_entry = URLs.query.filter_by(url=url).first()
     if url_entry.search_count >= 20:
         prediction_entry = Predictions.query.filter_by(url_id=url_entry.url_id).first()
 
-        if prediction_entry:
+        if prediction_entry and prediction_entry.prediction_result == 1:
             # 블랙리스트에 추가
             new_blacklist_entry = Blacklist(
                 url_id=url_entry.url_id, 

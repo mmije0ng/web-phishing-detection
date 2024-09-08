@@ -41,6 +41,8 @@ def add_or_update_predictions(db, url_id, prediction_result, prediction_prob):
             prediction_entity.prediction_result = prediction_result
             prediction_entity.prediction_prob = prediction_prob
             print(f"Prediction updated for URL ID {url_id}")
+            # 업데이트된 경우 Blacklist 테이블도 업데이트 (b_result, b_prob)
+            update_blacklist(db, url_id, prediction_result, prediction_prob)
         else:
             # 레코드가 없을 경우 새로 추가
             new_prediction_entity = Predictions(
@@ -52,9 +54,6 @@ def add_or_update_predictions(db, url_id, prediction_result, prediction_prob):
             print(f"New prediction added for URL ID {url_id}")
 
         db.session.commit()
-
-        # Blacklist 테이블의 b_result, b_prob 업데이트(최신화)
-        update_blacklist(db, url_id, prediction_result, prediction_prob)
 
 
     except Exception as e:
