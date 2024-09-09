@@ -110,7 +110,7 @@ async def simple_analyze_url(db, url):
     return simple_response_dto
 
 # (웹용) 상세 분석 결과
-async def detailed_analyze_url_based_on_blacklist(db, url, url_id):
+async def detailed_analyze_url(db, url):
     """URL에 대해 피처 추출 및 분석을 실행하는 함수."""
 
     start_time = time.time()
