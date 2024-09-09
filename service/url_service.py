@@ -12,44 +12,38 @@ import config
 API_KEY = config.API_KEY
 
 def not_blacklist_detailed_analyze_url(db, url):
-    # URLs 테이블에서 해당 URL이 존재하는지 확인
-    url_exist, url_id = get_url_exist(url)
-
-    if url_exist:
-        # URL이 존재하면 search_count 증가
-        update_urls_entity(db, url_id)
-    else:
-        # URL이 존재하지 않으면 새로운 URL 추가
-        url_id=add_urls_entity(db, url)
-    
+    url_id = get_url_id(db, url)
     return detailed_analyze_url(db, url, url_id)
 
-# (확장용) 분석 결과
-async def simple_analyze_url(url):
-    """URL에 대해 피처 추출 및 분석을 실행하는 함수."""
+# URL ID를 확인하고 없으면 생성하는 함수
+def get_url_id(db, url):
+    existing_url = URLs.query.filter_by(url=url).first()
 
-    start_time = time.time()
-        
-    # 피처 추출
-    features_array, features = await feature_service.extract_features(url)
-        
-    # 피싱 여부 및 확률 예측
-    phishing, phishing_prob = predict_service.predict_phishing(features_array)
+    if existing_url:
+        update_urls_entity(db, existing_url)
+        return existing_url.url_id
+    else:
+        return add_urls_entity(db, url)
 
-        
-    # DTO 생성
-    simple_response_dto = url_response_dto.simple_response_dto(url, phishing, phishing_prob)
-        
-    # 결과 출력
-    print(f"Simple Response DTO: {simple_response_dto}")
-        
-    print("-" * 50)
+# URLs 테이블 search_count 증가 update
+def update_urls_entity(db, url_entity):
+    url_entity.search_count += 1
+    print(f"Existing URL found. search_count updated to: {url_entity.search_count}")
+    commit_db_changes(db)
 
-    # 실행 시간 출력
-    elapsed_time = time.time() - start_time
-    print(f"실행 시간: {elapsed_time:.4f}초\n")
+# URLs 테이블에 URL 추가 후 ID 반환
+def add_urls_entity(db, url):
+    new_url_entity = URLs(url=url)
+    db.session.add(new_url_entity)
+    print(f"New URL added: {url}")
+    commit_db_changes(db)
+    return new_url_entity.url_id
 
-    return simple_response_dto
+# 데이터베이스 변경사항 커밋
+def commit_db_changes(db):
+    print("Session pending changes:", db.session.new)
+    db.session.commit()
+    print("Database changes committed successfully")
 
 
 # (웹용) 상세 분석 결과
@@ -65,7 +59,7 @@ async def detailed_analyze_url(db, url, url_id):
     prediction_result, prediction_prob = predict_service.predict_phishing(features_array)
     
     # features, predicts 테이블 업데이트
-    feature_service.add_or_update_features_entity(db, url_id, features)
+    feature_service.add_or_update_features(db, url_id, features)
     predict_service.add_or_update_predictions(db, url_id, prediction_result, prediction_prob)
 
     # 의심 피처 추출
@@ -89,57 +83,6 @@ async def detailed_analyze_url(db, url, url_id):
     return detailed_response_dto
 
 
-# URLs 테이블 존재 여부 반환
-def get_url_exist(url):
-    # 기존 URL이 있는지 확인
-    existing_url = URLs.query.filter_by(url=url).first()
-    url_exist=True
-    
-    if existing_url:
-        # URL이 존재하면 True와 해당 URL의 url_id를 반환
-        return url_exist, existing_url.url_id
-    else:
-        # URL이 존재하지 않으면 False를 반환
-        url_exist=False
-        return url_exist, None
-
-
-# URLs 테이블 업데이트
-def update_urls_entity(db, url_id):
-    # 기존 URL이 있는지 확인
-    url_entity = URLs.query.filter_by(url_id=url_id).first()
-    
-    # URL이 이미 존재하면 search_count 값을 1 증가
-    url_entity.search_count += 1
-    print(f"Existing URL found. search_count updated to: {url_entity.search_count}")
-    
-    # 세션에 데이터가 있는지 확인
-    print("Session pending changes:", db.session.new)
-    
-    # 데이터베이스에 커밋
-    db.session.commit()  
-    print("URLs update successfully") 
-
-# URLs 테이블 저장
-def add_urls_entity(db, url):
-    # URL 객체 생성
-    new_url_entity = URLs(url=url)
-    
-    # 세션에 URL 객체 추가
-    db.session.add(new_url_entity)
-    print(f"New URL added: {url}")
-    
-    # 세션에 데이터가 있는지 확인
-    print("Session pending changes:", db.session.new)
-    
-    # 데이터베이스에 커밋
-    db.session.commit()
-    print("URLs saved successfully")
-    
-    # 커밋 후 url_entity의 url_id 반환
-    return new_url_entity.url_id
-
-# url에서 도메인을 추출하여 ip로 변환
 # url에서 도메인을 추출하여 ip로 변환
 def change_domain_to_ip(url):
     # URL에서 도메인 추출
@@ -187,14 +130,12 @@ def get_detailed_response_by_ip(ip_address):
         # 필요한 필드 추출
         ip = data.get("ip_address", "N/A")
         country = data.get("country", "N/A")
-        region = data.get("region", "N/A")
         is_vpn = data.get("security", {}).get("is_vpn", "N/A")
         isp_name = data.get("connection", {}).get("isp_name", "N/A")
 
         # 추출한 정보 출력
         print(f"IP 주소: {ip}")
         print(f"국가: {country}")
-        print(f"지역: {region}")
         print(f"VPN 사용 여부: {is_vpn}")
         print(f"ISP 이름: {isp_name}")
 
@@ -202,7 +143,6 @@ def get_detailed_response_by_ip(ip_address):
         return {
             "ip_address": ip,
             "country": country,
-            "region": region,
             "is_vpn": is_vpn,
             "isp_name": isp_name
         }

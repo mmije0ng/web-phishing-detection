@@ -83,17 +83,17 @@ def get_suspicious_features(features):
     
     # URL 기반 피처 확인
     for feature_name in URL_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1:
+        if features.get(feature_name, 0) == 1 or features.get(feature_name, 0) == 0:
             suspicious_url_based.append(feature_name)
 
     # Content 기반 피처 확인
     for feature_name in CONTENT_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1:
+        if features.get(feature_name, 0) == 1 or features.get(feature_name, 0) == 0:
             suspicious_content_based.append(feature_name)
 
     # Domain 기반 피처 확인
     for feature_name in DOMAIN_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1:
+        if features.get(feature_name, 0) == 1 or features.get(feature_name, 0) == 0:
             suspicious_domain_based.append(feature_name)
 
     # 각 그룹의 의심 피처들을 사전 형태로 반환
@@ -105,7 +105,7 @@ def get_suspicious_features(features):
 
 
 # Features 테이블에 피처 추가 또는 업데이트하는 함수
-def add_or_update_features_entity(db, url_id, features):
+def add_or_update_features(db, url_id, features):
     """
     Features 테이블에 피처 값을 추가하거나 업데이트하는 함수.
     

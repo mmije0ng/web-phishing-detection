@@ -18,7 +18,6 @@ def detailed_response_dto(url, phishing_result, phishing_prob, suspicious_featur
         "prediction_prob": f"{phishing_prob}%",  # 피싱 확률
         "ip_address": ip_info["ip_address"],
         "country": ip_info["country"],
-        "region": ip_info["region"],
         "is_vpn": ip_info["is_vpn"],
         "isp_name": ip_info["isp_name"],
         "url_based_feature_list": suspicious_features["URL_based"],
