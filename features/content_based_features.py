@@ -46,7 +46,7 @@ def use_right_click(response):
         return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
     except Exception as e:
         print(f"RightClick Exception Error: {e}")
-        return 1  # 에러 발생 시 의심으로 간주 
+        return 0  # 에러 발생 시 의심으로 간주 
 
 
 # popUpWidnow    
@@ -72,7 +72,7 @@ def popup_window_text(response):
         return 1 
     except Exception as e:
         print(f"popUpWidnow Exception Error: {e}")
-        return 1
+        return 0
 
 # Iframe
 # iframe 사용 여부
@@ -95,10 +95,10 @@ def iFrame_redirection(response):
             
     except requests.RequestException as e:
         print(f"Iframe HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
+        return 1 
     except Exception as e:
         print(f"Iframe Exception Error: {e}")
-        return 1  # 오류 발생 시 의심으로 간주
+        return 0  
 
 # having_IPhaving_IP_Address
 # IP 사용 여부
@@ -142,10 +142,10 @@ def check_favicon(url, response):
 
     except requests.RequestException as e:
         print(f"Favicon HTTP Exception Error: {e}")
-        return 1 
+        return 1
     except Exception as e:
         print(f"Favicon Exception Error: {e}")
-        return 1 
+        return 0 
 
 # Request_URL
 # 웹페이지 내의 외부 객체(이미지, 비디오, 소리 등)가 다른 도메인에서 로드되는지를 검사
@@ -203,10 +203,10 @@ def check_request_url(url, response):
 
     except requests.RequestException as e:
         print(f"Request_URL HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없는 경우 의심
+        return 1  
     except Exception as e:
         print(f"Request_URL Exception Error: {e}")
-        return 1  # 일반적인 오류 발생 시 의심
+        return 0  
 
 # URL_of_Anchor
 # <a> 태그의 href 속성에 포함된 링크가 웹사이트의 도메인과 다른 도메인을 가리키는지 경우
@@ -258,10 +258,10 @@ def check_url_of_anchor(url, response):
 
     except requests.RequestException as e:
         print(f"URL_of_Anchor HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없는 경우 의심
+        return 1  
     except Exception as e:
         print(f"URL_of_Anchor Exception Error: {e}")
-        return 0  # 일반적인 오류 발생 시 의심
+        return 0  
 
 # Links_in_tags
 # 합법적인 웹사이트에서는 HTML 문서에 대한 메타데이터를 제공하기 위해 
@@ -285,10 +285,10 @@ def has_meta_tags(response):
         
     except requests.RequestException as e:
         print(f"Links_in_tags HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없는 경우 의심
+        return 1 
     except Exception as e:
         print(f"Links_in_tags Exception Error: {e}")
-        return 0  # 일반적인 오류 발생 시 의심
+        return 0 
 
 # SFH
 # form 태그에서 action 속성(SFH)이 
@@ -352,7 +352,7 @@ def check_submit_email(url, response):
         return 1  
     except Exception as e:
         print(f"Submitting_to_email Exception Error: {e}")
-        return 1  
+        return 0 
 
 # Redirect
 # 피싱 웹사이트는 최소한 4번 이상 리디렉션된
@@ -400,10 +400,10 @@ def check_onmouseover_change(response):
 
     except requests.RequestException as e:
         print(f"on_mouseover 요청 Error: {e}")
-        return 1  
+        return 1
     except Exception as e:
         print(f"on_mouseover Exception Error: {e}")
-        return 1
+        return 0
 
     # try:
     #     # 웹 페이지 요청
@@ -429,7 +429,7 @@ def check_onmouseover_change(response):
     # except Exception as e:
     #     print(f"on_mouseover Exception Error: {e}")
     #     return 0      
-
+    
 
 def classify_phishing(url):
     response = get_request_url(url)
