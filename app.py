@@ -14,7 +14,7 @@ from service import url_service, feature_service, predict_service, blacklist_ser
 app = Flask(__name__)
 
 # CORS 설정
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}},
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}},
     allow_headers="*", expose_headers="*", supports_credentials=True, max_age=3600)
 
 # Flask 애플리케이션에 SQLAlchemy 설정 추가
