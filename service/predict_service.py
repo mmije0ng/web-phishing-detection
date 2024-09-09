@@ -2,6 +2,8 @@ import pickle
 from entity.models import Predictions
 
 # 피싱 여부 및 확률 예측 함수
+from service.blacklist_service import update_blacklist
+
 # 피싱 여부 및 확률 예측 함수
 def predict_phishing(features_array):
     """피처 배열을 입력받아 피싱 여부와 확률을 반환하는 함수."""
@@ -41,6 +43,9 @@ def add_or_update_predictions(db, url_id, prediction_result, prediction_prob):
             prediction_entity.prediction_result = prediction_result
             prediction_entity.prediction_prob = prediction_prob
             print(f"Prediction updated for URL ID {url_id}")
+            # 업데이트된 경우 Blacklist 테이블도 업데이트 (b_result, b_prob)
+            update_blacklist(db, url_id, prediction_result, prediction_prob)
+
         else:
             # 레코드가 없을 경우 새로 추가
             new_prediction_entity = Predictions(
@@ -94,3 +99,4 @@ def add_or_update_predictions(db, url_id, prediction_result, prediction_prob):
 #     db.session.commit()
 
 #     print(f"New prediction added for URL ID {url_id}")
+
