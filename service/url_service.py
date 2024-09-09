@@ -9,12 +9,7 @@ import dns.query
 import requests
 import config
 
-API_KEY = config.API_KEY
-
-def detailed_analyze_url(db, input_url):
-    url_id = get_url_id(db, input_url)
-
-    return detailed_analyze_url_based_on_blacklist(db, input_url, url_id)        
+API_KEY = config.API_KEY     
 
 # URL ID를 확인하고 없으면 생성하는 함수
 def get_url_id(db, url):
@@ -65,40 +60,27 @@ async def simple_analyze_url(db, url):
     """URL에 대해 피처 추출 및 분석을 실행하는 함수."""
 
     start_time = time.time()
+
+    url_id = get_url_id(db, url) # URLs 테이블 존재 여부에 따른 url_id 반환
         
     # 피처 추출
     features_array, features = await feature_service.extract_features(url)
         
     # 피싱 여부 및 확률 예측
-    prediction_result, prediction_prob = predict_service.predict_phishing(features_array)
-    
-    # features, predicts 테이블 업데이트
-    feature_service.add_or_update_features(db, url_id, features)
-    predict_service.add_or_update_predictions(db, url_id, prediction_result, prediction_prob)
-
-    # 의심 피처 추출
-    suspicious_features = feature_service.get_suspicious_features(features)
-        
-    ip_address = change_domain_to_ip(url) # DNS를 이용하여 Domain => IP로 변환
-    ip_info = get_detailed_response_by_ip(ip_address) # API를 이용하여 IP를 기반으로 상세 정보를 받아옴
-
-    # DTO 생성
-    detailed_response_dto = url_response_dto.detailed_response_dto(url, prediction_result, prediction_prob, suspicious_features, ip_info)
-        
-    # 결과 출력
-    print(f"Detailed Response DTO: {detailed_response_dto}")
     phishing_result, phishing_prob = predict_service.predict_phishing(features_array)
 
-    #DB 저장
-    # URLs 테이블에서 해당 URL이 존재하는지 확인
-    url_exist, url_id = get_url_exist(url)
+    # #DB 저장
+    # # URLs 테이블에서 해당 URL이 존재하는지 확인
+    # url_exist, url_id = get_url_exist(url)
 
-    if url_exist:
-        # URL이 존재하면 search_count 증가
-        update_urls_entity(db, url_id)
-    else:
-        # URL이 존재하지 않으면 새로운 URL 추가
-        url_id=add_urls_entity(db, url)
+    # if url_exist:
+    #     # URL이 존재하면 search_count 증가
+    #     update_urls_entity(db, url_id)
+    # else:
+    #     # URL이 존재하지 않으면 새로운 URL 추가
+    #     url_id=add_urls_entity(db, url)
+
+
 
     # url_entry = URLs.query.filter_by(url=url).first() # URLs에 있는지 검색
 
@@ -125,7 +107,7 @@ async def simple_analyze_url(db, url):
     elapsed_time = time.time() - start_time
     print(f"실행 시간: {elapsed_time:.4f}초\n")
 
-    return detailed_response_dto
+    return simple_response_dto
 
 # (웹용) 상세 분석 결과
 async def detailed_analyze_url_based_on_blacklist(db, url, url_id):
@@ -133,9 +115,11 @@ async def detailed_analyze_url_based_on_blacklist(db, url, url_id):
 
     start_time = time.time()
 
-    # 블랙리스트 확인
-    # URLs 테이블에서 URL이 블랙리스트에 있는지 확인
-    blacklist_info = blacklist_service.check_blacklist(db, url)
+    url_id = get_url_id(db, url) # URLs 테이블 존재 여부에 따른 url_id 반환
+
+    blacklist_service.add_to_blacklist(db, url) # search_count >= 20시, 블랙리스트 추가
+    
+    blacklist_info = blacklist_service.check_blacklist(db, url) # URLs 테이블에서 URL이 블랙리스트에 있는지 확인
     # 블랙리스트에 있다면 Features 테이블에서 의심 피처와 Blacklist 테이블에서 결과, 확률 추출
     if blacklist_info:
         suspicious_features = feature_service.extract_suspicious_features_from_db(db, url_id)
