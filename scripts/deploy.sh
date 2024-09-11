@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ec2-user/hs-phishing
-FLASK_APP_DIR=/home/ec2-user/hs-phishing
+REPOSITORY=/home/ubuntu/hs-phishing
+FLASK_APP_DIR=/home/ubuntu/hs-phishing
 ENV_PATH=$FLASK_APP_DIR/.env
 cd $REPOSITORY
 
