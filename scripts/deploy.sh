@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 REPOSITORY=/home/ubuntu/hs-phishing
-FLASK_APP_DIR=/home/ubuntu/hs-phishing
-ENV_PATH=$FLASK_APP_DIR/.env
+# FLASK_APP_DIR=/home/ubuntu/hs-phishing
+# ENV_PATH=$FLASK_APP_DIR/.env
 cd $REPOSITORY
 
 # Flask 앱 인스턴스 종료
@@ -26,14 +26,14 @@ fi
 
 # 가상환경 삭제 및 재설정
 echo "> Removing existing venv directory"
-rm -rf $FLASK_APP_DIR/venv
+rm -rf $REPOSITORY/venv
 
 echo "> Setting up new virtual environment"
-python3 -m venv $FLASK_APP_DIR/venv
-source $FLASK_APP_DIR/venv/bin/activate
+python3 -m venv $REPOSITORY/venv
+source $REPOSITORY/venv/bin/activate
 
 echo "> Installing dependencies"
-pip install -r $FLASK_APP_DIR/requirements.txt > pip_install.log 2> pip_install_error.log
+pip install -r $REPOSITORY/requirements.txt > pip_install.log 2> pip_install_error.log
 
 # Flask 앱 시작
 echo "> Starting Flask app with gunicorn"
