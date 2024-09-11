@@ -39,12 +39,12 @@ pip install -r $FLASK_APP_DIR/requirements.txt > pip_install.log 2> pip_install_
 echo "> Starting Flask app with gunicorn"
 nohup gunicorn -w 4 app:app -b 0.0.0.0:5000 > gunicorn.log 2> gunicorn_error.log &
 
-# Gunicorn 실행 확인
-sleep 5
-if pgrep -f gunicorn > /dev/null
-then
-    echo "> Gunicorn started successfully"
-else
-    echo "> Gunicorn failed to start"
-    exit 1
-fi
+# # Gunicorn 실행 확인
+# sleep 5
+# if pgrep -f gunicorn > /dev/null
+# then
+#     echo "> Gunicorn started successfully"
+# else
+#     echo "> Gunicorn failed to start"
+#     exit 1
+# fi

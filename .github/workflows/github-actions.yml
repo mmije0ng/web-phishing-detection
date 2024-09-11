@@ -29,6 +29,13 @@ jobs:
           . venv/bin/activate
           pip install -r requirements.txt
 
+      # config.py 생성
+      - name: Make config.py
+        run: |
+          touch config.py
+          echo "${{ secrets.CONFIG }}" | base64 --decode > config.py
+        shell: bash
+
       - name: Make Zip File
         run: |
           . venv/bin/activate
