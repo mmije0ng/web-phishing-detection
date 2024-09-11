@@ -23,15 +23,15 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install dependencies
+      - name: Set up virtual environment and install dependencies
         run: |
-          python -m venv venv
-          . venv/bin/activate
-          pip install -r requirements.txt
+          python -m venv /home/ubuntu/hs-phishing/venv
+          source /home/ubuntu/hs-phishing/venv/bin/activate
+          pip install -r /home/ubuntu/hs-phishing/requirements.txt
 
       - name: Make Zip File
         run: |
-          . venv/bin/activate
+          source /home/ubuntu/hs-phishing/venv/bin/activate
           zip -qq -r ./$GITHUB_SHA.zip .
         shell: bash
 
