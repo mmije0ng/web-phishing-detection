@@ -16,13 +16,13 @@ else
     sleep 5
 fi
 
-# 환경 변수 로드
-if [ -f $ENV_PATH ]; then
-    echo "> Sourcing environment variables from $ENV_PATH"
-    source $ENV_PATH
-else
-    echo "> Warning: $ENV_PATH does not exist!"
-fi
+# # 환경 변수 로드
+# if [ -f $ENV_PATH ]; then
+#     echo "> Sourcing environment variables from $ENV_PATH"
+#     source $ENV_PATH
+# else
+#     echo "> Warning: $ENV_PATH does not exist!"
+# fi
 
 # 가상환경 삭제 및 재설정
 echo "> Removing existing venv directory"
