@@ -23,6 +23,11 @@ jobs:
         with:
           python-version: 3.9
 
+      # - name: Install system dependencies
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y pkg-config libmysqlclient-dev
+
       - name: Install dependencies
         run: |
           python -m venv venv
@@ -59,4 +64,3 @@ jobs:
                 --deployment-config-name CodeDeployDefault.AllAtOnce
                 --deployment-group-name $DEPLOYMENT_GROUP_NAME 
                 --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
-                
