@@ -7,7 +7,7 @@ on:
       - "dev"
 
 env:
-  PROJECT_NAME: web-phishing-detection
+  PROJECT_NAME: hs-phishing
   BUCKET_NAME: hs-phishing-bucket 
   CODE_DEPLOY_APP_NAME: hs-phishing-codedeploy-app
   DEPLOYMENT_GROUP_NAME: hs-phishing-codedeploy-deployment-group
