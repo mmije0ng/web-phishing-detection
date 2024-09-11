@@ -20,7 +20,6 @@ if [ -f $ENV_PATH ]; then
     source $ENV_PATH
 fi
 
-
 echo "> Removing existing venv directory"
 rm -rf $FLASK_APP_DIR/venv
 
