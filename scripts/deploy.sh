@@ -16,14 +16,6 @@ else
     sleep 5
 fi
 
-# # 환경 변수 로드
-# if [ -f $ENV_PATH ]; then
-#     echo "> Sourcing environment variables from $ENV_PATH"
-#     source $ENV_PATH
-# else
-#     echo "> Warning: $ENV_PATH does not exist!"
-# fi
-
 # 가상환경 삭제 및 재설정
 echo "> Removing existing venv directory"
 rm -rf $REPOSITORY/venv
@@ -35,16 +27,24 @@ source $REPOSITORY/venv/bin/activate
 echo "> Installing dependencies"
 pip install -r $REPOSITORY/requirements.txt > pip_install.log 2> pip_install_error.log
 
+# Gunicorn 설치 확인 및 설치
+if ! pip show gunicorn > /dev/null 2>&1; then
+    echo "> Gunicorn not found, installing gunicorn"
+    pip install gunicorn
+else
+    echo "> Gunicorn is already installed"
+fi
+
 # Flask 앱 시작
 echo "> Starting Flask app with gunicorn"
 nohup gunicorn -w 4 app:app -b 0.0.0.0:5000 > gunicorn.log 2> gunicorn_error.log &
 
-# # Gunicorn 실행 확인
-# sleep 5
-# if pgrep -f gunicorn > /dev/null
-# then
-#     echo "> Gunicorn started successfully"
-# else
-#     echo "> Gunicorn failed to start"
-#     exit 1
-# fi
+# Gunicorn 실행 확인
+sleep 5
+if pgrep -f gunicorn > /dev/null
+then
+    echo "> Gunicorn started successfully"
+else
+    echo "> Gunicorn failed to start"
+    exit 1
+fi
