@@ -124,7 +124,7 @@ async def detailed_analyze_url(db, url):
     
     # 블랙리스트에 있다면 Features 테이블에서 의심 피처와 Blacklist 테이블에서 결과, 확률 추출
     if blacklist_info:
-        print("{url} 블랙리스트 존재")
+        print(f"{url} 블랙리스트 존재")
         suspicious_features = feature_service.extract_suspicious_features_from_db(db, url_id)
         prediction_result = blacklist_info.b_result
         prediction_prob = blacklist_info.b_prob

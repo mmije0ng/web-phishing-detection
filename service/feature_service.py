@@ -174,17 +174,17 @@ def get_suspicious_features(features):
     
     # URL 기반 피처 확인
     for key, value in URL_BASED_FEATURES.items():
-        if features.get(value, 0) == 1 or features.get(value, 0) == 0:
+        if features.get(key, 0) == 1 or features.get(key, 0) == 0:
             suspicious_url_based.append(value)
 
     # Content 기반 피처 확인
     for key, value in CONTENT_BASED_FEATURES.items():
-        if features.get(value, 0) == 1:
+        if features.get(key, 0) == 1 or features.get(key, 0) == 0:
             suspicious_content_based.append(value)
 
     # Domain 기반 피처 확인
     for key, value in DOMAIN_BASED_FEATURES.items():
-        if features.get(value, 0) == 1 or features.get(value, 0) == 0:
+        if features.get(key, 0) == 1 or features.get(key, 0) == 0:
             suspicious_domain_based.append(value)
 
     # 각 그룹의 의심 피처들을 사전 형태로 반환
