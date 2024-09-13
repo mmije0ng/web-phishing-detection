@@ -164,7 +164,7 @@ def get_suspicious_features(features):
 
     # Content 기반 피처 확인
     for feature_name in CONTENT_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1 or features.get(feature_name, 0) == 0:
+        if features.get(feature_name, 0) == 1:
             suspicious_content_based.append(feature_name)
 
     # Domain 기반 피처 확인
@@ -174,9 +174,9 @@ def get_suspicious_features(features):
 
     # 각 그룹의 의심 피처들을 사전 형태로 반환
     return {
-        "URL_based": suspicious_url_based,
-        "Content_based": suspicious_content_based,
-        "Domain_based": suspicious_domain_based
+        "url_based_features": suspicious_url_based,
+        "content_based_features": suspicious_content_based,
+        "domain_based_features": suspicious_domain_based
     }
 
 

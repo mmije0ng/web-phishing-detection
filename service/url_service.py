@@ -1,6 +1,6 @@
 from entity.models import URLs
 from service import feature_service, predict_service, blacklist_service
-from dto import url_response_dto
+from dto import url_response_dto, error_response_dto
 import time
 import dns.resolver
 from urllib.parse import urlparse
@@ -8,8 +8,9 @@ import dns.message
 import dns.query
 import requests
 import config
+from exceptions import DomainToIPError
 
-API_KEY = config.API_KEY     
+API_KEY = config.API_KEY    
 
 # URL ID를 확인하고 없으면 생성하는 함수
 def get_url_id(db, url):
@@ -55,7 +56,7 @@ def get_url_exist(url):
         url_exist=False
         return url_exist, None
 
-# (확장용) 분석 결과
+# 확장용 분석 결과
 async def simple_analyze_url(db, url):
     """URL에 대해 피처 추출 및 분석을 실행하는 함수."""
 
@@ -96,7 +97,7 @@ async def simple_analyze_url(db, url):
     blacklist_service.add_to_blacklist(db, url) # search_count >= 20시, 블랙리스트 추가
         
     # DTO 생성
-    simple_response_dto = url_response_dto.simple_response_dto(url, phishing_result, phishing_prob)
+    simple_response_dto = url_response_dto.SimpleResponseDTO(url, phishing_result, phishing_prob)
         
     # 결과 출력
     print(f"Simple Response DTO: {simple_response_dto}")
@@ -109,17 +110,18 @@ async def simple_analyze_url(db, url):
 
     return simple_response_dto
 
-# (웹용) 상세 분석 결과
+# 웹용 분석 결과
 async def detailed_analyze_url(db, url):
     """URL에 대해 피처 추출 및 분석을 실행하는 함수."""
-
+    
     start_time = time.time()
 
-    url_id = get_url_id(db, url) # URLs 테이블 존재 여부에 따른 url_id 반환
+    # URL ID 가져오기 또는 생성
+    url_id = get_url_id(db, url)
 
     blacklist_service.add_to_blacklist(db, url) # search_count >= 20시, 블랙리스트 추가
-    
     blacklist_info = blacklist_service.check_blacklist(db, url) # URLs 테이블에서 URL이 블랙리스트에 있는지 확인
+    
     # 블랙리스트에 있다면 Features 테이블에서 의심 피처와 Blacklist 테이블에서 결과, 확률 추출
     if blacklist_info:
         print("{url} 블랙리스트 존재")
@@ -140,57 +142,66 @@ async def detailed_analyze_url(db, url):
 
         # 의심 피처 추출
         suspicious_features = feature_service.get_suspicious_features(features)
-        
-    ip_address = change_domain_to_ip(url) # DNS를 이용하여 Domain => IP로 변환
-    ip_info = get_detailed_response_by_ip(ip_address) # API를 이용하여 IP를 기반으로 상세 정보를 받아옴
 
-    # DTO 생성
-    detailed_response_dto = url_response_dto.detailed_response_dto(url, prediction_result, prediction_prob, suspicious_features, ip_info)
-        
-    # 결과 출력
-    print(f"Detailed Response DTO: {detailed_response_dto}")
-        
-    print("-" * 50)
+    # IP 주소로 도메인 변환 시도 및 상세 정보 가져오기
+    try:
+        ip_address = change_domain_to_ip(url)
+        ip_info = get_detailed_response_by_ip(ip_address)
+    except DomainToIPError as e:
+        print(f"DomainToIPError 에러 발생: {str(e)}")
+        ip_info = {
+            "ip_address": "N/A",
+            "country": "N/A",
+            "region": "N/A",
+            "is_vpn": "N/A",
+            "isp_name": "N/A"
+        }
 
+    # 응답 DTO 생성
+    detailed_response_dto = url_response_dto.DetailedResponseDTO(
+        url, prediction_result, prediction_prob, suspicious_features, ip_info
+    )
+    
     # 실행 시간 출력
     elapsed_time = time.time() - start_time
     print(f"실행 시간: {elapsed_time:.4f}초\n")
 
     return detailed_response_dto
 
-
-# url에서 도메인을 추출하여 ip로 변환
 def change_domain_to_ip(url):
-    # URL에서 도메인 추출
-    domain = urlparse(url).netloc
-    print("도메인: "+domain)
+    try:
+        # URL에서 도메인 추출
+        domain = urlparse(url).netloc
+        print("도메인: " + domain)
 
-    # 사용할 DNS Server 주소 입력 (Google Public DNS 서버)
-    dns_server = '8.8.8.8'
+        # 사용할 DNS Server 주소 입력 (Google Public DNS 서버)
+        dns_server = '8.8.8.8'
 
-    # 도메인의 A record에 대한 DNS 쿼리 생성
-    query = dns.message.make_query(domain, 'A')
+        # 도메인의 A record에 대한 DNS 쿼리 생성
+        query = dns.message.make_query(domain, 'A')
 
-    # DNS 서버로 쿼리 전송 및 응답 받기
-    response = dns.query.udp(query, dns_server)
+        # DNS 서버로 쿼리 전송 및 응답 받기
+        response = dns.query.udp(query, dns_server)
 
-    # 응답으로부터 A 레코드(IP 주소) 추출
-    ip_addresses = []
-    for answer in response.answer:
-        for item in answer.items:
-            if item.rdtype == dns.rdatatype.A:  # A 레코드만 필터링
-                ip_addresses.append(item.address)
+        # 응답으로부터 A 레코드(IP 주소) 추출
+        ip_addresses = []
+        for answer in response.answer:
+            for item in answer.items:
+                if item.rdtype == dns.rdatatype.A:  # A 레코드만 필터링
+                    ip_addresses.append(item.address)
 
-    # 첫 번째 IP 주소만 반환
-    if ip_addresses:
-        ip_address = ip_addresses[0]
-        print(f"{domain}의 IP 주소는 {ip_address}입니다.")
-    else:
-        ip_address = None
-        print(f"{domain}에 대한 IP 주소를 찾을 수 없습니다.")
+        # 첫 번째 IP 주소만 반환
+        if ip_addresses:
+            ip_address = ip_addresses[0]
+            print(f"{domain}의 IP 주소는 {ip_address}입니다.")
+        else:
+            raise DomainToIPError(f"{domain}에 대한 IP 주소를 찾을 수 없습니다.")
 
-    print("IP 주소: " + str(ip_address))
-    return ip_address
+        return ip_address
+
+    except Exception as e:
+        print(f"에러 발생: {str(e)}")
+        raise  # 발생한 에러를 최상위 메서드로 전달
 
 
 # ip를 기반으로 정보 가져오기 
