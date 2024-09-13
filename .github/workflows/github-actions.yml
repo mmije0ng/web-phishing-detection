@@ -1,0 +1,66 @@
+name: Build and Deploy Flask to AWS EC2
+
+on:
+  push:
+    branches:
+      - "main"
+      - "dev"
+
+env:
+  PROJECT_NAME: hs-phishing
+  BUCKET_NAME: hs-phishing-bucket 
+  CODE_DEPLOY_APP_NAME: hs-phishing-codedeploy-app
+  DEPLOYMENT_GROUP_NAME: hs-phishing-codedeploy-deployment-group
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      # - name: Install system dependencies
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y pkg-config libmysqlclient-dev
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install -r requirements.txt
+
+      # config.py 생성
+      - name: Make config.py
+        run: |
+          touch config.py
+          echo "${{ secrets.CONFIG }}" | base64 --decode > config.py
+        shell: bash
+
+      - name: Make Zip File
+        run: |
+          . venv/bin/activate
+          zip -qq -r ./$GITHUB_SHA.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+
+      - name: Code Deploy To EC2 instance
+        run: aws deploy create-deployment 
+                --application-name $CODE_DEPLOY_APP_NAME 
+                --deployment-config-name CodeDeployDefault.AllAtOnce
+                --deployment-group-name $DEPLOYMENT_GROUP_NAME 
+                --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
