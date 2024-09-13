@@ -94,7 +94,7 @@ async def detailed_result():
 
 @app.route('/test')
 def test():
-    return 'Test Hello World'
+    return 'Test Hello World!'
 
 # # 데이터베이스 연결 테스트
 # @app.route('/test-connection')
