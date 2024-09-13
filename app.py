@@ -2,14 +2,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS # pip install flask-cors
 #from aioflask import Flask, request, Response, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from sqlalchemy import text
 from config import DB_URL, DB_ENGINE_OPTIONS
-from entity.models import db, URLs
-from service import url_service
-from entity.models import db, URLs, Predictions, Features, Blacklist
-from service import url_service, feature_service, predict_service, blacklist_service
+from entity.models import db
+from service import url_service, blacklist_service
+from exceptions import DomainToIPError
 
 app = Flask(__name__)
 
@@ -90,14 +87,10 @@ async def detailed_result():
     if not url:
         return {"error": "No URL provided"}, 400  # URL이 없으면 400 Bad Request 반환
 
-    # Blacklist 검색 로직
-    # Blacklist 있을 시 db 검색
-
-    # Blacklist 없을 시 feature 추출, 모델 예측, db
     detailed_response_dto = await url_service.detailed_analyze_url(db, url)
-
+    
     # 분석 결과 반환
-    return jsonify(detailed_response_dto)
+    return jsonify(detailed_response_dto.to_dict())
 
 @app.route('/test')
 def test():
