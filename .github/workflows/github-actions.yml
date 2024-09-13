@@ -6,12 +6,6 @@ on:
       - "main"
       - "dev"
 
-env:
-  PROJECT_NAME: hs-phishing
-  BUCKET_NAME: hs-phishing-bucket 
-  CODE_DEPLOY_APP_NAME: hs-phishing-codedeploy-app
-  DEPLOYMENT_GROUP_NAME: hs-phishing-codedeploy-deployment-group
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,6 +17,7 @@ jobs:
         with:
           python-version: 3.9
 
+      # 시스템 의존성 설치 (필요한 경우 주석 해제)
       # - name: Install system dependencies
       #   run: |
       #     sudo apt-get update
@@ -56,11 +51,12 @@ jobs:
 
       - name: Upload to S3
         run: |
-          aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+          aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ secrets.BUCKET_NAME }}/${{ secrets.PROJECT_NAME }}/$GITHUB_SHA.zip
 
       - name: Code Deploy To EC2 instance
-        run: aws deploy create-deployment 
-                --application-name $CODE_DEPLOY_APP_NAME 
-                --deployment-config-name CodeDeployDefault.AllAtOnce
-                --deployment-group-name $DEPLOYMENT_GROUP_NAME 
-                --s3-location bucket=$BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+        run: |
+          aws deploy create-deployment \
+            --application-name ${{ secrets.CODE_DEPLOY_APP_NAME }} \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --deployment-group-name ${{ secrets.DEPLOYMENT_GROUP_NAME }} \
+            --s3-location bucket=${{ secrets.BUCKET_NAME }},bundleType=zip,key=${{ secrets.PROJECT_NAME }}/$GITHUB_SHA.zip
