@@ -14,23 +14,38 @@ FEATURE_ORDER = [
 ]
 
 # URL 기반 피처 목록
-URL_BASED_FEATURES = [
-    'having_IPhaving_IP_Address', 'URLURL_Length', 'Shortining_Service',
-    'having_At_Symbol', 'double_slash_redirecting', 'Prefix_Suffix'
-]
+URL_BASED_FEATURES = {
+    'having_IPhaving_IP_Address': 'having_ip_address',
+    'URLURL_Length': 'url_length',
+    'Shortining_Service': 'shortening_service',
+    'having_At_Symbol': 'having_at_symbol',
+    'double_slash_redirecting': 'double_slash_redirecting',
+    'Prefix_Suffix': 'prefix_suffix'
+}
 
 # 컨텐츠 기반 피처 목록
-CONTENT_BASED_FEATURES = [
-    'RightClick', 'popUpWidnow', 'Iframe', 'Favicon', 'Request_URL',
-    'URL_of_Anchor', 'Links_in_tags', 'SFH', 'Submitting_to_email',
-    'Redirect', 'on_mouseover'
-]
+CONTENT_BASED_FEATURES = {
+    'RightClick': 'right_click',
+    'popUpWidnow': 'popup_window',
+    'Iframe': 'iframe',
+    'Favicon': 'favicon',
+    'Request_URL': 'request_url',
+    'URL_of_Anchor': 'url_of_anchor',
+    'Links_in_tags': 'links_in_tags',
+    'SFH': 'sfh',
+    'Submitting_to_email': 'submitting_to_email',
+    'Redirect': 'redirect',
+    'on_mouseover': 'on_mouseover'
+}
 
 # 도메인 기반 피처 목록
-DOMAIN_BASED_FEATURES = [
-    'Google_Index', 'age_of_domain', 'SSLfinal_State', 'having_Sub_Domain',
-    'HTTPS_token'
-]
+DOMAIN_BASED_FEATURES = {
+    'Google_Index': 'google_index',
+    'age_of_domain': 'age_of_domain',
+    'SSLfinal_State': 'ssl_final_state',
+    'having_Sub_Domain': 'having_sub_domain',
+    'HTTPS_token': 'https_token'
+}
 
 # 피처 추출 함수
 async def extract_features(url):
@@ -158,19 +173,19 @@ def get_suspicious_features(features):
     suspicious_domain_based = []
     
     # URL 기반 피처 확인
-    for feature_name in URL_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1 or features.get(feature_name, 0) == 0:
-            suspicious_url_based.append(feature_name)
+    for key, value in URL_BASED_FEATURES.items():
+        if features.get(value, 0) == 1 or features.get(value, 0) == 0:
+            suspicious_url_based.append(value)
 
     # Content 기반 피처 확인
-    for feature_name in CONTENT_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1:
-            suspicious_content_based.append(feature_name)
+    for key, value in CONTENT_BASED_FEATURES.items():
+        if features.get(value, 0) == 1:
+            suspicious_content_based.append(value)
 
     # Domain 기반 피처 확인
-    for feature_name in DOMAIN_BASED_FEATURES:
-        if features.get(feature_name, 0) == 1 or features.get(feature_name, 0) == 0:
-            suspicious_domain_based.append(feature_name)
+    for key, value in DOMAIN_BASED_FEATURES.items():
+        if features.get(value, 0) == 1 or features.get(value, 0) == 0:
+            suspicious_domain_based.append(value)
 
     # 각 그룹의 의심 피처들을 사전 형태로 반환
     return {
