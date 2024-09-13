@@ -193,7 +193,7 @@ def change_domain_to_ip(url):
     return ip_address
 
 
-# ip를 기반으로 정보 가져오기
+# ip를 기반으로 정보 가져오기 
 def get_detailed_response_by_ip(ip_address): 
     url = f"https://ipgeolocation.abstractapi.com/v1/?api_key={API_KEY}&ip_address={ip_address}"
     
