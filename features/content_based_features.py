@@ -130,13 +130,18 @@ def check_favicon(url, response):
             parsed_favicon_url = urlparse(favicon_url)
             favicon_domain = parsed_favicon_url.netloc
 
-            # 도메인 비교
+            # 도메인 비교: .으로 분리한 후 첫 번째 문자열이 같은지 확인
             # 다른 도메인에서 로드된 경우 피싱으로 간주
-            if favicon_domain != base_domain:
-                return 1  
-            # 동일 도메인
+            base_domain_first = base_domain.split('.')[0]
+            favicon_domain_first = favicon_domain.split('.')[0]
+
+            print(f"Base domain: {base_domain_first}")
+            print(f"Favicon domain: {favicon_domain_first}")
+
+            if base_domain_first == favicon_domain_first:
+                return -1  # 첫 번째 문자열이 같으면 -1 반환
             else:
-                return -1 
+                return 1  # 첫 번째 문자열이 다르면 1 반환
         else:
             return 1  # 파비콘을 찾을 수 없는 경우 피싱
 
