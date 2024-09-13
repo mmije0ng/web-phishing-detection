@@ -207,7 +207,7 @@ def get_detailed_response_by_ip(ip_address):
         # 필요한 필드 추출
         ip = data.get("ip_address", "N/A")
         country = data.get("country", "N/A")
-        region = data.get("country", "N/A")
+        region = data.get("region", "N/A")
         is_vpn = data.get("security", {}).get("is_vpn", "N/A")
         isp_name = data.get("connection", {}).get("isp_name", "N/A")
 

@@ -43,7 +43,7 @@ def use_right_click(response):
         
     except requests.RequestException as e:
         print(f"RightClick HTTP 요청 Error: {e}")
-        return 1  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
+        return 0  # 요청 오류로 인해 사이트를 확인할 수 없을 시 의심으로 간주
     except Exception as e:
         print(f"RightClick Exception Error: {e}")
         return 0  # 에러 발생 시 의심으로 간주 
@@ -69,7 +69,7 @@ def popup_window_text(response):
         
     except requests.RequestException as e:
         print(f"popUpWidnow HTTP 요청 Error: {e}")
-        return 1 
+        return 0 
     except Exception as e:
         print(f"popUpWidnow Exception Error: {e}")
         return 0
@@ -95,7 +95,7 @@ def iFrame_redirection(response):
             
     except requests.RequestException as e:
         print(f"Iframe HTTP 요청 Error: {e}")
-        return 1 
+        return 0
     except Exception as e:
         print(f"Iframe Exception Error: {e}")
         return 0  
@@ -142,7 +142,7 @@ def check_favicon(url, response):
 
     except requests.RequestException as e:
         print(f"Favicon HTTP Exception Error: {e}")
-        return 1
+        return 0
     except Exception as e:
         print(f"Favicon Exception Error: {e}")
         return 0 
@@ -203,7 +203,7 @@ def check_request_url(url, response):
 
     except requests.RequestException as e:
         print(f"Request_URL HTTP 요청 Error: {e}")
-        return 1  
+        return 0  
     except Exception as e:
         print(f"Request_URL Exception Error: {e}")
         return 0  
@@ -258,7 +258,7 @@ def check_url_of_anchor(url, response):
 
     except requests.RequestException as e:
         print(f"URL_of_Anchor HTTP 요청 Error: {e}")
-        return 1  
+        return 0  
     except Exception as e:
         print(f"URL_of_Anchor Exception Error: {e}")
         return 0  
@@ -320,7 +320,7 @@ def check_sfh(url, response):
 
     except requests.RequestException as e:
         print(f"SFH HTTP 요청 Error: {e}")
-        return 1  
+        return 0  
     except Exception as e:
         print(f"SFH Exception Error: {e}")
         return 0 
@@ -349,7 +349,7 @@ def check_submit_email(url, response):
         
     except requests.RequestException as e:
         print(f"Submitting_to_email 요청 Error: {e}")
-        return 1  
+        return 0  
     except Exception as e:
         print(f"Submitting_to_email Exception Error: {e}")
         return 0 
@@ -374,7 +374,7 @@ def check_redirect_count(response):
     
     except requests.RequestException as e:
         print(f"Redirect 요청 Error: {e}")
-        return 1  
+        return 0  
     except Exception as e:
         print(f"Redirect Exception Error: {e}")
         return 0
@@ -400,7 +400,7 @@ def check_onmouseover_change(response):
 
     except requests.RequestException as e:
         print(f"on_mouseover 요청 Error: {e}")
-        return 1
+        return 0
     except Exception as e:
         print(f"on_mouseover Exception Error: {e}")
         return 0
