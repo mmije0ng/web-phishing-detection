@@ -100,7 +100,7 @@ async def detailed_result():
     return jsonify(detailed_response_dto)
 
 @app.route('/test')
-def index():
+def test():
     return 'Test Hello World'
 
 # # 데이터베이스 연결 테스트
