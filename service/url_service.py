@@ -119,7 +119,6 @@ async def detailed_analyze_url(db, url):
     # URL ID 가져오기 또는 생성
     url_id = get_url_id(db, url)
 
-    blacklist_service.add_to_blacklist(db, url) # search_count >= 20시, 블랙리스트 추가
     blacklist_info = blacklist_service.check_blacklist(db, url) # URLs 테이블에서 URL이 블랙리스트에 있는지 확인
     
     # 블랙리스트에 있다면 Features 테이블에서 의심 피처와 Blacklist 테이블에서 결과, 확률 추출
@@ -130,6 +129,8 @@ async def detailed_analyze_url(db, url):
         prediction_prob = blacklist_info.b_prob
 
     else:
+        blacklist_service.add_to_blacklist(db, url) # search_count >= 20시, 블랙리스트 추가
+
         # 피처 추출
         features_array, features = await feature_service.extract_features(url)
             

@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = DB_ENGINE_OPTIONS
 
-# SQLAlchemy 초기화
+# db 초기화
 db.init_app(app)
 
 # Flask-Migrate 초기화
