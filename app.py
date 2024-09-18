@@ -11,7 +11,7 @@ from exceptions import DomainToIPError
 app = Flask(__name__)
 
 # CORS 설정
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}},
+CORS(app, resources={r"/*": {"origins": ["http://localhost:3000", "https://www.catch-phishing.site"]}},
     allow_headers="*", expose_headers="*", supports_credentials=True, max_age=3600)
 
 # Flask 애플리케이션에 SQLAlchemy 설정 추가
