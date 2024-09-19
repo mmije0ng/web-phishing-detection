@@ -7,6 +7,7 @@ from config import DB_URL, DB_ENGINE_OPTIONS
 from entity.models import db
 from service import url_service, blacklist_service
 from exceptions import DomainToIPError
+from model.update_model import schedule_model_update
 
 app = Flask(__name__)
 
@@ -130,4 +131,5 @@ def test():
 
 
 if __name__ == '__main__':
+    schedule_model_update(db)
     app.run('0.0.0.0', port=5000, debug=True)
