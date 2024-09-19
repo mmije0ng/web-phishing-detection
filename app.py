@@ -70,12 +70,12 @@ async def simple_result():
 
     # blacklist_service.add_to_blacklist(db, url_entry) # search_count >= 20시, 블랙리스트 추가
 
-    simple_response = {
-        "url": input_url,
-        "prediction_result": simple_response_dto.get('prediction_result'),
-        "prediction_prob": f"{simple_response_dto.get('prediction_prob')}"
-    }
-    return jsonify(simple_response)
+    # simple_response = {
+    #     "url": input_url,
+    #     "prediction_result": simple_response_dto.get('prediction_result'),
+    #     "prediction_prob": f"{simple_response_dto.get('prediction_prob')}"
+    # }
+    return jsonify(simple_response_dto.to_dict())
 
 
 # (웹용) 피싱 분석 상세 결과
