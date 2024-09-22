@@ -111,5 +111,6 @@ def test():
 
 
 if __name__ == '__main__':
-    # schedule_model_update(db)
-    app.run('0.0.0.0', port=5000, debug=True)
+    schedule_model_update(db)
+    # apscheduler 사용 시 스케줄링이 2번 실행되는 문제를 막기 위해 use_reloader=False 로 설정
+    app.run('0.0.0.0', port=5000, debug=True, use_reloader=False) 

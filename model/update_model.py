@@ -1,7 +1,7 @@
 import pickle
 import numpy as np
 import pandas as pd
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
@@ -127,18 +127,23 @@ def update_model_with_csv(db):
     print(f"Model update completed at {datetime.now()}")
 
 
+def test_backgroundScheduler():
+    print("BackgroundScheduler Test")
+
 # 스케줄러 설정
 def schedule_model_update(db):
     """
     한 달에 한 번 모델을 업데이트하는 스케줄러 설정 함수
     """
-    scheduler = BlockingScheduler()
+    scheduler = BackgroundScheduler() # 백그라운드 스케줄러
 
     # 매달 1일 오전 2시에 모델 업데이트 실행
     scheduler.add_job(lambda: update_model_with_csv(db), 'cron', day=1, hour=2)
+    # scheduler.add_job(lambda: test_backgroundScheduler(), 'cron', hour=12, minute=48) # 백그라운드 스케줄러 테스트
 
-    print("Model update scheduler started.")
     try:
+        print("Model update scheduler started.")
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
+        scheduler.shutdown()  # 스케줄러 종료
         print("Model update scheduler stopped.")
