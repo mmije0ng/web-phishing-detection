@@ -34,9 +34,6 @@ def is_shortened_url(url):
     print(parsed_url.netloc in SHORTENING_DOMAINS)
     return parsed_url.netloc in SHORTENING_DOMAINS
 
-
-from urllib.parse import urlparse
-
 def check_phishing_shortening_service(url):
     """
     주어진 URL이 단축 URL인지 확인하고, 블랙리스트에 있는지 검사.
