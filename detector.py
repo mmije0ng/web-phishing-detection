@@ -15,8 +15,8 @@ feature_order = [
 async def evaluate_url(url):
 
     # URL이 단축된 경우 복원
-    is_shortened = await asyncio.to_thread(short_url_features.is_shortened, url)
-    print(f'단축 URL 여부: {is_shortened}')
+    # is_shortened = await asyncio.to_thread(short_url_features.is_shortened, url)
+    # print(f'단축 URL 여부: {is_shortened}')
 
     # 컨텐츠 기반 피처용 URLData 객체 생성
     response = await asyncio.to_thread(content_based_features.get_request_url, url)
@@ -48,7 +48,7 @@ async def evaluate_url(url):
         'having_Sub_Domain': asyncio.to_thread(domain_based_features.having_subdomain, url),
         'HTTPS_token': asyncio.to_thread(domain_based_features.https_token, url),
 
-        'Shortining_Service': asyncio.to_thread(short_url_features.is_shortened, url)
+        'Shortining_Service': asyncio.to_thread(short_url_features.check_phishing_shortening_service, url)
     }
 
     # 모든 비동기 작업을 병렬로 실행
@@ -95,48 +95,48 @@ async def evaluate_url(url):
     }
 
 # 테스트용 URL 목록
-# test_urls = [
-#     # 단축 URL (정상 5개, 악성 5개)
-#     'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-#     'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-#     'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-#     'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
-#     'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
-#     'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-#     'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
-#     'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-#     'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 99.9994%, XGBoost: 94.4168%
-#     'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0.0000%, XGBoost: 1.3971%
-
-#     # 일반 URL (정상 5개, 악성 5개)
-#     'https://www.google.com',  # 정상, mlp: 0.0000%, XGBoost: 0.5252%
-#     'https://www.wikipedia.org',  # 정상, mlp: 0.0003%, XGBoost: 0%
-#     'https://www.python.org',  # 정상, mlp: 0.0000%, XGBoost: 1.5160%
-#     'https://www.github.com',  # 정상, mlp: 8.8258%, XGBoost: 4.7550%
-#     'https://www.stackoverflow.com',  # 정상, mlp: 0.0000%, XGBoost: 0.8729%
-#     'http://malicious-site.com',  # 악성, mlp: 100.0000%, XGBoost: 99.9999%
-#     'http://phishing-site.com',  # 악성, mlp:  100.0000%, XGBoost: 98.3522%
-#     'http://fraud-site.org',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
-#     'http://fake-login.net',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
-#     'http://dangerous-site.biz',  # 악성, mlp: 100.0000%, XGBoost:88.3212%
-# ]
-
-# 테스트용 URL 목록
 test_urls = [
-    # 피싱 5개
-    'https://buly.kr/BITBije', # 복원 o, mlp: 0.0000%, XGBoost: 1.0463%
-    'https://buly.kr/9BU5wxI', # 복원 o, mlp: 0.0038%, XGBoost: 0.4673%
-    'https://buly.kr/Gkqg82e', # 복원 o, mlp: 0.0000%, XGBoost: 0.1185%
-    'https://buly.kr/GZvv9En', # 복원 o, mlp: 0.0000%, XGBoost: 1.7451%
-    'https://buly.kr/jXirow', # 복원 o, mlp: 0.0000%, XGBoost: 0.0727%
+    # 단축 URL (정상 5개, 악성 5개)
+    'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
+    'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
+    'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
+    'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 99.9994%, XGBoost: 94.4168%
+    'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0.0000%, XGBoost: 1.3971%
 
-    # 일반 5개
-    'https://buly.kr/610SIJC', # 복원 o, mlp: 0.0000%, XGBoost: 0.0003%
-    'https://buly.kr/2qWodcD', # 복원 o, mlp: 0.0000%, XGBoost: 0.0009%
-    'https://buly.kr/C08De2i', # 복원 o, mlp: 0.0000%, XGBoost: 1.9202%
-    'https://url.kr/b2ecua', # 복원 o, mlp: 0.0000%, XGBoost: 0.2273%
-    'https://tinyurl.com/3z5h4h3w' # 복원 o, mlp: 0.0000%, XGBoost: 0.0011%
+    # 일반 URL (정상 5개, 악성 5개)
+    'https://www.google.com',  # 정상, mlp: 0.0000%, XGBoost: 0.5252%
+    'https://www.wikipedia.org',  # 정상, mlp: 0.0003%, XGBoost: 0%
+    'https://www.python.org',  # 정상, mlp: 0.0000%, XGBoost: 1.5160%
+    'https://www.github.com',  # 정상, mlp: 8.8258%, XGBoost: 4.7550%
+    'https://www.stackoverflow.com',  # 정상, mlp: 0.0000%, XGBoost: 0.8729%
+    'http://malicious-site.com',  # 악성, mlp: 100.0000%, XGBoost: 99.9999%
+    'http://phishing-site.com',  # 악성, mlp:  100.0000%, XGBoost: 98.3522%
+    'http://fraud-site.org',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
+    'http://fake-login.net',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
+    'http://dangerous-site.biz',  # 악성, mlp: 100.0000%, XGBoost:88.3212%
 ]
+
+# # 테스트용 URL 목록
+# test_urls = [
+#     # 피싱 5개
+#     'https://buly.kr/BITBije', # 복원 o, mlp: 0.0000%, XGBoost: 1.0463%
+#     'https://buly.kr/9BU5wxI', # 복원 o, mlp: 0.0038%, XGBoost: 0.4673%
+#     'https://buly.kr/Gkqg82e', # 복원 o, mlp: 0.0000%, XGBoost: 0.1185%
+#     'https://buly.kr/GZvv9En', # 복원 o, mlp: 0.0000%, XGBoost: 1.7451%
+#     'https://buly.kr/jXirow', # 복원 o, mlp: 0.0000%, XGBoost: 0.0727%
+
+#     # 일반 5개
+#     'https://buly.kr/610SIJC', # 복원 o, mlp: 0.0000%, XGBoost: 0.0003%
+#     'https://buly.kr/2qWodcD', # 복원 o, mlp: 0.0000%, XGBoost: 0.0009%
+#     'https://buly.kr/C08De2i', # 복원 o, mlp: 0.0000%, XGBoost: 1.9202%
+#     'https://url.kr/b2ecua', # 복원 o, mlp: 0.0000%, XGBoost: 0.2273%
+#     'https://tinyurl.com/3z5h4h3w' # 복원 o, mlp: 0.0000%, XGBoost: 0.0011%
+# ]
 
 # 메인 함수에서 비동기 함수 실행
 async def main():
