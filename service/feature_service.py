@@ -77,7 +77,7 @@ async def extract_features(url):
         'SSLfinal_State': asyncio.to_thread(domain_based_features.sslfinal_state, url),
         'having_Sub_Domain': asyncio.to_thread(domain_based_features.having_subdomain, url),
         'HTTPS_token': asyncio.to_thread(domain_based_features.https_token, url),
-        'Shortining_Service': asyncio.to_thread(short_url_features.is_shortened, url)
+        'Shortining_Service': asyncio.to_thread(short_url_features.check_phishing_shortening_service, url)
     }
 
     # 모든 비동기 작업을 병렬로 실행
