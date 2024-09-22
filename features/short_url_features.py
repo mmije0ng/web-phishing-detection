@@ -31,8 +31,12 @@ def is_shortened_url(url):
     - bool: 단축 URL이면 True, 그렇지 않으면 False
     """
     parsed_url = urlparse(url)
-    print(parsed_url.netloc in SHORTENING_DOMAINS)
-    return parsed_url.netloc in SHORTENING_DOMAINS
+    if parsed_url.netloc in SHORTENING_DOMAINS:
+        print(1)  # 단축 URL일 때 1 출력
+        return 1
+    else:
+        print(-1)  # 단축 URL이 아닐 때 -1 출력
+        return -1
 
 def check_phishing_shortening_service(url):
     """

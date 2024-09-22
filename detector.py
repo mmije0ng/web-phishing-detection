@@ -97,14 +97,14 @@ async def evaluate_url(url):
 # 테스트용 URL 목록
 test_urls = [
     # 단축 URL (정상 5개, 악성 5개)
-    'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
-    'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
-    'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
-    'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # 'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # 'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # 'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # 'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
+    # 'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
+    # 'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # 'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
+    # 'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
     'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 99.9994%, XGBoost: 94.4168%
     'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0.0000%, XGBoost: 1.3971%
 
