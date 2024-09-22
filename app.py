@@ -109,27 +109,8 @@ def test():
 #     except Exception as e:
 #         return f"Database connection failed: {e}"
 
-    
-# # db 데이터 create test
-# @app.route('/test')
-# def add_url():
-#     # URL 객체 생성 및 데이터베이스에 추가
-#     new_url = URLs(url="https://www.notion.so/f267366bd61041c88f7bb39edddf46bc")
-#     db.session.add(new_url)
-    
-#     # 세션에 데이터가 있는지 확인
-#     print("Session pending changes:", db.session.new)
-    
-#     # 데이터베이스에 커밋
-#     db.session.commit()
-    
-#     # 커밋 후 데이터가 있는지 확인
-#     saved_url = URLs.query.filter_by(url="https://www.notion.so/f267366bd61041c88f7bb39edddf46bc").first()
-#     print("Saved URL:", saved_url)
-    
-#     return f"<h1>Added URL</h1><p>{new_url.url}</p>"
-
 
 if __name__ == '__main__':
     schedule_model_update(db)
-    app.run('0.0.0.0', port=5000, debug=True)
+    # apscheduler 사용 시 스케줄링이 2번 실행되는 문제를 막기 위해 use_reloader=False 로 설정
+    app.run('0.0.0.0', port=5000, debug=True, use_reloader=False) 
