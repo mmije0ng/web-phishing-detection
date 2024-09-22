@@ -242,39 +242,3 @@ def get_detailed_response_by_ip(ip_address):
     else:
         print(f"API 요청 실패. 상태 코드: {response.status_code}")
         return None
-
-
-# # URLs 테이블 업데이트
-# def update_urls_entity(db, url_id):
-#     # 기존 URL이 있는지 확인
-#     url_entity = URLs.query.filter_by(url_id=url_id).first()
-    
-#     # URL이 이미 존재하면 search_count 값을 1 증가
-#     url_entity.search_count += 1
-#     print(f"Existing URL found. search_count updated to: {url_entity.search_count}")
-    
-#     # 세션에 데이터가 있는지 확인
-#     print("Session pending changes:", db.session.new)
-    
-#     # 데이터베이스에 커밋
-#     db.session.commit()  
-#     print("URLs update successfully") 
-
-# # URLs 테이블 저장
-# def add_urls_entity(db, url):
-#     # URL 객체 생성
-#     new_url_entity = URLs(url=url)
-    
-#     # 세션에 URL 객체 추가
-#     db.session.add(new_url_entity)
-#     print(f"New URL added: {url}")
-    
-#     # 세션에 데이터가 있는지 확인
-#     print("Session pending changes:", db.session.new)
-    
-#     # 데이터베이스에 커밋
-#     db.session.commit()
-#     print("URLs saved successfully")
-    
-#     # 커밋 후 url_entity의 url_id 반환
-#     return new_url_entity.url_id

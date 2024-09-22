@@ -31,8 +31,11 @@ def is_shortened_url(url):
     - bool: 단축 URL이면 True, 그렇지 않으면 False
     """
     parsed_url = urlparse(url)
+    print(parsed_url.netloc in SHORTENING_DOMAINS)
     return parsed_url.netloc in SHORTENING_DOMAINS
 
+
+from urllib.parse import urlparse
 
 def check_phishing_shortening_service(url):
     """
@@ -44,24 +47,35 @@ def check_phishing_shortening_service(url):
     Returns:
     - int: -1 (정상 사이트), 1 (피싱 사이트), -1 (단축 URL 아님)
     """
+    parsed_url = urlparse(url)
+    
+    # 단축 URL인지 확인
     if not is_shortened_url(url):
+        print('not a shortened URL')
         return -1
     
-    matching_row = shortened_urls_df[shortened_urls_df['url'] == url]
+    # 스킴을 제외한 나머지 부분 (도메인 + 경로)을 추출
+    full_url_without_scheme = parsed_url.netloc + parsed_url.path
+    print('Full URL without scheme: ' + full_url_without_scheme)
+
+    # 해당 URL이 블랙리스트에 있는지 검사
+    matching_row = shortened_urls_df[shortened_urls_df['url'] == full_url_without_scheme]
 
     if not matching_row.empty:
         # 해당 URL이 존재하면, 라벨을 확인
         label = matching_row['label'].values[0]
+        print("label: " + label)
         if label == 'good':
             return -1  # 정상 사이트
         elif label == 'bad':
             return 1  # 피싱 사이트
     else:
-        # 해당 URL이 존재하지 않으면, 피싱 사이트로 간주
+        # 해당 URL이 존재하지 않은 경우
+        print('URL not found in blacklist')
         return -1
 
-# 예제 URL
+# 테스트 URL
 if __name__ == "__main__":
-    example_url = 'https://buly.kr/610SIJC'
+    example_url = 'https://goo.gl/EKpJ8k'
     result = check_phishing_shortening_service(example_url)
     print(result)  # -1 (정상), 1 (피싱), -1 (단축 URL 아님)
