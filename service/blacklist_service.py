@@ -23,7 +23,8 @@ def add_to_blacklist(db, url):
     if url_entry.search_count >= 20:
         prediction_entry = Predictions.query.filter_by(url_id=url_entry.url_id).first()
 
-        if prediction_entry and prediction_entry.prediction_result == 1:
+        #if prediction_entry and prediction_entry.prediction_result == 1:
+        if prediction_entry:
             # 블랙리스트에 추가
             new_blacklist_entry = Blacklist(
                 url_id=url_entry.url_id, 
