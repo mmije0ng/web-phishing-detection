@@ -96,29 +96,29 @@ async def evaluate_url(url):
 
 # 테스트용 URL 목록
 test_urls = [
-    # 단축 URL (정상 5개, 악성 5개)
-    # 'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    # 'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    # 'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    # 'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
-    # 'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
-    # 'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    # 'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
-    # 'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
-    'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 99.9994%, XGBoost: 94.4168%
-    'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0.0000%, XGBoost: 1.3971%
+    # # 단축 URL (정상 5개, 악성 5개)
+    # # 'https://bit.ly/3xyz123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # # 'https://tinyurl.com/y6abcd',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # # 'https://goo.gl/abc123',  # 정상, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # # 'https://ow.ly/abcd1234',  # 정상, 복원 o, mlp: 100.0000%, XGBoost: 99.9788%
+    # # 'https://bit.ly/4abcd',  # 정상, 복원 o, mlp: 0%, XGBoost: 1.5160%
+    # # 'https://bit.ly/malicious1',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # # 'https://cli.gs/malware',  # 악성, 복원 x, mlp: 100.0000%, XGBoost: 99.9788%
+    # # 'https://v.gd/phishing',  # 악성, 0% 복원 x, mlp: 100.0000%, XGBoost: 59.4475%
+    # 'https://bc.vc/fraud',  # 악성, 0%, 복원 o, mlp: 99.9994%, XGBoost: 94.4168%
+    # 'https://po.st/scam',  # 악성, 0%, 복원 x, mlp: 0.0000%, XGBoost: 1.3971%
 
-    # 일반 URL (정상 5개, 악성 5개)
-    'https://www.google.com',  # 정상, mlp: 0.0000%, XGBoost: 0.5252%
+    # # 일반 URL (정상 5개, 악성 5개)
+    # 'https://www.google.com',  # 정상, mlp: 0.0000%, XGBoost: 0.5252%
     'https://www.wikipedia.org',  # 정상, mlp: 0.0003%, XGBoost: 0%
-    'https://www.python.org',  # 정상, mlp: 0.0000%, XGBoost: 1.5160%
-    'https://www.github.com',  # 정상, mlp: 8.8258%, XGBoost: 4.7550%
-    'https://www.stackoverflow.com',  # 정상, mlp: 0.0000%, XGBoost: 0.8729%
-    'http://malicious-site.com',  # 악성, mlp: 100.0000%, XGBoost: 99.9999%
-    'http://phishing-site.com',  # 악성, mlp:  100.0000%, XGBoost: 98.3522%
-    'http://fraud-site.org',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
-    'http://fake-login.net',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
-    'http://dangerous-site.biz',  # 악성, mlp: 100.0000%, XGBoost:88.3212%
+    # 'https://www.python.org',  # 정상, mlp: 0.0000%, XGBoost: 1.5160%
+    # 'https://www.github.com',  # 정상, mlp: 8.8258%, XGBoost: 4.7550%
+    # 'https://www.stackoverflow.com',  # 정상, mlp: 0.0000%, XGBoost: 0.8729%
+    # 'http://malicious-site.com',  # 악성, mlp: 100.0000%, XGBoost: 99.9999%
+    # 'http://phishing-site.com',  # 악성, mlp:  100.0000%, XGBoost: 98.3522%
+    # 'http://fraud-site.org',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
+    # 'http://fake-login.net',  # 악성, mlp: 100.0000%, XGBoost: 88.3212%
+    # 'http://dangerous-site.biz',  # 악성, mlp: 100.0000%, XGBoost:88.3212%
 ]
 
 # # 테스트용 URL 목록
