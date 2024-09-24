@@ -151,3 +151,18 @@ def check_prefix_suffix(url):
 
 # if __name__ == "__main__":
 #     test_features()
+
+# def check_abnormal_url(url):
+#     domain = urlparse(url).netloc
+
+#     try:
+#         # WHOIS 정보 조회
+#         w = whois.whois(domain)
+
+#         if not w.domain_name or not w.creation_date:
+#             return 1
+#         else:
+#             return -1
+#     except Exception as e:
+#         # WHOIS 조회 실패 시 피싱으로 간주
+#         return 1
