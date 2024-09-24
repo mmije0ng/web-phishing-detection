@@ -1,12 +1,12 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.model_selection import train_test_split, KFold
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 # CSV 파일 로드
-data = pd.read_csv('C:/Users/박준희/Desktop/공경진/forest/test1.csv')
+data = pd.read_csv('dataset.csv')
 
 # 특징과 라벨 분리
 X = data.drop('Result', axis=1)  # 'Result' 열이 라벨인 경우
@@ -70,7 +70,7 @@ print("훈련 데이터 혼동 행렬:\n", conf_matrix_train)
 
 # 혼동 행렬 시각화 (훈련 데이터)
 plt.figure(figsize=(8, 6))
-sns.heatmap(conf_matrix_train, annot=True, fmt="d", cmap="Blues", xticklabels=unique_labels, yticklabels=unique_labels)
+sns.heatmap(conf_matrix_train, annot=True, fmt="d", cmap="viridis", xticklabels=unique_labels, yticklabels=unique_labels)
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix (Train Data)')
@@ -82,7 +82,7 @@ print("테스트 데이터 혼동 행렬:\n", conf_matrix_test)
 
 # 혼동 행렬 시각화 (테스트 데이터)
 plt.figure(figsize=(8, 6))
-sns.heatmap(conf_matrix_test, annot=True, fmt="d", cmap="Blues", xticklabels=unique_labels, yticklabels=unique_labels)
+sns.heatmap(conf_matrix_test, annot=True, fmt="d", cmap="viridis", xticklabels=unique_labels, yticklabels=unique_labels)
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.title('Confusion Matrix (Test Data)')
