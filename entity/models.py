@@ -12,7 +12,7 @@ class URLs(db.Model):
     __tablename__ = 'URLs'  # 테이블 이름을 'URLs'로 지정
 
     url_id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # pk
-    url = db.Column(db.String(500), nullable=False, unique=True)
+    url = db.Column(db.String(255), nullable=False, unique=True)
     is_blacklisted = db.Column(db.Boolean, default=False)  # 블랙리스트 여부
     search_count = db.Column(db.Integer, default=1)  # URL 조회 횟수
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(kst))  # 한국 시간으로 설정
