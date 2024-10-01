@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/hs-phishing
+REPOSITORY=/home/ubuntu/web-phishing-detection
 # FLASK_APP_DIR=/home/ubuntu/hs-phishing
 # ENV_PATH=$FLASK_APP_DIR/.env
 cd $REPOSITORY
