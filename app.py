@@ -28,7 +28,7 @@ migrate = Migrate(app, db)
 
 @app.route('/')
 def index():
-    return 'Hello World!!'
+    return 'Hello World!'
 
 # (확장용) 피싱 여부 및 확률
 @app.route('/api/url/simple', methods=['POST'])
@@ -95,7 +95,7 @@ async def detailed_result():
 
 @app.route('/test')
 def test():
-    return 'Test Hello World!!'
+    return 'Test Hello World!'
 
 # # 데이터베이스 연결 테스트
 # @app.route('/test-connection')
