@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 REPOSITORY=/home/ubuntu/web-phishing-detection
+# FLASK_APP_DIR=/home/ubuntu/hs-phishing
+# ENV_PATH=$FLASK_APP_DIR/.env
 cd $REPOSITORY
 
 # Flask 앱 인스턴스 종료
@@ -33,26 +35,16 @@ else
     echo "> Gunicorn is already installed"
 fi
 
-# Gunicorn 소켓 파일 제거
-if [ -f /run/gunicorn.sock ]; then
-    echo "> Removing existing gunicorn.sock"
-    rm /run/gunicorn.sock
-fi
+# Flask 앱 시작
+echo "> Starting Flask app with gunicorn"
+nohup gunicorn -w 4 app:app -b 0.0.0.0:5000 > gunicorn.log 2> gunicorn_error.log &
 
-# Gunicorn 소켓 설정으로 Flask 앱 시작
-echo "> Starting Flask app with gunicorn (using unix socket)"
-nohup gunicorn -w 4 app:app -b unix:/run/gunicorn.sock > gunicorn.log 2> gunicorn_error.log &
-
-# Nginx 재시작
-echo "> Reloading Nginx"
-sudo systemctl restart nginx
-
-# Gunicorn 실행 확인
-sleep 5
-if pgrep -f gunicorn > /dev/null
-then
-    echo "> Gunicorn started successfully"
-else
-    echo "> Gunicorn failed to start"
-    exit 1
-fi
+# # Gunicorn 실행 확인
+# sleep 5
+# if pgrep -f gunicorn > /dev/null
+# then
+#     echo "> Gunicorn started successfully"
+# else
+#     echo "> Gunicorn failed to start"
+#     exit 1
+# fi
