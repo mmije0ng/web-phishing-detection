@@ -37,7 +37,7 @@ fi
 
 # Flask 앱 시작
 echo "> Starting Flask app with gunicorn"
-nohup gunicorn -w 4 app:app -b 0.0.0.0:5000 > gunicorn.log 2> gunicorn_error.log &
+nohup gunicorn -w 2 app:app -b 0.0.0.0:5000 > gunicorn.log 2> gunicorn_error.log &
 
 # # Gunicorn 실행 확인
 # sleep 5

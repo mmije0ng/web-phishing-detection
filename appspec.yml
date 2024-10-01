@@ -3,10 +3,10 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ubuntu/hs-phishing
+    destination: /home/ubuntu/hs-web-phishing-detection
 file_exists_behavior: OVERWRITE # file already exists at this location 에러 방지
 permissions:
-  - object: /home/ubuntu/hs-phishing/
+  - object: /home/ubuntu/web-phishing-detection/
     owner: ubuntu
     group: ubuntu
 hooks:
