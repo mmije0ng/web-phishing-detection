@@ -4,9 +4,9 @@
 **웹 사이트**: https://www.catch-phishing.site/
 
 &nbsp;
-## 작품 개요 
+## 작품 개요
 최근 주요 웹 사이트를 모방한 피싱 사이트가 증가하면서 사용자를 유도하여 악성코들르 감염시키고, 개인정보와 금융 정보를 탈취하는 사이버 범죄가 빈번히 발생하고 있습니다.  
-본 서비스는 **URL을 분석해 피싱 여부를 판별하는 머신너링 모델 XGBoos**t를 기반으로 **Chrome 확장 프로그램**과 **웹 애플리케이션**을 제공합니다.  
+본 서비스는 **URL을 분석해 피싱 여부를 판별하는 머신너링 모델 XGBoost**를 기반으로 **Chrome 확장 프로그램**과 **웹 애플리케이션**을 제공합니다.  
 사용자는 이를 통해 **웹 사이트의 피싱 확률과 분석 결과를 실시간으로 확인**하고, 안전하게 웹을 탐색할 수 있습니다.
 ### 1. 투명한 탐지 근거 제공
 - 피싱으로 판별된 이유와 해당 사이트의 상세 정보를 제공하여 분석 결과의 신뢰성과 이해도를 높임.
@@ -29,12 +29,12 @@
 
 백엔드
 - ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white)
-- Flask를 확용하여 Python 기반의 경량 웹 프레임워크를 통해 실시간 탐지 API 제공
+- Flask를 활용하여 Python 기반의 경량 웹 프레임워크를 통해 실시간 탐지 API 제공
 - AWS 클라우드를 이용하여 확장 가능하고 안전한 인프라를 통해 효율적인 데이터 처리 및 모델 배포
   
 프론트엔드
 - ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
-- React 및 TypeScript를 활용하여 사용자 친화적이고 반응형 UI 사용  
+- React 및 TypeScript를 활용하여 사용자 친화적이고 반응형 UI 제공  
 
 확장 프로그램
 - ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
