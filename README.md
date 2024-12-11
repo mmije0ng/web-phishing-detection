@@ -128,7 +128,7 @@ URL을 실시간으로 분석하여 피싱 사이트로 의심될 경우 경고 
 &nbsp;
 ## 프로젝트 흐름도  
 <p align="center">
-  <img width="500" alt="image" src="https://github.com/user-attachments/assets/9843f5f1-2ae5-42b7-acf5-ad010e604e34">
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/4c9f629b-54e9-41bc-b41b-9b44133e926b">
 </p>
 
 &nbsp;
