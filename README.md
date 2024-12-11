@@ -1,6 +1,6 @@
 # 머신러닝을 활용한 웹 피싱 탐지 서비스
 ### [제20회 한성공학경진대회 동상 수상]
-**크롬 확장 프로그램**: [Catch Phishing Chrome Extension](https://chromewebstore.google.com/detail/catch-phishing/lcjnjlhedbbckkcenidmfokbpchnimji?hl=ko)  
+**확장 프로그램**: [Catch Phishing Chrome Extension](https://chromewebstore.google.com/detail/catch-phishing/lcjnjlhedbbckkcenidmfokbpchnimji?hl=ko)  
 **웹 사이트**: https://www.catch-phishing.site/
 
 &nbsp;
